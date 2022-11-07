@@ -1,16 +1,9 @@
-import {CanvasJSChart} from 'canvasjs-react-charts'
-
-// props:
-//zoomable: zoomable & pannable
-//chartTitle: chart title
-//xAxisTitle: xAxis title (Years, months, or Thousands of years)
-//yAxisTitle: yAxis title 
-//data[]: datasets
+import CanvasJSReact from '../canvasjs.react';
 
 export default function DoughnutChart(props){
+    var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     const options = { // cant be named anything else than options
         theme: "light2",
-        zoomEnabled: props.zoomable,
         title: {
             text: props.chartTitle,
             fontFamily: "Calibri"
@@ -26,13 +19,7 @@ export default function DoughnutChart(props){
             showInLegend: true,
 			indexLabel: "{name}: {y}",
 			yValueFormatString: "#,###'%'",
-			dataPoints: [
-				{ name: "Kiinnostus", y: 5 },
-				{ name: "Motivaatio", y: 31 },
-				{ name: "Jaksaminen", y: 40 },
-				{ name: "Keskittymiskyky", y: 17 },
-				{ name: "-j-", y: 7 }
-			]
+			dataPoints: props.data.set[0].points
         }]
     }
 

@@ -1,33 +1,29 @@
-import {CanvasJSChart} from 'canvasjs-react-charts'
-
-// props:
-//zoomable: zoomable & pannable
-//chartTitle: chart title
-//xAxisTitle: xAxis title (Years, months, or Thousands of years)
-//yAxisTitle: yAxis title 
-//data[]: datasets
+import CanvasJSReact from '../canvasjs.react';
 
 export default function LineChart(props){
+    var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
     const options = { // cant be named anything else than options
         theme: "light2",
-        zoomEnabled: props.zoomable,
         title: {
-            text: props.chartTitle,
-            fontFamily: "Calibri"
+            text: props.data.title,
+            fontFamily: "Calibri" //MOVE TO ENV VAR
         },
         axisY: {
             title: "Y Axis",
-            suffix: "suffix"
+            suffix: props.data.set[0].suffix,
+            prefix: props.data.set[0].prefix
         },
         axisX: {
-            title: props.xAxisTitle,
-            prefix: "prefix",
-            interval: 10
+            title: props.data.xTitle,
+            prefix: props.data.xPrefix,
+            suffix: props.data.xSuffix,
+            interval: 10 //NOT SURE WHAT TO DO WITH THIS
         },
         data: [{
             type: "line",
             toolTipContent: "Prefix {x}: {y}suffix",
-            dataPoints: props.data
+            dataPoints: props.data.set[0].points
         }]
     }
 
