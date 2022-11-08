@@ -11,6 +11,8 @@ export default function VisualizeData(props){
 
     var chartElement;
 
+   console.log(props.data.title);
+
     switch(props.chartType){
         case "line":        chartElement = (<LineChart data={props.data} zoomable='true'/>)
             break;

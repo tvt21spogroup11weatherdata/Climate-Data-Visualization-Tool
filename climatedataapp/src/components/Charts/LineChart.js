@@ -3,6 +3,25 @@ import CanvasJSReact from '../../canvasjs.react';
 export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+    var data = [];
+
+    function toggleSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+        } else { e.dataSeries.visible = true;}
+        e.chart.render();
+    }
+
+    for(var i = 0; i < props.data.set.length; i++){
+        data[i] = {
+            type: "line",
+            name: props.data.set[i].yTitle,
+            toolTipContent: props.data.set[i].prefix + " {x}: {y}" + props.data.set[i].suffix,
+            showInLegend: true,
+            dataPoints: props.data.set[i].points
+        }
+    }
+
     const options = { // cant be named anything else than options
         theme: "light2",
         title: {
@@ -10,7 +29,7 @@ export default function LineChart(props){
             fontFamily: "Calibri" //MOVE TO ENV VAR
         },
         axisY: {
-            title: "Y Axis",
+            title:  props.data.yTitle,
             suffix: props.data.set[0].suffix,
             prefix: props.data.set[0].prefix
         },
@@ -20,11 +39,11 @@ export default function LineChart(props){
             suffix: props.data.xSuffix,
             interval: 10 //NOT SURE WHAT TO DO WITH THIS
         },
-        data: [{
-            type: "line",
-            toolTipContent: "Prefix {x}: {y}suffix",
-            dataPoints: props.data.set[0].points
-        }]
+        legend: {
+            cursor: "pointer",
+            itemclick: toggleSeries
+        },
+        data: data
     }
 
     return(

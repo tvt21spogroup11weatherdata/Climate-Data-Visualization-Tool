@@ -3,6 +3,7 @@ import VisualizeTempData from './components/Visualizations/VisualizeTempData';
 import VisualizeEmissionData from './components/Visualizations/VisualizeEmissionData';
 import VisualizeUserDefined from './components/Visualizations/VisualizeUserDefined';
 import { Route, Routes } from 'react-router-dom';
+import {useEffect, useState} from 'react'
 import Navigation from './components/Navigation';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
@@ -11,6 +12,7 @@ import Home from './components/Home';
 import UserAccount from './components/UserAccount';
 
 function App() {
+    
 
     return (
         <>
@@ -29,25 +31,6 @@ function App() {
         </div>
         </>
     )
-    /*
-    return (
-            <div className="App" id="content">
-                <Tabs defaultActiveKey="line" transition={false} id="noanim-tab-example" className="mb-6 nav-fill" >
-                    <Tab eventKey="line" title="Line">
-                     <VisualizeData chartType="line"      data={lineData}/>
-                    </Tab>
-                    <Tab eventKey="multiaxis" title="Multiaxis">
-                        <VisualizeData chartType="multiaxis" data={multiAxisData}/>
-                    </Tab>
-                    <Tab eventKey="stacked" title="Stacked">
-                        <VisualizeData chartType="stacked"   data={stackedData}/>
-                    </Tab>
-                    <Tab eventKey="doughnut" title="Doughnut">
-                        <VisualizeData chartType="doughnut"  data={doughnutData}/> 
-                    </Tab>
-                </Tabs>
-            </div>
-    )*/
 }
 
 export default App;

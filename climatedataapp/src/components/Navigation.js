@@ -1,7 +1,12 @@
-export default function Navbar(){
-    var loggedIn = true;
+import { useEffect, useState } from "react";
 
+export default function Navbar(props){
     var userElement;
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    //////////////////////////////////////////
+    ///for testing switching views
+    var loginTestElement = (<ul className="navbar-nav ms-auto"><li><button onClick= {() => setLoggedIn(!loggedIn)}>Switch login navs</button></li></ul>);
 
     if(loggedIn){
         userElement = (<ul className="navbar-nav ms-auto">
@@ -23,6 +28,8 @@ export default function Navbar(){
         </li>
     </ul>)
     }
+    //////////////////////////////////////////
+
 
     return (
         <>
@@ -32,7 +39,7 @@ export default function Navbar(){
             <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div data-bs-toggle="collapse" class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div data-bs-toggle="collapse" className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
 
                 <li className="nav-item">
@@ -41,10 +48,8 @@ export default function Navbar(){
                 <li className="nav-item">
                     <a className="nav-link" href="/emission">Emission Visualization</a>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/adjsaskfjak">User Defined test page</a>
-                </li>
             </ul>
+            {loginTestElement}
             {userElement}
         </div>
         </nav>
