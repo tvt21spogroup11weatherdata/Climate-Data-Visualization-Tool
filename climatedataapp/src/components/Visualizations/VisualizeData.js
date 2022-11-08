@@ -1,7 +1,7 @@
-import LineChart from "./LineChart";
-import DoughnutChart from "./DoughnutChart";
-import StackedChart from "./StackedChart";
-import MultiAxisChart from "./MultiAxisChart";
+import LineChart from "../Charts/LineChart";
+import DoughnutChart from "../Charts/DoughnutChart";
+import StackedChart from "../Charts/StackedChart";
+import MultiAxisChart from "../Charts/MultiAxisChart";
 
 //props:
 //data: data object

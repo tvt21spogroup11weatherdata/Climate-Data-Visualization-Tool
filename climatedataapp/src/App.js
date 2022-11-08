@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import VisualizeTempData from './components/VisualizeTempData';
-import VisualizeEmissionData from './components/VisualizeEmissionData';
-import VisualizeUserDefined from './components/VisualizeUserDefined';
+import VisualizeTempData from './components/Visualizations/VisualizeTempData';
+import VisualizeEmissionData from './components/Visualizations/VisualizeEmissionData';
+import VisualizeUserDefined from './components/Visualizations/VisualizeUserDefined';
 import { Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
 

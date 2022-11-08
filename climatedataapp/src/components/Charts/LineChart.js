@@ -1,4 +1,4 @@
-import CanvasJSReact from '../canvasjs.react';
+import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;

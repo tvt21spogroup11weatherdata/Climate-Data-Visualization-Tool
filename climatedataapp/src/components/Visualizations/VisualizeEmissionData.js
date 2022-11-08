@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import VisualizeData from "./VisualizeData";
-import {Data, DataSet} from '../classes/Data';
+import {Data, DataSet} from '../../classes/Data';
 
 export default function VisualizeEmissionData(){
 
