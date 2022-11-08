@@ -8,6 +8,7 @@ import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Header from './components/Header';
 import Home from './components/Home';
+import UserAccount from './components/UserAccount';
 
 function App() {
 
@@ -15,13 +16,13 @@ function App() {
         <>
         <Header/>
         <Navigation/>
-        <div id="buffer"></div>
         <div className="App" id="content">
             <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
                 <Route path="/custompath" element={<VisualizeUserDefined/>} />
+                <Route path="/account" element={<UserAccount/>} />
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/signup" element={<SignupForm/>} />
             </Routes>
