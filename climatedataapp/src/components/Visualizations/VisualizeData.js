@@ -8,10 +8,7 @@ import MultiAxisChart from "../Charts/MultiAxisChart";
 //chartType: chart type
 
 export default function VisualizeData(props){
-
     var chartElement;
-
-   console.log(props.data.title);
 
     switch(props.chartType){
         case "line":        chartElement = (<LineChart data={props.data} zoomable='true'/>)
@@ -27,8 +24,14 @@ export default function VisualizeData(props){
     return(
         <div>
             {chartElement}
-            <p>{props.data.longDesc}</p>
-            <p><a href={props.data.source}>{props.data.source}</a>, <a href={props.data.desc}>{props.data.desc}</a></p>
+            <div id="chartDesc">
+                <p>{props.data.longDesc}</p>
+                <p>{props.data.longDesc2}</p>
+            </div>
+            <p>
+                <a href={props.data.source} target="_blank" rel="noreferrer">Data source</a> - 
+                <a href={props.data.desc} target="_blank" rel="noreferrer">Data description</a>
+            </p>
             <p><input type="submit" value="Tässä piti olla joku save nappula vissiin"/></p>
             <hr/>
         </div>

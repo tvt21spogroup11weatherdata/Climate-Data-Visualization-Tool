@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
     var data = [];
 
+    //Toggle series
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
@@ -12,6 +13,7 @@ export default function LineChart(props){
         e.chart.render();
     }
 
+    //Set datapoints
     for(var i = 0; i < props.data.set.length; i++){
         data[i] = {
             type: "line",
@@ -24,6 +26,7 @@ export default function LineChart(props){
 
     const options = { // cant be named anything else than options
         theme: "light2",
+        zoomEnabled: true,
         title: {
             text: props.data.title,
             fontFamily: "Calibri" //MOVE TO ENV VAR
@@ -37,18 +40,20 @@ export default function LineChart(props){
             title: props.data.xTitle,
             prefix: props.data.xPrefix,
             suffix: props.data.xSuffix,
-            interval: 10 //NOT SURE WHAT TO DO WITH THIS
+            interval: 10 //NOT DEFINED
         },
+        
         legend: {
             cursor: "pointer",
             itemclick: toggleSeries
         },
+        //width: chartSize, // FIND A WAY TO FORCE REFRESH DIV SIZE TO TRIGGER CHART RESIZE
         data: data
     }
 
     return(
         <div>
-            <CanvasJSChart options = {options}/>
+            <CanvasJSChart  options = {options}/>
         </div>
     )
 }
