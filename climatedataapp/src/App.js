@@ -1,21 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
 import VisualizeTempData from './components/Visualizations/VisualizeTempData';
 import VisualizeEmissionData from './components/Visualizations/VisualizeEmissionData';
 import VisualizeUserDefined from './components/Visualizations/VisualizeUserDefined';
 import { Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
+import LoginForm from './components/LoginForm';
+import SignupForm from './components/SignupForm';
+import Header from './components/Header';
+import Home from './components/Home';
 
 function App() {
 
     return (
         <>
+        <Header/>
         <Navigation/>
+        <div id="buffer"></div>
         <div className="App" id="content">
             <Routes>
+                <Route path="/" element={<Home/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
                 <Route path="/custompath" element={<VisualizeUserDefined/>} />
+                <Route path="/login" element={<LoginForm/>} />
+                <Route path="/signup" element={<SignupForm/>} />
             </Routes>
         </div>
         </>
