@@ -5,9 +5,7 @@ import { Tab, Tabs } from "react-bootstrap";
 
 export default function VisualizeTempData(){
     const [loading, setLoading] = useState(true);
-    
     var v1Data, v3Data, v4Data, v5Data, v6Data, v7Data;
-    var dataSets = [];
 
     //insert random numbers to data to draw test lines
     function InsertTestValues(data, min, max){
@@ -254,11 +252,6 @@ export default function VisualizeTempData(){
         console.log("loading")
         setLoading(true);
     }
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            console.log("now")
-    }, 1000);
-    })
     ///////////////////////////////////////////////////////////////////////////
 
     if(!loading){
