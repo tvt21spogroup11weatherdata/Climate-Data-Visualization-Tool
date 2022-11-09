@@ -11,7 +11,7 @@ export default function VisualizeData(props){
     var chartElement;
 
     switch(props.chartType){
-        case "line":        chartElement = (<LineChart data={props.data} zoomable='true'/>)
+        case "line":        chartElement = (<LineChart data={props.data} human={props.human} zoomable='true'/>)
             break;
         case "stacked":     chartElement = (<StackedChart data={props.data} zoomable='true'/>)
             break;

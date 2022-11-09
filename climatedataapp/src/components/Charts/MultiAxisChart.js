@@ -30,7 +30,7 @@ export default function MultiAxisChart(props){
             includeZero: true,
             suffix: props.data.set[0].suffix
         },
-        axisY2: {
+        axisY2: [{
             title: props.data.set[1].yTitle,
             lineColor: "#7F6084",
             tickColor: "#7F6084",
@@ -40,6 +40,16 @@ export default function MultiAxisChart(props){
             prefix: props.data.set[1].prefix,
             suffix: props.data.set[1].suffix
         },
+        {
+            title: props.data.set[2].yTitle,
+            lineColor: "#",
+            tickColor: "#1100ff",
+            labelFontColor: "#1100ff",
+            titleFontColor: "#1100ff",
+            includeZero: true,
+            prefix: props.data.set[2].prefix,
+            suffix: props.data.set[2].suffix
+        }],
         toolTip: {
             shared: true
         },
@@ -63,6 +73,14 @@ export default function MultiAxisChart(props){
             axisYType: "secondary",
             showInLegend: true,
             dataPoints: props.data.set[1].points
+        },
+        {
+            type: "scatter",
+            name: props.data.set[2].yTitle,
+            color: "#1100ff",
+            axisYType: "secondary",
+            showInLegend: true,
+            dataPoints: props.data.set[2].points
         }]
     }
 

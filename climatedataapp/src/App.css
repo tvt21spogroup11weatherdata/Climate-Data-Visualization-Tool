@@ -44,6 +44,14 @@
     width: 100%;
 }
 
+#chartContainer {
+    width: 20;
+}
+
+.nav-tabs {
+    display: inline-flex !important;
+}
+
 #chartDesc {
     width: 100%;
     padding-top: 30px;
