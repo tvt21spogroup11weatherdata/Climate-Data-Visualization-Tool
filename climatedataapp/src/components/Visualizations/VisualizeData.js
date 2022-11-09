@@ -33,7 +33,6 @@ export default function VisualizeData(props){
                 <a href={props.data.desc} target="_blank" rel="noreferrer">Data description</a>
             </p>
             <p><input type="submit" value="Tässä piti olla joku save nappula vissiin"/></p>
-            <hr/>
         </div>
     )
 }

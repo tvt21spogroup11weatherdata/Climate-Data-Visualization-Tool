@@ -4,6 +4,8 @@ import {Data, DataSet} from '../../classes/Data';
 import { Tab, Tabs } from "react-bootstrap";
 
 export default function VisualizeTempData(){
+    const [loading, setLoading] = useState(true);
+    
     var v1Data, v3Data, v4Data, v5Data, v6Data, v7Data;
     var dataSets = [];
 
@@ -17,7 +19,6 @@ export default function VisualizeTempData(){
                 data.set[j].points[i] = dataPoint;
             }
         }
-        
     }
 
     function V1Data(){
@@ -245,12 +246,25 @@ export default function VisualizeTempData(){
     InsertTestValues(v6Data, 0, 400);
     InsertTestValues(v7Data, 0, 400);
 
-    function refreshw(){
-        window.resizeBy(1,1);
+    //////////////////////////////////////////////////////////////////////////////
+    /// CONVOLUTED WAY TO MAKE SURE THE TAB SIZE IS PROPAGATED TO THE CHART'S OPTIONS BEFORE IT LOADS (blame canvasjs)
+    if(loading === true) { setLoading(false);}
+
+    function loadTab(){
+        console.log("loading")
+        setLoading(true);
     }
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log("now")
+    }, 1000);
+    })
+    ///////////////////////////////////////////////////////////////////////////
+
+    if(!loading){
         return (
-            <>  
-           <Tabs width="100%" defaultActiveKey="actor" transition={false} id="noanim-tab-example" onSelect={refreshw} className="mb-3 nav-fill">
+            <> 
+           <Tabs fill justify width="100%" defaultActiveKey="actor" transition={false} onSelect={loadTab} id="noanim-tab-example" className="mb-3 nav-fill" aria-label="wrapped label tabs example">
                 <Tab eventKey="v1" title="Global historical surface temperature anomalies from January 1850 onwards" wrapped="true">
                     {/*V1 Global historical surface temperature anomalies from January 1850 onwards
                     V2 option Northern Hemisphere 2,000-year temperature reconstruction*/}
@@ -280,4 +294,11 @@ export default function VisualizeTempData(){
 
             </>
         )
+    }
+    else {
+        return (
+            <div>Loading</div>
+        )
+    }
+        
 }

@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
-    var chartSize = 1000; //DEFAULT UNTIL FIND A WAY TO REFRESH CONTAINER TO RESIZE CHART
+
 
     //Toggle series
     function toggleSeries(e) {
@@ -27,7 +26,6 @@ export default function LineChart(props){
 
     //IF REQUIRES TO SHOW HUMAN EVOLUTION SERIES
     if(props.human){
-        console.log("yes")
         data[4] = {
             type: "scatter",
             color: "#1100ff",
@@ -38,8 +36,9 @@ export default function LineChart(props){
         }
     }
 
-    const options = { // cant be named anything else than options
+    const options = {
         theme: "light2",
+        animationEnabled: true,
         zoomEnabled: true,
         title: {
             text: props.data.title,
@@ -61,13 +60,8 @@ export default function LineChart(props){
             cursor: "pointer",
             itemclick: toggleSeries
         },
-        width: chartSize, // FIND A WAY TO FORCE REFRESH DIV SIZE TO TRIGGER CHART RESIZE
         data: data
     }
 
-    return(
-        <div>
-            <CanvasJSChart  options = {options}/>
-        </div>
-    )
+    return( <div><CanvasJSChart options = {options}/></div> ) 
 }

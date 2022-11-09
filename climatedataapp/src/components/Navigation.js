@@ -53,7 +53,6 @@ export default function Navbar(props){
             {userElement}
         </div>
         </nav>
-        <div id="buffer"></div>
         </>
     )
 }
