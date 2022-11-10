@@ -2,6 +2,9 @@ import LineChart from "../Charts/LineChart";
 import DoughnutChart from "../Charts/DoughnutChart";
 import StackedChart from "../Charts/StackedChart";
 import MultiAxisChart from "../Charts/MultiAxisChart";
+import { UserCollection } from "../../classes/UserCollection";
+import { useState } from "react";
+import VisualizationEditor from "./VisualizeUserDefined";
 
 //props:
 //data: data object
@@ -21,18 +24,23 @@ export default function VisualizeData(props){
             break;
     }
 
-    return(
-        <div>
-            {chartElement}
-            <div id="chartDesc">
-                <p>{props.data.longDesc}</p>
-                <p>{props.data.longDesc2}</p>
+    function addToColl(e){
+        e.preventDefault();
+    }
+    
+     return(
+            <div>
+                {chartElement}
+                <div id="chartDesc">
+                    <p>{props.data.longDesc}</p>
+                    <p>{props.data.longDesc2}</p>
+                </div>
+                <p>
+                    <a href={props.data.source} target="_blank" rel="noreferrer">Data source</a> - 
+                    <a href={props.data.desc} target="_blank" rel="noreferrer">Data description</a>
+                </p>
+                <form action="newcollection" onSubmit="redirect();"> <input type="submit" value="Add to a collection"/></form> {/* dropdown list that show all user's collections + option for new? */}
             </div>
-            <p>
-                <a href={props.data.source} target="_blank" rel="noreferrer">Data source</a> - 
-                <a href={props.data.desc} target="_blank" rel="noreferrer">Data description</a>
-            </p>
-            <p><input type="submit" value="Tässä piti olla joku save nappula vissiin"/></p>
-        </div>
-    )
+        )
+    
 }
