@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
+//RIKKI
 export default function DoughnutChart(props){
     const [subSector, toggleSubSector] = useState(false);
     const [subSubSector, toggleSubSubSector] = useState(false);

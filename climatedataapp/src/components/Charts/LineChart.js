@@ -1,15 +1,20 @@
+import { Collapse } from 'react-bootstrap';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
-
+    var postedData = props.data; //METADATA THAT WILL BE POSTED TO USER DATABASE
 
     //Toggle series
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
-        } else { e.dataSeries.visible = true;}
+            postedData.set[e.dataSeriesIndex].enabled = false;
+        } else { 
+            e.dataSeries.visible = true; 
+            postedData.set[e.dataSeriesIndex].enabled = true;
+        }
         e.chart.render();
     }
 
@@ -23,6 +28,8 @@ export default function LineChart(props){
             dataPoints: props.data.set[i].points
         }
     }
+
+
 
     //IF REQUIRES TO SHOW HUMAN EVOLUTION SERIES
     if(props.human){
@@ -57,6 +64,8 @@ export default function LineChart(props){
         }
     }
 
+
+
     const options = {
         theme: "light2",
         animationEnabled: true,
@@ -84,5 +93,14 @@ export default function LineChart(props){
         data: data
     }
 
-    return( <div><CanvasJSChart options = {options}/></div> ) 
+    var chart = <CanvasJSChart options = {options}/>
+
+    //Set enabled series (when loading user collection)
+    if(props.seriesEnabled !== undefined){
+        for(var i = 0; i < props.data.set.length; i++){
+            chart.props.options.data[i].visible = props.seriesEnabled[i];
+        }
+    }
+
+    return( <div>{chart}</div> ) 
 }

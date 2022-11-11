@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import VisualizeData from "./VisualizeData";
-import {Data, DataSet, DataConstructor} from '../../classes/Data';
+import { DataConstructor} from '../../classes/Data';
 import { Tab, Tabs } from "react-bootstrap";
 
 export default function VisualizeTempData(){
