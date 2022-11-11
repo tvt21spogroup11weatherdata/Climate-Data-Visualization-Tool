@@ -1,9 +1,10 @@
+//Class for the descriptive data inserted into a chart
 export class Data{
     title = 'Title'
     index = '' 
     source = 'source link'
     desc = 'desc link'
-    set = [];
+    set = []; //DataSet array for multiple series
     longDesc = 'tähän pitkä descriptioni siitä datasta mitä tässä nyt ollaan analysoimassa ja sillee lorem ipsum jii än ee'
     longDesc2 = 'tähän lisädescriptioni jos sitä tarvitaan'
     xTitle = 'äks akseli'
@@ -23,16 +24,16 @@ export class Data{
         this.longDesc = longDesc;
         this.longDesc2 = longDesc2;
     }
-
 }
 
+//Class for the actual data inserted into the chart
 export class DataSet {
     xTitle = "äks akseli"
     yTitle = "yy akseli"
     prefix = ' '
     suffix = ' '
     points = []
-    enabled = ' '
+    enabled = ' ' //Is the series enabled when the chart is loaded?
 
     constructor(xTitle, yTitle, prefix, suffix){
         this.xTitle = xTitle;
@@ -42,10 +43,11 @@ export class DataSet {
     }
 }
 
+//Class for constructing the Data objects as per the Visualization requirements
 export class DataConstructor{
     
+    //Construct Data object by index
     GetByIndex(i){
-
         if(i === 0) return this.V1Data();
         if(i === 1) return this.V3Data();
         if(i === 2) return this.V4Data();
@@ -56,7 +58,7 @@ export class DataConstructor{
         if(i === 7) return this.V9Data();
     }
 
-    //insert random numbers to data to draw test lines
+    //Insert random numbers to DataSet objects
     InsertTestValues(data, min, max){
         for(var j = 0; j < data.set.length; j++){
             var max = Math.floor(max);
@@ -69,7 +71,6 @@ export class DataConstructor{
     }
 
     V1Data(){
-        //Global historical surface temperature anomalies from January 1850 onwards
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Global historical surface temperature anomalies from January 1850 onwards', 
             'https://www.metoffice.gov.uk/hadobs/hadcrut5/',
@@ -118,14 +119,15 @@ export class DataConstructor{
             'Northern Hemisphere 2,000-year temperature reconstruction',
             ' ',
             '\xB0C'
-        ); //uncertainty values error chart
+        ); 
+        //Uncertainty values error chart:
         data.set[7] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Northern Hemisphere 2,000-year temperature reconstruction ERROR',
             ' ',
             '\xB0C'
         );
-        //uncertainty values range area chart
+        //Uncertainty values range area chart:
         data.set[8] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Northern Hemisphere 2,000-year temperature reconstruction RANGE AREA',
@@ -133,22 +135,28 @@ export class DataConstructor{
             '\xB0C'
         );
 
-
         data.chartType="line";
 
         //GET DATA HERE
         this.InsertTestValues(data, -2, 2);
+
+
+
+        //////////////////////////////
+        //TESTING UNCERTAINTY VALUES
         for(var i = 0; i < 100; i++){
             const dataPoint = {x: i, y: Math.floor(Math.random() * (0 - 100) + 0)};
             data.set[7].points[i] = {y: [data.set[6].points[i].y - 1, data.set[6].points[i].y + 1]};
             data.set[8].points[i] = {y: [data.set[6].points[i].y - 1, data.set[6].points[i].y + 1]};
         }
+        //////////////////////////////
+
+
         return data;
     }
 
 
     V3Data(){
-        //Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958', 
             'https://gml.noaa.gov/ccgg/trends/',
@@ -177,7 +185,6 @@ export class DataConstructor{
     }
 
     V4Data(){
-        //Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements', 
             'https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat',
@@ -224,7 +231,6 @@ export class DataConstructor{
     }
 
     V5Data(){
-        //Vostok Ice Core CO2 measurements, 417160 - 2342 years
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Vostok Ice Core CO2 measurements, 417160 - 2342 years', 
         'https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2',
@@ -265,7 +271,6 @@ export class DataConstructor{
     }
 
     V6Data(){
-        //Ice core 800k year composite study CO2 measurements
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Ice core 800k year composite study CO2 measurement', 
         'https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt',
@@ -294,7 +299,6 @@ export class DataConstructor{
     }
 
     V7Data(){
-        //Evolution of global temperature over the past two million years
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Evolution of global temperature over the past two million years', 
         'http://carolynsnyder.com/papers/Snyder_Data_Figures.zip',
@@ -329,7 +333,6 @@ export class DataConstructor{
     }
 
     V8Data(){
-        //CO2 emissions by country
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by country', 
             'https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D',
@@ -369,7 +372,6 @@ export class DataConstructor{
     V9Data(subSectors, subSubSectors){
         var subSectors = [];
         var subSubSectors = [];
-        //CO2 emissions by sectors
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by sectors', 
             'https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx',
@@ -385,6 +387,9 @@ export class DataConstructor{
             '%'
         );
         
+        //////////////////////////////////
+        // FIGURING OUT SUBSECTORS / SUBSUBSECTORS
+        // WIP
         //foreach sector
         subSectors[0] = new Data('Energy');
         subSectors[1] = new Data('Industrial processes');
@@ -398,7 +403,6 @@ export class DataConstructor{
             data.set[0].points[i] = dataPoint;
             subSectors[i].set[0] = new DataSet();
             
-
             var numberOfSubSectors = 6
             for(var j = 0; j < numberOfSubSectors; j++){
                 subSectors[i].set[0].points[j] = {x: "Subsector title", y: Math.floor(Math.random() * (100 - 0) + 0)};
@@ -409,18 +413,14 @@ export class DataConstructor{
                     subSubSectors[j] = new Data()
                     subSubSectors[j].title = "Subsubsector title"
                     subSubSectors[j].set[j] = new DataSet()
-                    
-                    
-                    
                     subSubSectors[j].set[j].points[k] = {x: "Subsubsector title", y: Math.floor(Math.random() * (100 - 0) + 0)};
                 }
             }
         }
-
-        
         //foreach subsector
         //subSectors.set[0] = new DataSet('Transport')
-
+        //////////////////////////////////
+        
         data.chartType="doughnut";
 
         //GET DATA HERE

@@ -1,12 +1,11 @@
-import { Collapse } from 'react-bootstrap';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
-    var postedData = props.data; //METADATA THAT WILL BE POSTED TO USER DATABASE
+    var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
 
-    //Toggle series
+    //Toggle series when clicking legend
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
@@ -65,7 +64,7 @@ export default function LineChart(props){
     }
 
 
-
+    //Chart options
     const options = {
         theme: "light2",
         animationEnabled: true,
@@ -93,9 +92,10 @@ export default function LineChart(props){
         data: data
     }
 
+    //Define chart
     var chart = <CanvasJSChart options = {options}/>
 
-    //Set enabled series (when loading user collection)
+    //Set enabled series when loading user collection
     if(props.seriesEnabled !== undefined){
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = props.seriesEnabled[i];

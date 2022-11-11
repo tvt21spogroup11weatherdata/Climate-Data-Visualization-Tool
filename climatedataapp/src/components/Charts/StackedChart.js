@@ -4,6 +4,7 @@ export default function StackedChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     const stacks = [];
 
+    //Set datapoints
     for(var i = 0; i < props.data.set.length; i++){
         stacks[i] = {
             type: "stackedArea100",

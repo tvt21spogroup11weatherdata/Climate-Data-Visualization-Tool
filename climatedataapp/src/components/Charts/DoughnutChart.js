@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
-//RIKKI
+////////////////////////////////////////////////////
+//RIKKI, KESKEN JNE
 export default function DoughnutChart(props){
     const [subSector, toggleSubSector] = useState(false);
     const [subSubSector, toggleSubSubSector] = useState(false);
@@ -24,16 +25,12 @@ export default function DoughnutChart(props){
         subDataPoints[i] = {y: props.subSectors[i].set[0].points[i].y, indexLabel: props.subSectors[i].set[0].points[i].x}
     }
 
-
-    
    // subSubDataPoints[0] = {y: props.subSubSectors[0].set[0].points[0].y, indexLabel: props.subSubSectors[0].title} 
 
     /*for(var i = 0; i < props.subSubSectors.set[0].points.length; i++){
         subSubDataPoints[i] = {y: props.subSubSectors[i].set[0].points[i].y, indexLabel: props.subSubSectors[i].set[0].points[i].x}
     }*/
     
-    
-
     function toggleSub(e){
         console.log("toggle subsector");
         console.log(e);
@@ -95,22 +92,14 @@ export default function DoughnutChart(props){
     var subsubchart = <CanvasJSChart options = {subSubSectorOptions}/>;
 
     if(subSector){
-        return(
-            <div>
-            {subchart}
-        </div>
-        )
+        
+        return(<div>{subchart}</div>)
     }
     else if(subSubSector){
-        return(
-            <div>
-            {subsubchart}
-        </div>
-        )
+        
+        return(<div>{subsubchart}</div>)
     }
-    else return (
-        <div>
-            {chart}
-        </div>
+    else 
+        return (<div>{chart}</div>
     )
 }

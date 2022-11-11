@@ -10,7 +10,8 @@ import DoughnutChart from "../Charts/DoughnutChart";
 export default function VisualizationCollection(props){
     //GET FORMATTYPE
     const [formatType, setFormatType] = useState("2column");
-
+    
+    ///////////////////////////////////////////////
     //TESTING DATA
     var coll = new Collection();
     coll.formatType = '1column'
@@ -18,10 +19,8 @@ export default function VisualizationCollection(props){
     coll.visualizations.push(new VisualizationsMeta(0, [true,true,true,true,true,true,true,true,true], "This is a description"))
     coll.visualizations.push(new VisualizationsMeta(1, [true,false], "This is a description"))
     coll.visualizations.push(new VisualizationsMeta(2, [false,true], "This is a description"))
+    ///////////////////////////////////////////////
 
-   
-    
-    
     var collectionElements = [];
     var column2 = [];
     var visualizationsData = [];
@@ -62,14 +61,16 @@ export default function VisualizationCollection(props){
     LoadVisualizationData();
     CreateElements();
 
-    if(formatType === "1column")
-    {
+    if(formatType === "1column"){
         return(<><div>{collectionElements}</div></>)
     }
     else if(formatType === "2column"){
-        return(<><table class="table" width="100%"><tbody>
+        return(<>
+            <table class="table" width="100%">
+                <tbody>
                     {collectionElements}
-                </tbody></table></>
+                </tbody>
+            </table></>
         )
     }
 }

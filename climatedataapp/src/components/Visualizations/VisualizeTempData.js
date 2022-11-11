@@ -3,11 +3,13 @@ import VisualizeData from "./VisualizeData";
 import { DataConstructor} from '../../classes/Data';
 import { Tab, Tabs } from "react-bootstrap";
 
+//Creates visualizations V1-7 & V10
 export default function VisualizeTempData(){
     const [loading, setLoading] = useState(true);
+
+    //Constructs Data objects and inserts values
     var v1Data, v3Data, v4Data, v5Data, v6Data, v7Data;
     var cnstr = new DataConstructor();
-
     v1Data = cnstr.V1Data();
     v3Data = cnstr.V3Data();
     v4Data = cnstr.V4Data();

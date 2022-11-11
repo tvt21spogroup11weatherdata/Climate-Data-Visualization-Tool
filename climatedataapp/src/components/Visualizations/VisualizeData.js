@@ -2,14 +2,8 @@ import LineChart from "../Charts/LineChart";
 import DoughnutChart from "../Charts/DoughnutChart";
 import StackedChart from "../Charts/StackedChart";
 import MultiAxisChart from "../Charts/MultiAxisChart";
-import { UserCollection } from "../../classes/UserCollection";
-import { useState } from "react";
-import CollectionEditor from "./CollectionEditor";
 
-//props:
-//data: data object
-//chartType: chart type
-
+//Creates visualization with defined chartType and data + the source links & descriptions required
 export default function VisualizeData(props){
     var chartElement;
 
@@ -23,12 +17,8 @@ export default function VisualizeData(props){
         case "doughnut":    chartElement = (<DoughnutChart data={props.data} subSectors={props.subSectors} subSubSectors={props.subSubSectors}/>)
             break;
     }
-
-    function addToColl(e){
-        e.preventDefault();
-    }
     
-     return(
+    return(
             <div>
                 {chartElement}
                 <div id="chartDesc">

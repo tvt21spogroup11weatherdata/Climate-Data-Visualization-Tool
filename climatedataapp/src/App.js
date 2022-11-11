@@ -4,18 +4,14 @@ import VisualizeEmissionData from './components/Visualizations/VisualizeEmission
 import CollectionEditor from './components/Visualizations/CollectionEditor';
 import VisualizationCollection from './components/Visualizations/VisualizationCollection';
 import { Route, Routes } from 'react-router-dom';
-import {useEffect, useState} from 'react'
 import Navigation from './components/Navigation';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Header from './components/Header';
 import Home from './components/Home';
 import UserAccount from './components/UserAccount';
-import { UserCollection } from './classes/UserCollection';
 
 function App() {
-    
-
     return (
         <>
         <Header/>
@@ -31,7 +27,6 @@ function App() {
                 <Route path="/signup" element={<SignupForm/>} />
                 <Route path="/newcollection" element={<CollectionEditor/>}/>
                 <Route path="/usercollection" element={<VisualizationCollection/>}/>
-                
             </Routes>
         </div>
         </>

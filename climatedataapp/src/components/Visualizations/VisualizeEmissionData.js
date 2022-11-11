@@ -3,6 +3,7 @@ import VisualizeData from "./VisualizeData";
 import {Data, DataSet, DataConstructor} from '../../classes/Data';
 import { Tab, Tabs } from "react-bootstrap";
 
+//Creates visualizations V8 & V9
 export default function VisualizeTempData(){
     const [loading, setLoading] = useState(true);
     var cnstr = new DataConstructor();
@@ -27,10 +28,10 @@ export default function VisualizeTempData(){
             <> 
            <Tabs fill justify width="100%" defaultActiveKey="actor" transition={false} onSelect={loadTab} id="noanim-tab-example" className="mb-3 nav-fill" aria-label="wrapped label tabs example">
                 <Tab eventKey="v1" title="CO2 emissions by country" wrapped="true">
-                    {/*CO2 emissions by country*/}
                     <div><VisualizeData data={v8Data} chartType="stacked"/></div> 
                 </Tab>
-                {/*<Tab eventKey="v3" title="CO2 emissions by sectors" wrapped="true">
+                {/* DOUGHNUT IS BROKE
+                <Tab eventKey="v3" title="CO2 emissions by sectors" wrapped="true">
                     {/*CO2 emissions by sectors}
                     <div><VisualizeData data={v9Data} subSectors={subSectors} subSubSectors={subSubSectors} chartType="doughnut"/></div> 
                 </Tab></>*/}
