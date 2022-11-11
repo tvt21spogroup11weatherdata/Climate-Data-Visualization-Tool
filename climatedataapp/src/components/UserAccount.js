@@ -15,7 +15,7 @@ export default function UserAccount(){
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href="/adjsaskfjak">User-generated Visualization</a></td>
+                                        <td><a href="/usercollection">User-generated Visualization</a></td>
                                         <td><button  id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>
                                     </tr>
                                 </tbody>

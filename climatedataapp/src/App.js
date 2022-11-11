@@ -1,7 +1,8 @@
 import './App.css';
 import VisualizeTempData from './components/Visualizations/VisualizeTempData';
 import VisualizeEmissionData from './components/Visualizations/VisualizeEmissionData';
-import VisualizationEditor from './components/Visualizations/VisualizeUserDefined';
+import CollectionEditor from './components/Visualizations/CollectionEditor';
+import VisualizationCollection from './components/Visualizations/VisualizationCollection';
 import { Route, Routes } from 'react-router-dom';
 import {useEffect, useState} from 'react'
 import Navigation from './components/Navigation';
@@ -24,12 +25,12 @@ function App() {
                 <Route path="/" element={<Home/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
-                <Route path="/custompath" element={<VisualizationEditor/>} />
+                <Route path="/custompath" element={<CollectionEditor/>} />
                 <Route path="/account" element={<UserAccount/>} />
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/signup" element={<SignupForm/>} />
-                <Route path="/newcollection" element={<VisualizationEditor/>}/>
-                
+                <Route path="/newcollection" element={<CollectionEditor/>}/>
+                <Route path="/usercollection" element={<VisualizationCollection/>}/>
                 
             </Routes>
         </div>

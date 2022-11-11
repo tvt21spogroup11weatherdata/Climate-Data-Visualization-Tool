@@ -33,7 +33,7 @@ export default function VisualizeTempData(){
                 <Tab eventKey="v1" title="Global historical surface temperature anomalies from January 1850 onwards" wrapped="true">
                     {/*V1 Global historical surface temperature anomalies from January 1850 onwards
                     V2 option Northern Hemisphere 2,000-year temperature reconstruction*/}
-                    <div><VisualizeData data={v1Data} chartType="line"/></div> 
+                    <div><VisualizeData data={v1Data} v2error="true" chartType="line"/></div> 
                 </Tab>
                 <Tab eventKey="v3" title="Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958" wrapped="true">
                     {/*V3 Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958*/}

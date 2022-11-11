@@ -4,7 +4,7 @@ import StackedChart from "../Charts/StackedChart";
 import MultiAxisChart from "../Charts/MultiAxisChart";
 import { UserCollection } from "../../classes/UserCollection";
 import { useState } from "react";
-import VisualizationEditor from "./VisualizeUserDefined";
+import CollectionEditor from "./CollectionEditor";
 
 //props:
 //data: data object
@@ -14,7 +14,7 @@ export default function VisualizeData(props){
     var chartElement;
 
     switch(props.chartType){
-        case "line":        chartElement = (<LineChart data={props.data} human={props.human} zoomable='true'/>)
+        case "line":        chartElement = (<LineChart  v2error={props.v2error} data={props.data} human={props.human} zoomable='true'/>)
             break;
         case "stacked":     chartElement = (<StackedChart data={props.data} zoomable='true'/>)
             break;

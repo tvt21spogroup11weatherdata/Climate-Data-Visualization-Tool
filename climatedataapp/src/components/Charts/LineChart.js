@@ -36,6 +36,27 @@ export default function LineChart(props){
         }
     }
 
+    //FOR UNCERTAINTY VALUES IN SET V2
+    if(props.v2error){
+        data[7] = {
+            type: "error",
+            color: "#34eb6e",
+            name: props.data.set[7].yTitle,
+            toolTipContent: props.data.set[7].prefix + " {x}: {y}" + props.data.set[7].suffix,
+            showInLegend: true,
+            dataPoints: props.data.set[7].points
+        }
+
+        data[8] = {
+            type: "rangeArea",
+            color: "#8446f0",
+            name: props.data.set[8].yTitle,
+            toolTipContent: props.data.set[8].prefix + " {x}: {y}" + props.data.set[8].suffix,
+            showInLegend: true,
+            dataPoints: props.data.set[8].points
+        }
+    }
+
     const options = {
         theme: "light2",
         animationEnabled: true,

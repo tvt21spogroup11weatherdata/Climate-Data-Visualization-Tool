@@ -106,12 +106,31 @@ export class DataConstructor{
             'Northern Hemisphere 2,000-year temperature reconstruction',
             ' ',
             '\xB0C'
+        ); //uncertainty values error chart
+        data.set[7] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Northern Hemisphere 2,000-year temperature reconstruction ERROR',
+            ' ',
+            '\xB0C'
         );
+        //uncertainty values range area chart
+        data.set[8] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Northern Hemisphere 2,000-year temperature reconstruction RANGE AREA',
+            ' ',
+            '\xB0C'
+        );
+
 
         data.chartType="line";
 
         //GET DATA HERE
         this.InsertTestValues(data, -2, 2);
+        for(var i = 0; i < 100; i++){
+            const dataPoint = {x: i, y: Math.floor(Math.random() * (0 - 100) + 0)};
+            data.set[7].points[i] = {y: [data.set[6].points[i].y - 1, data.set[6].points[i].y + 1]};
+            data.set[8].points[i] = {y: [data.set[6].points[i].y - 1, data.set[6].points[i].y + 1]};
+        }
         return data;
     }
 

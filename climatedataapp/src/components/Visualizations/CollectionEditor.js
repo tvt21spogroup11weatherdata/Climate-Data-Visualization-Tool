@@ -5,24 +5,12 @@ import { UserCollection
 import LineChart from "../Charts/LineChart";
 import { useState } from "react";
 
-export default function VisualizationEditor(props){
-
+export default function CollectionEditor(props){
+    //For formatting the page as 1 column or 2 columns
     const [formatType, setFormatType] = useState("2column");
 
-    /*Käyttäjän tulee voida luoda visualisointinäkymä yksilöllisellä url-tunnisteella. 
-    Näkymään käyttäjä voi valita haluamansa visualisoinnit, valita haluamansa asettelun ja kirjoittaa kuvaustekstin jokaiselle visualisoinnille. 
-    Yhdellä käyttäjällä voi olla monta luotua visualisointinäkymää.
-
-    Visualisoinnin asettelun osalta käyttäjä voi valita
-    •	Sarakeasettelun, jossa jokainen visualisointi on allekkain ja yksi visualisointi käyttää aina 100% käytettävissä olevasta leveydestä.
-    •	2-sarakkeen rinnakkaisasettelun, jossa visualisoinnit ovat kaksi rinnakkain sarakkeissa. 
-    */
-
-    var collectionElements;
     var coll = new UserCollection();
-   // console.log(coll.visualizations);
     var debugColls = [];
-    
     var column2 = [];
 
     for(var i = 0; i < coll.visualizations.length; i++){
@@ -47,11 +35,16 @@ export default function VisualizationEditor(props){
         }
     }
 
+    //POST FORMATTYPE
+    //POST VISUALIZATION IDS
+    //POST TOGGLED SERIES' IN VISUALIZATION
+    //POST CUSTOM DESCRIPTION
+
     const saveButton = (<button className="btn btn-primary">Save & share</button>)
     const formatSelect = (<>Formatting: <button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></>);
     const menu = (<table width="100%"><tbody><td>{formatSelect}</td><td>{saveButton}</td></tbody></table>);
-    if(formatType === "1column")
-    {
+    
+    if(formatType === "1column"){
         return(
             <>
             {menu}
