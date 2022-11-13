@@ -1,0 +1,38 @@
+### This file is for testing routes with VSCode's REST Client extension. 
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+### Get all data
+GET http://localhost:3001/hadcrutglobalmonthly/
+
+### Get data from year 2020
+GET http://localhost:3001/hadcrutglobalmonthly/year/2020
+
+### Get data after year 2021
+GET http://localhost:3001/hadcrutglobalmonthly/fromyear/2021
+
+### Get data from year 1998 through custom query
+GET http://localhost:3001/hadcrutglobalmonthly/freeform
+Content-Type: application/json
+
+{
+    "query": "{\"Year\": \"1998\"}"
+}
+
+
+
+
+###
+### Testing each route
+###
+GET http://localhost:3001/hadcrutglobalannual/year/2020
+###
+GET http://localhost:3001/hadcrutglobalmonthly/year/2020
+###
+GET http://localhost:3001/hadcrutnorthernhemisphereannual/year/2020
+###
+GET http://localhost:3001/hadcrutnorthernhemispheremonthly/year/2020
+###
+GET http://localhost:3001/hadcrutsouthernhemisphereannual/year/2020
+###
+GET http://localhost:3001/hadcrutsouthernhemispheremonthly/year/2020
+###
