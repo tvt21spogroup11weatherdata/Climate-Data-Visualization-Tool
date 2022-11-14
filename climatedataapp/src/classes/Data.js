@@ -1,3 +1,5 @@
+import axios from "axios";
+
 //Class for the descriptive data inserted into a chart
 export class Data{
     title = 'Title'
@@ -45,7 +47,6 @@ export class DataSet {
 
 //Class for constructing the Data objects as per the Visualization requirements
 export class DataConstructor{
-    
     //Construct Data object by index
     GetByIndex(i){
         if(i === 0) return this.V1Data();
@@ -58,6 +59,7 @@ export class DataConstructor{
         if(i === 7) return this.V9Data();
     }
 
+    /*
     //Insert random numbers to DataSet objects
     InsertTestValues(data, min, max){
         for(var j = 0; j < data.set.length; j++){
@@ -68,16 +70,16 @@ export class DataConstructor{
                 data.set[j].points[i] = dataPoint;
             }
         }
-    }
+    }*/
 
-    V1Data(){
+    async V1Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Global historical surface temperature anomalies from January 1850 onwards', 
             'https://www.metoffice.gov.uk/hadobs/hadcrut5/',
             'https://gml.noaa.gov/ccgg/about/co2_measurements.html', 
             'HadCRUT5 is a gridded dataset of global historical surface temperature anomalies relative to a 1961-1990 reference period. Data are available for each month from January 1850 onwards, on a 5 degree grid and as global and regional average time series. The dataset is a collaborative product of the Met Office Hadley Centre and the Climatic Research Unit at the University of East Anglia.',
             'Northern Hemisphere temperature reconstruction for the past 2,000 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.',
-            'Years', ' ', ' ' , ' ', '0'); 
+            'Years', ' ', '' , 'A.D.', '0'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Global Annual',
@@ -135,23 +137,140 @@ export class DataConstructor{
             '\xB0C'
         );
 
-        data.chartType="line";
+        data.chartType="line"
+        let set0 = new DataSet()
+        
+        //SET 0
+        axios.get('http://localhost:3001/hadcrutglobalannual', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year, y: response.data[i].Anomaly};
+              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set0.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[0].points = set0.points;
+        
+        //SET 1
+        let set1 = new DataSet()
+        axios.get('http://localhost:3001/hadcrutglobalmonthly', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
+                //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set1.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[1].points = set1.points;
 
-        //GET DATA HERE
-        this.InsertTestValues(data, -2, 2);
+
+        //SET 2
+        let set2 = new DataSet()
+        axios.get('http://localhost:3001/hadcrutnorthernhemisphereannual', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year, y: response.data[i].Anomaly};
+                //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set2.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[2].points = set2.points;
 
 
+        //SET 3
+        let set3 = new DataSet()
+        axios.get('http://localhost:3001/hadcrutnorthernhemispheremonthly', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
+                //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set3.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[3].points = set3.points;
 
-        //////////////////////////////
-        //TESTING UNCERTAINTY VALUES
-        for(var i = 0; i < 100; i++){
-            const dataPoint = {x: i, y: Math.floor(Math.random() * (0 - 100) + 0)};
-            data.set[7].points[i] = {y: [data.set[6].points[i].y - 1, data.set[6].points[i].y + 1]};
-            data.set[8].points[i] = {y: [data.set[6].points[i].y - 1, data.set[6].points[i].y + 1]};
-        }
-        //////////////////////////////
+        //SET 4
+        let set4 = new DataSet()
+        axios.get('http://localhost:3001/hadcrutsouthernhemisphereannual', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year, y: response.data[i].Anomaly};
+                //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set4.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[4].points = set4.points;
 
 
+        //SET 5
+        let set5 = new DataSet()
+        axios.get('http://localhost:3001/hadcrutsouthernhemispheremonthly', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
+                //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set5.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[5].points = set5.points;
+
+        //SET 6 V2
+        /*
+        let set6 = new DataSet()
+        axios.get('http://localhost:3001/hadcrutsouthernhemispheremonthly', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+               console.log(response.data);
+
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
+                //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set5.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[6].points = set6.points;
+        */
         return data;
     }
 
@@ -180,7 +299,7 @@ export class DataConstructor{
         data.chartType="line";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+  //      this.InsertTestValues(data, 0, 400);
         return data;
     }
 
@@ -226,7 +345,7 @@ export class DataConstructor{
         data.chartType="line";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+ //       this.InsertTestValues(data, 0, 400);
         return data;
     }
 
@@ -266,7 +385,7 @@ export class DataConstructor{
         data.chartType="line";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+       // this.InsertTestValues(data, 0, 400);
         return data;
     }
 
@@ -294,7 +413,7 @@ export class DataConstructor{
         data.chartType="line";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+ //       this.InsertTestValues(data, 0, 400);
         return data;
     }
 
@@ -328,7 +447,7 @@ export class DataConstructor{
         data.chartType="multiaxis";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+   //     this.InsertTestValues(data, 0, 400);
         return data;
     }
 
@@ -364,7 +483,7 @@ export class DataConstructor{
         data.chartType="stacked";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+    //    this.InsertTestValues(data, 0, 400);
         return data;
     }
 
@@ -424,7 +543,7 @@ export class DataConstructor{
         data.chartType="doughnut";
 
         //GET DATA HERE
-        this.InsertTestValues(data, 0, 400);
+   //     this.InsertTestValues(data, 0, 400);
         return data;
     }
 }

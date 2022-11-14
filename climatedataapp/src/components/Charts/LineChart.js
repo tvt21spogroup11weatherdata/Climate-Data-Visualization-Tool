@@ -9,16 +9,42 @@ export default function LineChart(props){
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
-            postedData.set[e.dataSeriesIndex].enabled = false;
-        } else { 
-            e.dataSeries.visible = true; 
-            postedData.set[e.dataSeriesIndex].enabled = true;
-        }
+        } else { e.dataSeries.visible = true;}
         e.chart.render();
     }
+    
+    for(var i = 0; i < 6; i++){
+        data[i] = {
+            type: "line",
+            name: props.data.set[i].yTitle,
+            toolTipContent: props.data.set[i].prefix + " {x}: {y}" + props.data.set[i].suffix,
+            showInLegend: true,
+            dataPoints: props.data.set[i].points
+        }
+    }
+/*
+    data[0] = {
+        type: "line",
+        name: props.data.set[0].yTitle,
+        toolTipContent: props.data.set[0].prefix + " {x}: {y}" + props.data.set[0].suffix,
+        showInLegend: true,
+        dataPoints:  props.data.set[0].points
+    }
 
-    //Set datapoints
+    
+    data[1] = {
+        type: "line",
+        name: props.data.set[1].yTitle,
+        toolTipContent: props.data.set[1].prefix + " {x}: {y}" + props.data.set[1].suffix,
+        showInLegend: true,
+        dataPoints:  props.data.set[1].points
+    }
+
+
+/*
+
     for(var i = 0; i < props.data.set.length; i++){
+        console.log(props.data.set[i])
        data[i] = {
             type: "line",
             name: props.data.set[i].yTitle,
@@ -63,6 +89,7 @@ export default function LineChart(props){
         }
     }
 
+*/
 
     //Chart options
     const options = {
@@ -82,7 +109,7 @@ export default function LineChart(props){
             title: props.data.xTitle,
             prefix: props.data.xPrefix,
             suffix: props.data.xSuffix,
-            interval: 10 //NOT DEFINED
+            interval: 1 //NOT DEFINED
         },
         
         legend: {

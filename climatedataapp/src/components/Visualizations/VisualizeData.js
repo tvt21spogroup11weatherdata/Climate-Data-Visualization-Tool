@@ -17,7 +17,7 @@ export default function VisualizeData(props){
         case "doughnut":    chartElement = (<DoughnutChart data={props.data} subSectors={props.subSectors} subSubSectors={props.subSubSectors}/>)
             break;
     }
-    
+
     return(
             <div>
                 {chartElement}
@@ -29,7 +29,7 @@ export default function VisualizeData(props){
                     <a href={props.data.source} target="_blank" rel="noreferrer">Data source</a> - 
                     <a href={props.data.desc} target="_blank" rel="noreferrer">Data description</a>
                 </p>
-                <form action="newcollection" onSubmit="redirect();"> <input type="submit" value="Add to a collection"/></form> {/* dropdown list that show all user's collections + option for new? */}
+             {/*   <form action="newcollection" onSubmit="redirect();"> <input type="submit" value="Add to a collection"/></form> {/* dropdown list that show all user's collections + option for new? */}
             </div>
         )
     
