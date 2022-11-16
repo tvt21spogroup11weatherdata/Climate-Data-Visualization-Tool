@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     try {
         const result = await NorthernHemisphereTemperatureReconstruction.find().sort({Year: 1})
         res.status(200).json(result)
-    } catch {error} {res.status(500).json({message: err.message})}
+    } catch {err} {res.status(500).json({message: err.message})}
 })
 
 // Get all data beginning from specific year
