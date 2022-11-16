@@ -16,9 +16,7 @@ export default function VisualizationCollection(props){
     var coll = new Collection();
     coll.formatType = '1column'
     coll.visualizations = [];
-    coll.visualizations.push(new VisualizationsMeta(0, [true,true,true,true,true,true,true,true,true], "This is a description"))
-    coll.visualizations.push(new VisualizationsMeta(1, [true,false], "This is a description"))
-    coll.visualizations.push(new VisualizationsMeta(2, [false,true], "This is a description"))
+    coll.visualizations.push(new VisualizationsMeta(0, [true,true,true,true,true,true], "This is a description"))
     ///////////////////////////////////////////////
 
     var collectionElements = [];
@@ -28,10 +26,7 @@ export default function VisualizationCollection(props){
     
     function LoadVisualizationData(){
         var dataC = new DataConstructor();
-        for(var i = 0; i < coll.visualizations.length; i++){
-            console.log(coll.visualizations[0])
-            visualizationsData.push(dataC.GetByIndex(coll.visualizations[i].dataIndex));
-        }
+        visualizationsData[0] = dataC.GetByIndex(coll.visualizations[0].dataIndex);
     }
 
     function CreateElements(){

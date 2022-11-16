@@ -1,4 +1,5 @@
 import axios from "axios";
+require('dotenv')
 
 //Class for the descriptive data inserted into a chart
 export class Data{
@@ -47,6 +48,9 @@ export class DataSet {
 
 //Class for constructing the Data objects as per the Visualization requirements
 export class DataConstructor{
+    url = "http://localhost:3001"
+    headers = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin'}
+
     //Construct Data object by index
     GetByIndex(i){
         if(i === 0) return this.V1Data();
@@ -58,19 +62,6 @@ export class DataConstructor{
         if(i === 6) return this.V8Data();
         if(i === 7) return this.V9Data();
     }
-
-    /*
-    //Insert random numbers to DataSet objects
-    InsertTestValues(data, min, max){
-        for(var j = 0; j < data.set.length; j++){
-            var max = Math.floor(max);
-
-            for(var i = 0; i < 100; i++){
-                const dataPoint = {x: i, y: Math.floor(Math.random() * (max - min) + min)};
-                data.set[j].points[i] = dataPoint;
-            }
-        }
-    }*/
 
     async V1Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
@@ -139,9 +130,9 @@ export class DataConstructor{
 
         data.chartType="line"
         let set0 = new DataSet()
-        
+
         //SET 0
-        axios.get('http://localhost:3001/hadcrutglobalannual', {
+        axios.get(this.url + '/hadcrutglobalannual', {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Origin',
@@ -159,11 +150,8 @@ export class DataConstructor{
         
         //SET 1
         let set1 = new DataSet()
-        axios.get('http://localhost:3001/hadcrutglobalmonthly', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin',
-            }
+        axios.get(this.url + '/hadcrutglobalmonthly', {
+            headers: this.headers
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
@@ -178,11 +166,8 @@ export class DataConstructor{
 
         //SET 2
         let set2 = new DataSet()
-        axios.get('http://localhost:3001/hadcrutnorthernhemisphereannual', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin',
-            }
+        axios.get(this.url + '/hadcrutnorthernhemisphereannual', {
+            headers: this.headers
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: response.data[i].Year, y: response.data[i].Anomaly};
@@ -197,11 +182,8 @@ export class DataConstructor{
 
         //SET 3
         let set3 = new DataSet()
-        axios.get('http://localhost:3001/hadcrutnorthernhemispheremonthly', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin',
-            }
+        axios.get(this.url + '/hadcrutnorthernhemispheremonthly', {
+            headers: this.headers
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
@@ -215,11 +197,8 @@ export class DataConstructor{
 
         //SET 4
         let set4 = new DataSet()
-        axios.get('http://localhost:3001/hadcrutsouthernhemisphereannual', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin',
-            }
+        axios.get(this.url + '/hadcrutsouthernhemisphereannual', {
+            headers: this.headers
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: response.data[i].Year, y: response.data[i].Anomaly};
@@ -233,12 +212,9 @@ export class DataConstructor{
 
 
         //SET 5
-        let set5 = new DataSet()
-        axios.get('http://localhost:3001/hadcrutsouthernhemispheremonthly', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin',
-            }
+        var set5 = new DataSet()
+        axios.get(this.url + '/hadcrutsouthernhemispheremonthly', {
+            headers: this.headers
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
@@ -251,31 +227,28 @@ export class DataConstructor{
         data.set[5].points = set5.points;
 
         //SET 6 V2
-        /*
-        let set6 = new DataSet()
-        axios.get('http://localhost:3001/hadcrutsouthernhemispheremonthly', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin',
-            }
+        
+        var set6 = new DataSet()
+        axios.get(this.url + '/northerntempreconstruction', {
+            headers: this.headers
             }).then((response) => {
-               console.log(response.data);
+             //  console.log(response.data);
 
-            for(var i = 0; i < response.data.length; i++){
-                const dataPoint = {x: response.data[i].Year + (1/12) * response.data[i].Month, y: response.data[i].Anomaly};
+            for(var i = 1849; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Year, y: response.data[i].T};
                 //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
-                set5.points.push(dataPoint);
+                set6.points.push(dataPoint);
             }
         }).catch (error => {
             alert(error)
         })
         data.set[6].points = set6.points;
-        */
+        
         return data;
     }
 
 
-    V3Data(){
+    async V3Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958', 
             'https://gml.noaa.gov/ccgg/trends/',
@@ -287,19 +260,60 @@ export class DataConstructor{
             ' ',
             'Monthly mean data',
             ' ',
-            ' '
+            'ppm'
         );
         data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Annual mean data',
             ' ',
-            ' '
+            'ppm'
         );
 
         data.chartType="line";
 
-        //GET DATA HERE
-  //      this.InsertTestValues(data, 0, 400);
+                
+        let set0 = new DataSet()
+
+        //SET 1
+        axios.get(this.url + '/maunaloaco2monthly', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].year + (1/12) * response.data[i].month, y: response.data[i].average};
+              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set0.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[0].points = set0.points;
+
+
+        let set1 = new DataSet()
+
+        //SET 0
+        axios.get(this.url + '/maunaloaco2annual', {
+            headers: this.headers
+            }).then((response) => {
+                //console.log(response.data)
+            for(var i = 0; i < response.data.length; i++){
+              //  console.log(response.data[i].year + ' ' + response.data[i].mean)
+                const dataPoint = {x: response.data[i].year, y: response.data[i].mean};
+              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                console.log(dataPoint)
+                set1.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        console.log(set1.points[0])
+        data.set[1].points = set1.points;
+
+
+
         return data;
     }
 

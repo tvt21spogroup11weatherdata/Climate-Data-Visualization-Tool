@@ -13,7 +13,7 @@ export default function LineChart(props){
         e.chart.render();
     }
     
-    for(var i = 0; i < 6; i++){
+    for(var i = 0; i < props.data.set.length; i++){
         data[i] = {
             type: "line",
             name: props.data.set[i].yTitle,

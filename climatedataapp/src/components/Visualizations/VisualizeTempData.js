@@ -7,12 +7,12 @@ import { Tab, Tabs } from "react-bootstrap";
 export default function VisualizeTempData(){
     const [loading, setLoading] = useState(true);
     const [v1Data, setV1] = useState(null);
+    const [v3Data, setV3] = useState(null);
 
     //Constructs Data objects and inserts values
-    var v3Data, v4Data, v5Data, v6Data, v7Data;
+    var v4Data, v5Data, v6Data, v7Data;
     var cnstr = new DataConstructor();
-  // v1Data = cnstr.V1Data();
-    v3Data = cnstr.V3Data();
+
     v4Data = cnstr.V4Data();
     v5Data = cnstr.V5Data();
     v6Data = cnstr.V6Data();
@@ -26,6 +26,13 @@ export default function VisualizeTempData(){
             setLoading(true);
             cnstr.V1Data().then(res => {
                 setV1(res);
+                setTimeout(() => {setLoading(false)}, "1000");
+            })
+        }
+        if(v3Data === null){
+            setLoading(true);
+            cnstr.V3Data().then(res => {
+                setV3(res);
                 setTimeout(() => {setLoading(false)}, "1000");
             })
         }
@@ -47,10 +54,11 @@ export default function VisualizeTempData(){
                 <Tab eventKey="v1" title="Global historical surface temperature anomalies from January 1850 onwards" wrapped="true">
                     <div><VisualizeData data={v1Data} v2error="true" chartType="line"/></div> 
                 </Tab>
-                {/*
+                
                 <Tab eventKey="v3" title="Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958" wrapped="true">
                     <div><VisualizeData data={v3Data} chartType="line"/></div> 
                 </Tab>
+                {/*
                 <Tab eventKey="v4" title="Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements" wrapped="true">
                     <div><VisualizeData human={true} data={v4Data} chartType="line"/></div> 
                 </Tab>
