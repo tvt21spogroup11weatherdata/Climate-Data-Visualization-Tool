@@ -36,5 +36,15 @@ app.use('/hadcrutsouthernhemispheremonthly', hadcrutSouthernHemisphereMonthlyRou
 const hadcrutSouthernHemisphereAnnualRouter = require('./routes/hadcrut/hadcrut_southern_hemisphere_annual_Route')
 app.use('/hadcrutsouthernhemisphereannual', hadcrutSouthernHemisphereAnnualRouter)
 
+// northern hemisphere temperature reconstruction
+const northernHemisphereTemperatureReconstructionRouter = require('./routes/northern_hemisphere_temperature_reconstruction/northern_hemisphere_temperature_reconstruction_Route')
+app.use('/northerntempreconstruction', northernHemisphereTemperatureReconstructionRouter)
+
+// mauna loa co2
+const maunaLoaCO2AnnualRouter = require('./routes/mauna_loa_co2/mauna_loa_co2_annual_Route')
+app.use('/maunaloaco2annual', maunaLoaCO2AnnualRouter)
+
+const maunaLoaCO2MonthlyRouter = require('./routes/mauna_loa_co2/mauna_loa_co2_monthly_Route')
+app.use('/maunaloaco2monthly', maunaLoaCO2MonthlyRouter)
 
 app.listen(3001, () => console.log('Server started'))

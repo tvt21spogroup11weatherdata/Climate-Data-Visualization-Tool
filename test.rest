@@ -24,6 +24,7 @@ Content-Type: application/json
 ###
 ### Testing each route
 ###
+### Hadcrut
 GET http://localhost:3001/hadcrutglobalannual/year/2020
 ###
 GET http://localhost:3001/hadcrutglobalmonthly/year/2020
@@ -36,3 +37,13 @@ GET http://localhost:3001/hadcrutsouthernhemisphereannual/year/2020
 ###
 GET http://localhost:3001/hadcrutsouthernhemispheremonthly/year/2020
 ###
+
+
+### Northern temp reconstruction
+GET http://localhost:3001/northerntempreconstruction/fromyear/1970
+
+### mauna loa co2 annual
+GET http://localhost:3001/maunaloaco2annual/fromyear/2020
+
+### mauna loa co2 monthly
+GET http://localhost:3001/maunaloaco2monthly/fromyear/2020
