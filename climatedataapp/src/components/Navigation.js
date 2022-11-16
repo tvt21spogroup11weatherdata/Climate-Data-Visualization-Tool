@@ -43,7 +43,7 @@ export default function Navbar(props){
             <ul className="navbar-nav mr-auto">
 
                 <li className="nav-item">
-                    <a className="nav-link" href="/temp">Temperature Visualization</a>
+                    <a className="nav-link" href="/temp">Temperature/CO<sub>2</sub> Visualizations</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="/emission">Emission Visualization</a>
