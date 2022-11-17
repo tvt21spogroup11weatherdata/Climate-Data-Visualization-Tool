@@ -47,3 +47,13 @@ GET http://localhost:3001/maunaloaco2annual/fromyear/2020
 
 ### mauna loa co2 monthly
 GET http://localhost:3001/maunaloaco2monthly/fromyear/2020
+
+
+### vostok ice core co2
+GET http://localhost:3001/vostokicecoreco2/fromxyearstopresent/5000
+###
+GET http://localhost:3001/vostokicecoreco2
+### ice core 800kyr co2 composite
+GET http://localhost:3001/icecore800kco2/fromxyearstopresent/300
+###
+GET http://localhost:3001/icecore800kco2

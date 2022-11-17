@@ -47,4 +47,13 @@ app.use('/maunaloaco2annual', maunaLoaCO2AnnualRouter)
 const maunaLoaCO2MonthlyRouter = require('./routes/mauna_loa_co2/mauna_loa_co2_monthly_Route')
 app.use('/maunaloaco2monthly', maunaLoaCO2MonthlyRouter)
 
+// vostok ice core co2
+const vostokIceCoreCO2Router = require('./routes/vostok_ice_core_co2/vostok_ice_core_co2_Route')
+app.use('/vostokicecoreco2', vostokIceCoreCO2Router)
+
+// ice core 800kyr co2 composite
+const iceCore800kYearCompositeCO2Router = require('./routes/ice_core_800k_year_co2/ice_core_800k_year_co2_Route')
+app.use('/icecore800kco2', iceCore800kYearCompositeCO2Router)
+
+
 app.listen(3001, () => console.log('Server started'))
