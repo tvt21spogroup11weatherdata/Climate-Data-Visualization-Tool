@@ -10,6 +10,10 @@ import SignupForm from './components/SignupForm';
 import Header from './components/Header';
 import Home from './components/Home';
 import UserAccount from './components/UserAccount';
+import V1 from './components/Visualizations/V1'
+import V3 from './components/Visualizations/V3'
+import V5 from './components/Visualizations/V5'
+import V6 from './components/Visualizations/V6'
 
 function App() {
     return (
@@ -27,6 +31,11 @@ function App() {
                 <Route path="/signup" element={<SignupForm/>} />
                 <Route path="/newcollection" element={<CollectionEditor/>}/>
                 <Route path="/usercollection" element={<VisualizationCollection/>}/>
+
+                <Route path="/V1" element={<V1/>}/>
+                <Route path="/V3" element={<V3/>}/>
+                <Route path="/V5" element={<V5/>}/>
+                <Route path="/V6" element={<V6/>}/>
             </Routes>
         </div>
         </>

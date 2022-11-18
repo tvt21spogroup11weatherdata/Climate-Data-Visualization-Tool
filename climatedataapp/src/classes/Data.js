@@ -445,14 +445,11 @@ export class DataConstructor{
                 'Access-Control-Allow-Headers': 'Origin',
             }
             }).then((response) => {
-                console.log(response.data)
-                
+
             for(var i = 0; i < response.data.length; i+=1){
                 const dataPoint1 = {x: 0.001 * response.data[i].years_before_2016, y: response.data[i].co2_ppm};
-              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
                 set0.points.push(dataPoint1);
                 const dataPoint2 = {x: 0.001 * response.data[i].years_before_2016, y: response.data[i].co2_1s_ppm};
-              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
                 set1.points.push(dataPoint2);
             }
 
