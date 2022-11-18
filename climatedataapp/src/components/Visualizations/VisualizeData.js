@@ -8,7 +8,7 @@ export default function VisualizeData(props){
     var chartElement;
 
     switch(props.chartType){
-        case "line":        chartElement = (<LineChart  v2error={props.v2error} data={props.data} human={props.human} zoomable='true'/>)
+        case "line":        chartElement = (<LineChart  v2error={props.v2error} reversed={props.reversed} data={props.data} human={props.human} zoomable='true'/>)
             break;
         case "stacked":     chartElement = (<StackedChart data={props.data} zoomable='true'/>)
             break;

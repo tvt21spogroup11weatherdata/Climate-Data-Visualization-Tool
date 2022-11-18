@@ -274,7 +274,7 @@ export class DataConstructor{
                 
         let set0 = new DataSet()
 
-        //SET 1
+        //SET 0
         axios.get(this.url + '/maunaloaco2monthly', {
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -294,22 +294,18 @@ export class DataConstructor{
 
         let set1 = new DataSet()
 
-        //SET 0
+        //SET 1
         axios.get(this.url + '/maunaloaco2annual', {
             headers: this.headers
             }).then((response) => {
-                //console.log(response.data)
             for(var i = 0; i < response.data.length; i++){
-              //  console.log(response.data[i].year + ' ' + response.data[i].mean)
                 const dataPoint = {x: response.data[i].year, y: response.data[i].mean};
-              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
-                console.log(dataPoint)
                 set1.points.push(dataPoint);
             }
         }).catch (error => {
             alert(error)
         })
-        console.log(set1.points[0])
+
         data.set[1].points = set1.points;
 
 
@@ -349,7 +345,13 @@ export class DataConstructor{
             ' ',
             'ppm'
         );
-        data.set[4] = new DataSet (
+        data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Atmospheric CO2 concentrations from Mauna Loa annual',
+            ' ',
+            'ppm'
+        );
+        data.set[5] = new DataSet (
             ' ',
             'Human Evolution and Activities',
             '',
@@ -363,71 +365,103 @@ export class DataConstructor{
         return data;
     }
 
-    V5Data(){
+    async V5Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Vostok Ice Core CO2 measurements, 417160 - 2342 years', 
         'https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2',
         'https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html', 
         'In January 1998, the collaborative ice-drilling project between Russia, the United States, and France at the Russian Vostok station in East Antarctica yielded the deepest ice core ever recovered, reaching a depth of 3,623 m (Petit et al. 1997, 1999). Ice cores are unique with their entrapped air inclusions enabling direct records of past changes in atmospheric trace-gas composition. Preliminary data indicate the Vostok ice-core record extends through four climate cycles, with ice slightly older than 400 kyr (Petit et al. 1997, 1999). Because air bubbles do not close at the surface of the ice sheet but only near the firn-ice transition (that is, at ~90 m below the surface at Vostok), the air extracted from the ice is younger than the surrounding ice (Barnola et al. 1991). Using semiempirical models of densification applied to past Vostok climate conditions, Barnola et al. (1991) reported that the age difference between air and ice may be ~6000 years during the coldest periods instead of ~4000 years, as previously assumed. Ice samples were cut with a bandsaw in a cold room (at about -15°C) as close as possible to the center of the core in order to avoid surface contamination (Barnola et al. 1983).',
         '',
-        'Years', ' ', ' ' , ' ', '3'); 
+        'Mean age of the air', 'CO2 Concentration, Depth of ice', ' ' , ' ka', '3'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'Depth',
-            ' ',
-            ' '
-        );
-        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'Age of the ice',
-            ' ',
-            ' '
-        );
-        data.set[2] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'Mean age of the air',
-            ' ',
-            ' '
-        );
-        data.set[3] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'CO2 Concentration',
             ' ',
-            ' '
+            'ppm'
+        );
+        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Depth of ice',
+            ' ',
+            'hm'
         );
 
         data.chartType="line";
 
-        //GET DATA HERE
-       // this.InsertTestValues(data, 0, 400);
+        let set0 = new DataSet()
+        let set1 = new DataSet()
+        //SET 0
+        axios.get(this.url + '/vostokicecoreco2', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i+=1){
+                const dataPoint1 = {x: 0.001 * response.data[i].Mean_age_of_the_air, y: response.data[i].CO2};
+                set0.points.push(dataPoint1);
+                const dataPoint2 = {x: 0.001 * response.data[i].Mean_age_of_the_air, y: 0.1 * response.data[i].Depth};
+                set1.points.push(dataPoint2);
+            }
+
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[0].points = set0.points;
+        data.set[1].points = set1.points;
         return data;
     }
 
-    V6Data(){
+    async V6Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Ice core 800k year composite study CO2 measurement', 
         'https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt',
         'https://www.ncei.noaa.gov/access/paleo-search/study/17975', 
         'The European Project for Ice Coring in Antarctica Dome ice core from Dome C (EDC) has allowed for the reconstruction of atmospheric CO2 concentrations for the last 800,000 years. Here we revisit the oldest part of the EDC CO2 record using different air extraction methods and sections of the core. For our established cracker system, we found an analytical artifact, which increases over the deepest 200 m and reaches 10.1 +/- 2.4 ppm in the oldest/deepest part. The governing mechanism is not yet fully understood, but it is related to insufficient gas extraction in combination with ice relaxation during storage and ice structure. The corrected record presented here resolves partly - but not completely - the issue with a different correlation between CO2 and Antarctic temperatures found in this oldest part of the records. In addition, we provide here an update of 800,000 years atmospheric CO2 history including recent studies covering the last glacial cycle.',
         '',
-        'Years', ' ', ' ' , ' ', '4'); 
+        'Thousands of years (ka) before 2016', 'CO2 Concentrations', '' , 'ka', '4'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
-            'co2_ppm',
+            'CO2 ',
             ' ',
             'ppm'
         );
         data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
-            'co2_1s',
-            ' ',
+            'CO2 sigma mean',
+            'Sigma mean ',
             'ppm'
         );
 
         data.chartType="line";
 
-        //GET DATA HERE
- //       this.InsertTestValues(data, 0, 400);
+        let set0 = new DataSet()
+        let set1 = new DataSet()
+
+        //SET 0
+        axios.get(this.url + '/icecore800kco2', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+                console.log(response.data)
+                
+            for(var i = 0; i < response.data.length; i+=1){
+                const dataPoint1 = {x: 0.001 * response.data[i].years_before_2016, y: response.data[i].co2_ppm};
+              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set0.points.push(dataPoint1);
+                const dataPoint2 = {x: 0.001 * response.data[i].years_before_2016, y: response.data[i].co2_1s_ppm};
+              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set1.points.push(dataPoint2);
+            }
+
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[0].points = set0.points;
+        data.set[1].points = set1.points;
+        
         return data;
     }
 

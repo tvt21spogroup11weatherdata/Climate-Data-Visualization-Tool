@@ -109,6 +109,7 @@ export default function LineChart(props){
             title: props.data.xTitle,
             prefix: props.data.xPrefix,
             suffix: props.data.xSuffix,
+            reversed: props.reversed,
             interval: 1 //NOT DEFINED
         },
         
