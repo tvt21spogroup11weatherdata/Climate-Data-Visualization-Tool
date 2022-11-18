@@ -3,7 +3,7 @@ import VisualizeData from "./VisualizeData";
 import { DataConstructor} from '../../classes/Data';
 import VisualizeTempData from "./VisualizeTempData";
 
-export default function V5(){
+export default function V5(props){
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     var cnstr = new DataConstructor();
@@ -18,6 +18,8 @@ export default function V5(){
         }
     })
 
+    function setMenu(){ if(props.menu) return <VisualizeTempData/>}
+
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
         else return <VisualizeData data={data} reversed={true} chartType="line"/>
@@ -25,7 +27,7 @@ export default function V5(){
 
     return (
         <div>
-            <VisualizeTempData/>
+            {setMenu()}
             <hr/>
             {setContent()}
         </div>

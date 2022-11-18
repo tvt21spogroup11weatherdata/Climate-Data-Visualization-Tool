@@ -32,10 +32,10 @@ function App() {
                 <Route path="/newcollection" element={<CollectionEditor/>}/>
                 <Route path="/usercollection" element={<VisualizationCollection/>}/>
 
-                <Route path="/V1" element={<V1/>}/>
-                <Route path="/V3" element={<V3/>}/>
-                <Route path="/V5" element={<V5/>}/>
-                <Route path="/V6" element={<V6/>}/>
+                <Route path="/V1" element={<V1 menu={true}/>}/>
+                <Route path="/V3" element={<V3 menu={true}/>}/>
+                <Route path="/V5" element={<V5 menu={true}/>}/>
+                <Route path="/V6" element={<V6 menu={true}/>}/>
             </Routes>
         </div>
         </>

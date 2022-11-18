@@ -1,11 +1,12 @@
 
 import { Collection, VisualizationsMeta } from "../../classes/UserCollection";
-import LineChart from "../Charts/LineChart";
-import MultiAxisChart from "../Charts/MultiAxisChart";
-import StackedChart from "../Charts/StackedChart";
-import DoughnutChart from "../Charts/DoughnutChart";
-import { useState } from "react";
-import { DataConstructor } from "../../classes/Data";
+import { useEffect, useState } from "react";
+import { Data, DataConstructor } from "../../classes/Data";
+import V1 from "./V1"
+import V3 from "./V3"
+import V5 from "./V5"
+import V6 from "./V6"
+
 
 export default function CollectionEditor(props){
     //For formatting the page as 1 column or 2 columns
@@ -17,13 +18,14 @@ export default function CollectionEditor(props){
     coll.formatType = '1column'
     coll.visualizations = [];
     coll.visualizations.push(new VisualizationsMeta(0, [true,true,true,true,true,true,true,true,true], "This is a description"))
-    coll.visualizations.push(new VisualizationsMeta(1, [true,false], "This is a description"))
-    coll.visualizations.push(new VisualizationsMeta(2, [false,true], "This is a description"))
+    coll.visualizations.push(new VisualizationsMeta(1, [true,true], "This is a description"))
+    coll.visualizations.push(new VisualizationsMeta(3, [true,true], "This is a description"))
+    coll.visualizations.push(new VisualizationsMeta(4, [true,true], "This is a description"))
     ///////////////////////////////
 
     var collectionElements = [];
     var column2 = [];
-    var visualizationsData = [];
+    
 
     //Remove visualization from editor (not working)
     function RemoveVisualization(i){
@@ -35,26 +37,38 @@ export default function CollectionEditor(props){
 
     //Load data referred in the Visualizations MetaData
     function LoadVisualizationData(){
+        var visualizationsData = [];
         var dataC = new DataConstructor();
         for(var i = 0; i < coll.visualizations.length; i++){
             if(coll.visualizations[i] === null) return;
-            visualizationsData.push(dataC.GetByIndex(coll.visualizations[i].dataIndex));
+            dataC.GetByIndex(coll.visualizations[i].dataIndex).then(function(response){
+                visualizationsData.push(response);
+            })
         }
+        CreateElements(visualizationsData);
     }
 
     //Create the visualization elements
-    function CreateElements(){
+    function CreateElements(data){
+        console.log(collectionElements.length + " " + coll.visualizations.length)
+
+    //    if(collectionElements.length === coll.visualizations.length) return;
+
+        console.log("shouldnt be here")
+
         for(var i = 0; i < coll.visualizations.length; i++){
             if(coll.visualizations[i] === null) continue;
-            var data = visualizationsData[i];
             var element = [];
-            if(data.chartType === "line") {         element.push(<LineChart data={data} seriesEnabled={coll.visualizations[i].seriesEnabled} human={data.human} zoomable='true'/>);}
-            if(data.chartType === "multiAxis") {    element.push(<MultiAxisChart data={data} zoomable='true'/>);}
-            if(data.chartType === "stacked") {      element.push(<StackedChart data={data} zoomable='true'/>);}
-            if(data.chartType === "doughnut") {     element.push(<DoughnutChart data={data}  subSectors={props.subSectors} subSubSectors={props.subSubSectors}/>);}
+            
+            if(coll.visualizations[i].dataIndex === 0) element.push(<V1 menu={false}/>)
+            if(coll.visualizations[i].dataIndex === 1) element.push(<V3 menu={false}/>)
+            if(coll.visualizations[i].dataIndex === 3) element.push(<V5 menu={false}/>)
+            if(coll.visualizations[i].dataIndex === 4) element.push(<V6 menu={false}/>)
 
-            element.push((<div><b>Custom description:</b><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>))
-            element.push((<button onClick={() => RemoveVisualization(i)}>Remove visualization from collection</button>))
+       //     element.push(<V5 menu={false}/>)
+
+            element.push((<div><b>Custom description:</b><textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>))
+ //           element.push((<button onClick={() => RemoveVisualization(i)}>Remove visualization from collection</button>))
 
             if(formatType === "2column") {
                 column2.push((<td>{element}</td>));
@@ -68,15 +82,18 @@ export default function CollectionEditor(props){
     }
 
     LoadVisualizationData();
-    CreateElements();
+    //
+
+    
     //POST FORMATTYPE
     //POST VISUALIZATION IDS
     //POST TOGGLED SERIES' IN VISUALIZATION
     //POST CUSTOM DESCRIPTION
 
     const saveButton = (<button className="btn btn-primary">Save & share</button>)
-    const formatSelect = (<>Formatting: <button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></>);
-    const menu = (<table width="100%"><tbody><td>{formatSelect}</td><td>{saveButton}</td></tbody></table>);
+    const formatSelect = (<td>Formatting: <button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
+  //  const addVisualization = ()
+    const menu = (<table width="100%"><tbody><tr>{formatSelect}<td>{saveButton}</td></tr></tbody></table>);
     
     if(formatType === "1column"){
         return(
@@ -90,7 +107,7 @@ export default function CollectionEditor(props){
         return(
             <>
             {menu}
-            <table class="table" width="100%">
+            <table className="table" width="100%">
                 <tbody>
                     {collectionElements}
                 </tbody>
