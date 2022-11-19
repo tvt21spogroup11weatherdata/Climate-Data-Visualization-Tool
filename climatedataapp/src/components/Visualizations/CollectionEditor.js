@@ -117,8 +117,8 @@ export default function CollectionEditor(props){
     const saveButton = (<td><button className="btn btn-primary">Save & share</button></td>)
     const formatSelect = (<td>Formatting: <button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
     const addVisualization = (
-        <td>
-            <select defaultValue="-1" onChange={(e) => AddNew(e)}>
+        <td><br/>
+            <select class="form-select form-select-lg mb-3" defaultValue="-1" onChange={(e) => AddNew(e)}>
                 <option value="-1" disabled>Add new visualization</option>
                 <option value="0">Global historical surface temperature anomalies from January 1850 onwards</option>
                 <option value="1">Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958</option>
