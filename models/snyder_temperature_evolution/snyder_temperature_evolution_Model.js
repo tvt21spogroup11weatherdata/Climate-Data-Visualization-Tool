@@ -4,13 +4,13 @@ const snyder_temperature_evolutionSchema = new mongoose.Schema({
     Year: {
         type: Number
     },
-    '2p5': {
+    'l_2p5': {
         type: Number
     },
-    '50': {
+    'l_50': {
         type: Number
     },
-    '97p5': {
+    'l_97p5': { 
         type: Number
     }
 })
