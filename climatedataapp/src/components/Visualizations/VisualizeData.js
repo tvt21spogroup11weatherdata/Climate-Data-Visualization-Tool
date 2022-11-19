@@ -46,9 +46,8 @@ export default function VisualizeData(props){
             <div>
                 {chartElement}
                 <div id="chartDesc">
-                    <p>{setDesc()}</p>
-      
-                    <p><a className="read-more-link readmorelink" onClick={()=>{setReadMore(!readMore)}}><h2>{linkName}</h2></a></p>
+                    {setDesc()}
+                    <p><a className="read-more-link" id="readmorelink" onClick={()=>{setReadMore(!readMore)}}>{linkName}</a></p>
                 </div>
                 <p>
                     <a href={props.data.source} target="_blank" rel="noreferrer">Data source</a> - 

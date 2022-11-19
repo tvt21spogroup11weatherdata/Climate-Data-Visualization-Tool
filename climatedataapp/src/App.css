@@ -32,8 +32,8 @@
     text-align: center;
 }
 
-.readmorelink{
-    font-size: 10px;
+a.readmorelink{
+    font-size: 15px;
 }
 
 #title{
