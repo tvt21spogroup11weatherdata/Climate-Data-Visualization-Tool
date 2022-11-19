@@ -44,12 +44,15 @@ export default function MultiAxisChart(props){
     const options = {
         zoomEnabled: true,
         title:{
-            text: props.data.title
+            text: props.data.title,
+            fontFamily: "Calibri"
         },
         axisX: {
             title: props.data.xTitle,
+            reversed: true,
             prefix: props.data.xPrefix,
-            interval: 10
+            suffix: props.data.xSuffix,
+            interval: 1
         },
         axisY:{
             title: props.data.set[0].yTitle,

@@ -446,7 +446,7 @@ export class DataConstructor{
             }
             }).then((response) => {
 
-            for(var i = 0; i < response.data.length; i+=1){
+            for(var i = 0; i < response.data.length; i++){
                 const dataPoint1 = {x: 0.001 * response.data[i].years_before_2016, y: response.data[i].co2_ppm};
                 set0.points.push(dataPoint1);
                 const dataPoint2 = {x: 0.001 * response.data[i].years_before_2016, y: response.data[i].co2_1s_ppm};
@@ -462,23 +462,24 @@ export class DataConstructor{
         return data;
     }
 
-    V7Data(){
+    async V7Data(){
+        console.log("here")
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Evolution of global temperature over the past two million years', 
         'http://carolynsnyder.com/papers/Snyder_Data_Figures.zip',
         'https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf', 
         'Reconstructions of Earth’s past climate strongly influence our understanding of the dynamics and sensitivity of the climate system. Yet global temperature has been reconstructed for only a few isolated windows of time1,2, and continuous reconstructions across glacial cycles remain elusive. Here I present a spatially weighted proxy reconstruction of global temperature over the past 2 million years estimated from a multi-proxy database of over 20,000 sea surface temperature point reconstructions. Global temperature gradually cooled until roughly 1.2 million years ago and cooling then stalled until the present.',
         '',
-        'Thousand Years', ' ', ' ' , ' ', '5'); 
+        'Ten Thousand Years Before Present (2016)', '', '' , '', '5'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
+            'Year',
             'Change in Global Average Surface Temperature',
             ' ',
             '\xB0C'
         );
         data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
-            'co2',
+            'Ice core 800k year composite study CO2 measurements',
             ' ',
             'ppm'
         );
@@ -490,9 +491,45 @@ export class DataConstructor{
         );
 
         data.chartType="multiaxis";
+        
+        //SET 0
+        let set0 = new DataSet()
+        axios.get(this.url + '/snyder_temperature_evolution', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: 0.1 * response.data[i].kyr_BP, y: response.data[i].l_97p5};
+                set0.points.push(dataPoint);
+            }
 
-        //GET DATA HERE
-   //     this.InsertTestValues(data, 0, 400);
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[0].points = set0.points;
+
+        let set1 = new DataSet()
+
+        //SET 0
+        axios.get(this.url + '/icecore800kco2', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: 0.0001 * response.data[i].years_before_2016, y: response.data[i].co2_ppm};
+                set1.points.push(dataPoint);
+            }
+
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[1].points = set1.points;
+
         return data;
     }
 
