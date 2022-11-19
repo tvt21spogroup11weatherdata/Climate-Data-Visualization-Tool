@@ -11,6 +11,9 @@ export default function Navbar(props){
     if(loggedIn){
         userElement = (<ul className="navbar-nav ms-auto">
         <li className="nav-item">
+            <a className="nav-link" href="/newcollection">New Collection</a>
+        </li>
+        <li className="nav-item">
             <a className="nav-link" href="/account">Account</a>
         </li>
         <li className="nav-item">
