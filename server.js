@@ -55,5 +55,8 @@ app.use('/vostokicecoreco2', vostokIceCoreCO2Router)
 const iceCore800kYearCompositeCO2Router = require('./routes/ice_core_800k_year_co2/ice_core_800k_year_co2_Route')
 app.use('/icecore800kco2', iceCore800kYearCompositeCO2Router)
 
+// snyder temperature evolution 
+const snyderRouter = require('./routes/snyder_temperature_evolution/snyder_temperature_evolution_Route')
+app.use('/snyder_temperature_evolution', snyderRouter)
 
 app.listen(3001, () => console.log('Server started'))
