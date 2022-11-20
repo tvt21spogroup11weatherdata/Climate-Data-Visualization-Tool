@@ -16,46 +16,22 @@ export default function DoughnutChart(props){
     var chart;
     
     for(var i = 0; i < props.data.set[0].points.length; i++){
-        
         dataPoints[i] = {y: props.data.set[0].points[i].y, label: props.data.set[0].points[i].x}
     }
     
-    console.log(props.data.set[1].points)
-    subDataPoints = [];
-    for(var i = 0; i < props.data.set[1].points.length; i++){
-        subDataPoints[i] = {y: props.data.set[1].points[i].y, label: props.data.set[1].points[i].x}
-    }
-    subData[0] = subDataPoints;
-
-    
-    subDataPoints = [];
-    for(var i = 0; i < props.data.set[2].points.length; i++){
-        subDataPoints[i] = {y: props.data.set[2].points[i].y, label: props.data.set[2].points[i].x}
-    }
-    subData[1] = subDataPoints;
-    subDataPoints = [];
-    for(var i = 0; i < props.data.set[3].points.length; i++){
-        subDataPoints[i] = {y: props.data.set[3].points[i].y, label: props.data.set[3].points[i].x}
-    }
-    subData[2] = subDataPoints;
-    subDataPoints = [];
-    for(var i = 0; i < props.data.set[4].points.length; i++){
-        subDataPoints[i] = {y: props.data.set[4].points[i].y, label: props.data.set[4].points[i].x}
-    }
-    subData[3] = subDataPoints;
-    
-
-
-    function goBack(){
-        setSub(false)
+    for(var j = 1; j < props.data.set.length; j++){
+        subDataPoints = [];
+        for(var i = 0; i < props.data.set[j].points.length; i++){
+            subDataPoints[i] = {y: props.data.set[j].points[i].y, label: props.data.set[j].points[i].x}
+        }
+        subData[j - 1] = subDataPoints;
     }
 
     function drilldownHandler(e) {
-        console.log(e.dataPointIndex)
         setSub(true)
 
         setSubOptions({
-            animationEnabled: true,
+            animationEnabled: false,
             axisY: {
                 title:  "Share of global greenhouse gas emissions (%)",
                 suffix: "%"
@@ -68,13 +44,8 @@ export default function DoughnutChart(props){
                 color: "#E7823A",
                 dataPoints: subData[e.dataPointIndex]
             }]
-            
         })
-        chart = <CanvasJSChart options = {subSectorOpt}/>;
-		//chart.render();
-		//$("#backButton").toggleClass("invisible");
 	}
-
 
     var options = {
         animationEnabled: true,
@@ -93,20 +64,21 @@ export default function DoughnutChart(props){
         }]
     }
 
-    var backButton;
-
+    var buttonClass = "btn invisible";
+    var usedOptions;
     if(!subChart) {
-        chart = <CanvasJSChart options = {options}/>;
-        backButton = (<button className="btn invisible" id="backButton">&lt; Back</button>)
+        usedOptions = options
+        buttonClass = "btn invisible";
     }
     else {
-        chart = <CanvasJSChart options = {subSectorOpt}/>;
-        backButton = (<button className="btn btn-primary" onClick={() => goBack()} id="backButton">&lt; Back</button>)
+        usedOptions = subSectorOpt
+        buttonClass = "btn btn-primary";
     }
 
-
-        //var chart = <CanvasJSChart options = {options}/>;
-        return(
+    var backButton = (<button className={buttonClass} onClick={() => setSub(false)} id="backButton">&lt; Back</button>)
+    chart = <CanvasJSChart options = {usedOptions}/>;
+    
+    return(
         <div>
             {backButton}
             {chart}

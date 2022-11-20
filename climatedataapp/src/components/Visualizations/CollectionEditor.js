@@ -1,7 +1,7 @@
 
 import { Collection, VisualizationsMeta } from "../../classes/UserCollection";
 import { useEffect, useState } from "react";
-import { Data, DataConstructor } from "../../classes/Data";
+import { DataConstructor } from "../../classes/Data";
 import V1 from "./V1"
 import V3 from "./V3"
 import V5 from "./V5"
@@ -35,13 +35,14 @@ export default function CollectionEditor(props){
         if(colle.length >= coll.length) LoadVisualizationData();
     })
 
+    /*
     function SaveData(){
         //GENERATE & POST UNIQUE ID
         //POST FORMATTYPE
         //POST VISUALIZATION IDS
         //POST TOGGLED SERIES' IN VISUALIZATION
         //POST CUSTOM DESCRIPTION
-    }
+    }*/
 
     function UpdateData(props){
         colle.formatType = '1column'
@@ -67,8 +68,8 @@ export default function CollectionEditor(props){
         coll.splice(i, 1);
         var indexes = [];
         if(coll.length > 0){
-            for(var i = 0; i < coll.length; i++){
-                indexes[i] = coll[i].dataIndex;
+            for(var j = 0; j < coll.length; j++){
+                indexes[j] = coll[j].dataIndex;
             }
         }
         UpdateData(indexes)
