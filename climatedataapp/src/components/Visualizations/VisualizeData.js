@@ -16,7 +16,7 @@ export default function VisualizeData(props){
             break;
         case "multiaxis":   chartElement = (<MultiAxisChart data={props.data}/>)
             break;
-        case "doughnut":    chartElement = (<DoughnutChart data={props.data} subSectors={props.subSectors} subSubSectors={props.subSubSectors}/>)
+        case "doughnut":    chartElement = (<DoughnutChart data={props.data}/>)
             break;
     }
     

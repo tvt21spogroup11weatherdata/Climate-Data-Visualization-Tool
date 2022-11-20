@@ -7,6 +7,7 @@ import V3 from "./V3"
 import V5 from "./V5"
 import V6 from "./V6"
 import V7 from "./V7"
+import V9 from "./V9"
 
 export default function CollectionEditor(props){
     const [formatType, setFormatType] = useState("2column");
@@ -85,6 +86,7 @@ export default function CollectionEditor(props){
             if(coll[i].dataIndex === 3) element.push(<V5 menu={false}/>)
             if(coll[i].dataIndex === 4) element.push(<V6 menu={false}/>)
             if(coll[i].dataIndex === 5) element.push(<V7 menu={false}/>)
+            if(coll[i].dataIndex === 7) element.push(<V9 menu={false}/>)
 
             element.push((<div><b>Custom description:</b><textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>))
             element.push((<button value={index} onClick={(e) => RemoveVisualization(e)}>Remove visualization from collection</button>))
@@ -125,6 +127,7 @@ export default function CollectionEditor(props){
                 <option value="3">Vostok Ice Core CO2 measurements, 417160 - 2342 years</option>
                 <option value="4">Ice core 800k year composite study CO2 measurements</option>
                 <option value="5">Evolution of global temperature over the past two million years</option>
+                <option value="7">Global CO2 emissions by sectors</option>
             </select>
         </td>)
     

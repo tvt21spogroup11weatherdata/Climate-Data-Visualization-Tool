@@ -570,7 +570,7 @@ export class DataConstructor{
     }
 
 
-    V9Data(subSectors, subSubSectors){
+    async V9Data(){
         var subSectors = [];
         var subSubSectors = [];
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
@@ -587,7 +587,32 @@ export class DataConstructor{
             ' ',
             '%'
         );
+        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            ' ',
+            ' ',
+            '%'
+        );
+        data.set[2] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            ' ',
+            ' ',
+            '%'
+        );
+        data.set[3] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            ' ',
+            ' ',
+            '%'
+        );
+        data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            ' ',
+            ' ',
+            '%'
+        );
         
+        /*
         //////////////////////////////////
         // FIGURING OUT SUBSECTORS / SUBSUBSECTORS
         // WIP
@@ -621,11 +646,68 @@ export class DataConstructor{
         //foreach subsector
         //subSectors.set[0] = new DataSet('Transport')
         //////////////////////////////////
-        
+        */
+
         data.chartType="doughnut";
 
-        //GET DATA HERE
-   //     this.InsertTestValues(data, 0, 400);
+        //SET 0
+        let set0 = new DataSet()
+        axios.get(this.url + '/ghg_global_sector', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].Sector, y: response.data[i].ghg_percentual};
+                set0.points.push(dataPoint);
+            }
+
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[0].points = set0.points;
+
+        //SET 1 subsector energy
+        let set1 = new DataSet()
+        let set2 = new DataSet()
+        let set3 = new DataSet()
+        let set4 = new DataSet()
+
+        axios.get(this.url + '/ghg_global_subsector', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+                //energy
+            for(var i = 0; i < 6; i++){
+                const dataPoint = {x: response.data[i].Subsector, y: response.data[i].ghg_percentual};
+                set1.points.push(dataPoint);
+            }
+                //industry
+            for(var i = 6; i < 8; i++){
+                const dataPoint = {x: response.data[i].Subsector, y: response.data[i].ghg_percentual};
+                set2.points.push(dataPoint);
+            }
+                //agri
+            for(var i = 8; i < 15; i++){
+                const dataPoint = {x: response.data[i].Subsector, y: response.data[i].ghg_percentual};
+                set3.points.push(dataPoint);
+            }
+                //waste
+            for(var i = 15; i < 17; i++){
+                 const dataPoint = {x: response.data[i].Subsector, y: response.data[i].ghg_percentual};
+                 set4.points.push(dataPoint);
+             }
+
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[1].points = set1.points;
+        data.set[2].points = set2.points;
+        data.set[3].points = set3.points;
+        data.set[4].points = set4.points;
         return data;
     }
 }

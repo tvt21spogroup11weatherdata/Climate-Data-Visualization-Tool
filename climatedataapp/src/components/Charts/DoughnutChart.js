@@ -4,102 +4,112 @@ import CanvasJSReact from '../../canvasjs.react';
 ////////////////////////////////////////////////////
 //RIKKI, KESKEN JNE
 export default function DoughnutChart(props){
-    const [subSector, toggleSubSector] = useState(false);
-    const [subSubSector, toggleSubSubSector] = useState(false);
+    const [subChart, setSub] = useState(false)
+    const [subChartIndex, setSubIndex] = useState(0)
+    const [subSectorOpt, setSubOptions] = useState({})
 
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-    var chart;
-    var subchart;
-    var subsubchart;
-
     var dataPoints = [];
+    var subData = []
     var subDataPoints = [];
-    var subSubDataPoints = [];
-
-    for(var i = 0; i < props.data.set[0].points.length; i++){
-        dataPoints[i] = {y: props.data.set[0].points[i].y, indexLabel: props.data.set[0].points[i].x}
-    }
-
-    for(var i = 0; i < props.data.set[0].points.length; i++){
-        subDataPoints[i] = {y: props.subSectors[i].set[0].points[i].y, indexLabel: props.subSectors[i].set[0].points[i].x}
-    }
-
-   // subSubDataPoints[0] = {y: props.subSubSectors[0].set[0].points[0].y, indexLabel: props.subSubSectors[0].title} 
-
-    /*for(var i = 0; i < props.subSubSectors.set[0].points.length; i++){
-        subSubDataPoints[i] = {y: props.subSubSectors[i].set[0].points[i].y, indexLabel: props.subSubSectors[i].set[0].points[i].x}
-    }*/
+    var chart;
     
-    function toggleSub(e){
-        console.log("toggle subsector");
-        console.log(e);
-        subSectorOptions.subtitles[0].text = "uusi";
-        console.log(subSectorOptions.subtitles[0].text)
-        toggleSubSector(true);
+    for(var i = 0; i < props.data.set[0].points.length; i++){
+        
+        dataPoints[i] = {y: props.data.set[0].points[i].y, label: props.data.set[0].points[i].x}
     }
-
-    function toggleSubSub(e){
-        toggleSubSector(false);
-        console.log("toggle subsubsector");
-        console.log(e.dataPointIndex);
-        options = subSubSectorOptions;
-        toggleSubSubSector(true);
+    
+    console.log(props.data.set[1].points)
+    subDataPoints = [];
+    for(var i = 0; i < props.data.set[1].points.length; i++){
+        subDataPoints[i] = {y: props.data.set[1].points[i].y, label: props.data.set[1].points[i].x}
     }
+    subData[0] = subDataPoints;
 
     
+    subDataPoints = [];
+    for(var i = 0; i < props.data.set[2].points.length; i++){
+        subDataPoints[i] = {y: props.data.set[2].points[i].y, label: props.data.set[2].points[i].x}
+    }
+    subData[1] = subDataPoints;
+    subDataPoints = [];
+    for(var i = 0; i < props.data.set[3].points.length; i++){
+        subDataPoints[i] = {y: props.data.set[3].points[i].y, label: props.data.set[3].points[i].x}
+    }
+    subData[2] = subDataPoints;
+    subDataPoints = [];
+    for(var i = 0; i < props.data.set[4].points.length; i++){
+        subDataPoints[i] = {y: props.data.set[4].points[i].y, label: props.data.set[4].points[i].x}
+    }
+    subData[3] = subDataPoints;
+    
+
+
+    function goBack(){
+        setSub(false)
+    }
+
+    function drilldownHandler(e) {
+        console.log(e.dataPointIndex)
+        setSub(true)
+
+        setSubOptions({
+            animationEnabled: true,
+            axisY: {
+                title:  "Share of global greenhouse gas emissions (%)",
+                suffix: "%"
+            },
+            title:{
+                text: "CO2 emissions in " + e.dataPoint.label,
+            },
+            data: [{
+                type: "column",
+                color: "#E7823A",
+                dataPoints: subData[e.dataPointIndex]
+            }]
+            
+        })
+        chart = <CanvasJSChart options = {subSectorOpt}/>;
+		//chart.render();
+		//$("#backButton").toggleClass("invisible");
+	}
+
+
     var options = {
         animationEnabled: true,
-        theme: "light2",
-        subtitles: [{text: "Subtitle"}],
-        title:{ text: props.data.title },
-          data: [{
-           type: "doughnut",
-           dataPoints: dataPoints,
-           click: function(e){
-                toggleSub(e)
-           }
-         }]
+        title:{
+            text: props.data.title,
+        },
+        data: [{
+            type: "doughnut",
+            click: drilldownHandler,
+            startAngle: 60,
+            //innerRadius: 60,
+            indexLabelFontSize: 17,
+            indexLabel: "{label} - #percent%",
+            dataPoints: dataPoints
+            
+        }]
     }
 
-    var subSectorOptions = {
-        animationEnabled: true,
-        theme: "light2",
-        title:{ text: props.data.title },
-        subtitles: [{text: "Subtitle"}],
+    var backButton;
 
-          data: [{
-           type: "doughnut",
-           dataPoints: subDataPoints,
-
-         }]
+    if(!subChart) {
+        chart = <CanvasJSChart options = {options}/>;
+        backButton = (<button className="btn invisible" id="backButton">&lt; Back</button>)
     }
-
-    var subSubSectorOptions = {
-        animationEnabled: true,
-        theme: "light2",
-        title:{ text: props.data.title },
-        subtitles: [{text: "Subtitle"}],
-          data: [{
-           type: "doughnut",
-           dataPoints: subSubDataPoints,
-         }]
+    else {
+        chart = <CanvasJSChart options = {subSectorOpt}/>;
+        backButton = (<button className="btn btn-primary" onClick={() => goBack()} id="backButton">&lt; Back</button>)
     }
 
 
-    var chart = <CanvasJSChart options = {options}/>;
-    var subchart = <CanvasJSChart options = {subSectorOptions}/>;
-    var subsubchart = <CanvasJSChart options = {subSubSectorOptions}/>;
-
-    if(subSector){
-        
-        return(<div>{subchart}</div>)
-    }
-    else if(subSubSector){
-        
-        return(<div>{subsubchart}</div>)
-    }
-    else 
-        return (<div>{chart}</div>
-    )
+        //var chart = <CanvasJSChart options = {options}/>;
+        return(
+        <div>
+            {backButton}
+            {chart}
+        </div>)
+    
 }
