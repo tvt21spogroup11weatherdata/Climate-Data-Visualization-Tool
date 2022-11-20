@@ -5,7 +5,7 @@ const GlobalGHGBySubsector = require('../../models/global_ghg_emissions/global_g
 // Get all data
 router.get('/', async (req, res) => {
     try {
-        const result = await GlobalGHGBySubsector.find()
+        const result = await GlobalGHGBySubsector.find().sort({SectorID: 1})
         res.status(200).json(result)
     } catch (err) {res.status(500).json({message: err.message})}
 })
