@@ -59,4 +59,12 @@ app.use('/icecore800kco2', iceCore800kYearCompositeCO2Router)
 const snyderRouter = require('./routes/snyder_temperature_evolution/snyder_temperature_evolution_Route')
 app.use('/snyder_temperature_evolution', snyderRouter)
 
+// global greenhouse gas emissions by sector
+const ghgGlobalSector = require('./routes/global_ghg_emissions/global_ghg_emissions_by_sector_Route')
+app.use('/ghg_global_sector', ghgGlobalSector)
+
+// global greenhouse gas emissions by subsector
+const ghgGlobalSubsector = require('./routes/global_ghg_emissions/global_ghg_emissions_by_subsector_Route')
+app.use('/ghg_global_subsector', ghgGlobalSubsector)
+
 app.listen(3001, () => console.log('Server started'))
