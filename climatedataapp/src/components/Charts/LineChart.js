@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
+    const [loading, setLoading] = useState(true)
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
     var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
@@ -97,5 +99,14 @@ export default function LineChart(props){
         }
     }
 
-    return( <div>{chart}</div> ) 
+    //Makes sure that all of the chart loads
+    function CheckChartLoad(){
+        setTimeout(() => {setLoading(false)}, "500");
+        setTimeout(() => {chart.render()}, "1000");
+    }
+    CheckChartLoad()
+
+    if(!loading){
+        return( <div>{chart}</div> ) 
+    }
 }

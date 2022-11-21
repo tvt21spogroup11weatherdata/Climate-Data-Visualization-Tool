@@ -1,44 +1,53 @@
 
-import { Collection, VisualizationsMeta} from "../../classes/UserCollection";
-import LineChart from "../Charts/LineChart";
-import { useState } from "react";
+import { Collection, VisualizationsMeta } from "../../classes/UserCollection";
+import { useEffect, useState } from "react";
 import { DataConstructor } from "../../classes/Data";
-import MultiAxisChart from "../Charts/MultiAxisChart";
-import StackedChart from "../Charts/StackedChart";
-import DoughnutChart from "../Charts/DoughnutChart";
+import V1 from "./V1"
+import V3 from "./V3"
+import V5 from "./V5"
+import V6 from "./V6"
+import V7 from "./V7"
+import V9 from "./V9"
 
-export default function VisualizationCollection(props){
+export default function CollectionEditor(props){
     //GET FORMATTYPE
     const [formatType, setFormatType] = useState("2column");
-    
-    ///////////////////////////////////////////////
-    //TESTING DATA
-    var coll = new Collection();
-    coll.formatType = '1column'
-    coll.visualizations = [];
-    coll.visualizations.push(new VisualizationsMeta(0, [true,true,true,true,true,true], "This is a description"))
-    ///////////////////////////////////////////////
+    const [loading, setLoading] = useState(true);
 
     var collectionElements = [];
     var column2 = [];
     var visualizationsData = [];
-    
+    var collection = new Collection();
     
     function LoadVisualizationData(){
+        //LOAD FROM DB HERE
+        ///////////////////////////////////////////////
+        //TESTING DATA
+        
+        collection.formatType = '1column'
+        collection.visualizations = [];
+        collection.visualizations.push(new VisualizationsMeta(0, [true,true,true,true,true,true], "This is a description"))
+        collection.visualizations.push(new VisualizationsMeta(1, [true,true], "This is a description"))
+        ///////////////////////////////////////////////
+
         var dataC = new DataConstructor();
-        visualizationsData[0] = dataC.GetByIndex(coll.visualizations[0].dataIndex);
+        for(var i = 0; i < collection.visualizations.length; i++){
+            visualizationsData[i] = dataC.GetByIndex(collection.visualizations[i].dataIndex);
+        }
     }
 
     function CreateElements(){
         for(var i = 0; i < visualizationsData.length; i++){
             var data = visualizationsData[i];
             var element = [];
-            if(data.chartType === "line") { element.push(<LineChart data={data} seriesEnabled={coll.visualizations[i].seriesEnabled} human={data.human} zoomable='true'/>);}
-            if(data.chartType === "multiAxis") { element.push(<MultiAxisChart data={data} zoomable='true'/>);}
-            if(data.chartType === "stacked") { element.push(<StackedChart data={data} zoomable='true'/>);}
-            if(data.chartType === "doughnut") { element.push(<DoughnutChart data={data}  subSectors={props.subSectors} subSubSectors={props.subSubSectors}/>);}
+            if(collection.visualizations[i].dataIndex === 0) element.push(<V1 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 1) element.push(<V3 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 3) element.push(<V5 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 4) element.push(<V6 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 5) element.push(<V7 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 7) element.push(<V9 menu={false}/>)
 
-            element.push((<div><b>Description:</b> <p>{coll.visualizations[i].description}</p></div>))
+            element.push((<div><b>Description:</b> <p>{collection.visualizations[i].description}</p></div>))
     
             if(formatType === "2column") {
                 column2.push((<td>{element}</td>));
@@ -51,21 +60,22 @@ export default function VisualizationCollection(props){
                 collectionElements.push((element));
             }
         }
+
     }
-    
+
     LoadVisualizationData();
     CreateElements();
 
     if(formatType === "1column"){
-        return(<><div>{collectionElements}</div></>)
-    }
-    else if(formatType === "2column"){
-        return(<>
-            <table class="table" width="100%">
-                <tbody>
-                    {collectionElements}
-                </tbody>
-            </table></>
-        )
-    }
+            return(<><div>{collectionElements}</div></>)
+        }
+        else if(formatType === "2column"){
+            return(<>
+                <table className="table" width="100%">
+                    <tbody>
+                        {collectionElements}
+                    </tbody>
+                </table></>
+            )
+        }
 }

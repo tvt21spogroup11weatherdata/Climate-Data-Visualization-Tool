@@ -13,10 +13,12 @@ export default function UserAccount(){
         var wrapper = [];
         var amountOfColls = 2; //test value
 
+        //get user visualization DB table here
+
         for(var i = 0; i < amountOfColls; i++){
             var vLinkElements = []
             vLinkElements.push(<td><a href="/usercollection">User-generated Visualization</a></td>)
-            vLinkElements.push(<td><button  id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>)
+            vLinkElements.push(<td><button id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>)
             wrapper.push(<tr>{vLinkElements}</tr>)
         }
         return wrapper
