@@ -2,8 +2,8 @@ import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function DoughnutChart(props){
+    const [loading, setLoading] = useState(true)
     const [subChart, setSub] = useState(false)
-    const [subChartIndex, setSubIndex] = useState(0)
     const [subSectorOpt, setSubOptions] = useState({})
 
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -75,11 +75,17 @@ export default function DoughnutChart(props){
 
     var backButton = (<button className={buttonClass} onClick={() => setSub(false)} id="backButton">&lt; Back</button>)
     chart = <CanvasJSChart options = {usedOptions}/>;
-    
-    return(
-        <div>
-            {backButton}
-            {chart}
-        </div>)
+    setTimeout(() => {setLoading(false)}, "500");
+
+    if(!loading){
+        return(
+            <div>
+                {backButton}
+                {chart}
+            </div>)
+    }
+    else {
+        return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>
+    }
     
 }

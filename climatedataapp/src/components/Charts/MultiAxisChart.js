@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function MultiAxisChart(props){
+    const [loading, setLoading] = useState(true)
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var postedData ; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
     
@@ -92,10 +94,18 @@ export default function MultiAxisChart(props){
         },
         data: data
     }
+    
+    var chart = <CanvasJSChart options = {options}/>
+    setTimeout(() => {setLoading(false)}, "500");
 
-    return(
-        <div>
-            <CanvasJSChart options = {options}/>
-        </div>
-    )
+    if(!loading){
+        return(
+            <div>
+                {chart}
+            </div>
+        )
+    }
+    else {
+        return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>
+    }
 }

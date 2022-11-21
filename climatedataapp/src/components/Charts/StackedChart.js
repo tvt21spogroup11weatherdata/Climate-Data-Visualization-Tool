@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function StackedChart(props){
+    const [loading, setLoading] = useState(true)
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     const stacks = [];
 
@@ -33,9 +35,17 @@ export default function StackedChart(props){
         data: stacks
     }
 
-    return(
-        <div>
-            <CanvasJSChart options = {options}/>
-        </div>
-    )
+    var chart = <CanvasJSChart options = {options}/>
+    setTimeout(() => {setLoading(false)}, "500");
+
+    if(!loading){
+        return(
+            <div>
+                {chart}
+            </div>
+        )
+    }
+    else {
+        return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>
+    }
 }

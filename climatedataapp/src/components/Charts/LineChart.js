@@ -99,14 +99,12 @@ export default function LineChart(props){
         }
     }
 
-    //Makes sure that all of the chart loads
-    function CheckChartLoad(){
-        setTimeout(() => {setLoading(false)}, "500");
-        setTimeout(() => {chart.render()}, "1000");
-    }
-    CheckChartLoad()
+    setTimeout(() => {setLoading(false)}, "500");
 
     if(!loading){
         return( <div>{chart}</div> ) 
+    }
+    else {
+        return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>
     }
 }
