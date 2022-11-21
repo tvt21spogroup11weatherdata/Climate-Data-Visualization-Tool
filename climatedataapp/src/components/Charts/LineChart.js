@@ -23,40 +23,7 @@ export default function LineChart(props){
         }
     }
 /*
-    data[0] = {
-        type: "line",
-        name: props.data.set[0].yTitle,
-        toolTipContent: props.data.set[0].prefix + " {x}: {y}" + props.data.set[0].suffix,
-        showInLegend: true,
-        dataPoints:  props.data.set[0].points
-    }
-
-    
-    data[1] = {
-        type: "line",
-        name: props.data.set[1].yTitle,
-        toolTipContent: props.data.set[1].prefix + " {x}: {y}" + props.data.set[1].suffix,
-        showInLegend: true,
-        dataPoints:  props.data.set[1].points
-    }
-
-
-/*
-
-    for(var i = 0; i < props.data.set.length; i++){
-        console.log(props.data.set[i])
-       data[i] = {
-            type: "line",
-            name: props.data.set[i].yTitle,
-            toolTipContent: props.data.set[i].prefix + " {x}: {y}" + props.data.set[i].suffix,
-            showInLegend: true,
-            dataPoints: props.data.set[i].points
-        }
-    }
-
-
-
-    //IF REQUIRES TO SHOW HUMAN EVOLUTION SERIES
+    //IF REQUIRES HUMAN EVOLUTION SERIES
     if(props.human){
         data[4] = {
             type: "scatter",
@@ -110,7 +77,7 @@ export default function LineChart(props){
             prefix: props.data.xPrefix,
             suffix: props.data.xSuffix,
             reversed: props.reversed,
-            interval: 1 //NOT DEFINED
+            interval: 1
         },
         
         legend: {

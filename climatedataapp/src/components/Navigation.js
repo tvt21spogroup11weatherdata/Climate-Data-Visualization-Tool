@@ -7,7 +7,7 @@ export default function Navbar(props){
     //////////////////////////////////////////
     ///for testing switching views
     var loginTestElement = (<ul className="navbar-nav ms-auto"><li><button onClick= {() => setLoggedIn(!loggedIn)}>Switch login navs</button></li></ul>);
-
+    //////////////////////////////////////////
     if(loggedIn){
         userElement = (<ul className="navbar-nav ms-auto">
         <li className="nav-item">
@@ -31,7 +31,7 @@ export default function Navbar(props){
         </li>
     </ul>)
     }
-    //////////////////////////////////////////
+
 
 
     return (
@@ -44,7 +44,6 @@ export default function Navbar(props){
 
         <div data-bs-toggle="collapse" className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
-
                 <li className="nav-item">
                     <a className="nav-link" href="/temp">Temperature/CO<sub>2</sub> Visualizations</a>
                 </li>

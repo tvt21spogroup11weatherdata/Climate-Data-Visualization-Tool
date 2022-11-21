@@ -1,4 +1,27 @@
 export default function UserAccount(){
+
+    function DeleteUserButton(){
+        var deleteUserButton = 
+            (<form>
+                <input type="submit" id="button" className="btn btn-secondary" value="Delete account"/>
+            </form>)
+        
+        return deleteUserButton
+    }
+
+    function GetUserVisualizations(){
+        var wrapper = [];
+        var amountOfColls = 2; //test value
+
+        for(var i = 0; i < amountOfColls; i++){
+            var vLinkElements = []
+            vLinkElements.push(<td><a href="/usercollection">User-generated Visualization</a></td>)
+            vLinkElements.push(<td><button  id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>)
+            wrapper.push(<tr>{vLinkElements}</tr>)
+        }
+        return wrapper
+    }
+
     return(
         <div>
             <table id="useraccount-table">
@@ -14,18 +37,13 @@ export default function UserAccount(){
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href="/usercollection">User-generated Visualization</a></td>
-                                        <td><button  id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>
-                                    </tr>
+                                    {GetUserVisualizations()}
                                 </tbody>
                             </table>
                         </td>
-                    <td>
-                        <form>
-                        <input type="submit" id="button" className="btn btn-secondary" value="Delete account"/>
-                        </form>
-                    </td>
+                        <td>
+                            {DeleteUserButton()}
+                        </td>
                     </tr>
                 </tbody>
             </table>

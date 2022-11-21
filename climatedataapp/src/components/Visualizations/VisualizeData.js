@@ -3,6 +3,7 @@ import DoughnutChart from "../Charts/DoughnutChart";
 import StackedChart from "../Charts/StackedChart";
 import MultiAxisChart from "../Charts/MultiAxisChart";
 import { useState } from "react";
+
 //Creates visualization with defined chartType and data + the source links & descriptions required
 export default function VisualizeData(props){
     const [readMore, setReadMore] = useState(false)
@@ -21,14 +22,15 @@ export default function VisualizeData(props){
     }
     
     const linkName=readMore?'Read Less << ':'Read More >> '
-    function setDesc(){
+    
+    function SetDescription(){
         var descContent = ""
 
         if(readMore) {
             var tempCont = [];
             tempCont[0] = (<p>{props.data.longDesc}</p>)
-            if(props.data.longDesc2.length > 0) {
-                tempCont[1] = (<p>{props.data.longDesc2}</p>)
+            if(props.data.longDesc2.length > 0) { 
+                tempCont[1] = (<p>{props.data.longDesc2}</p>) 
             }
             descContent = (<p className="extraContent">{tempCont}</p>)
         }
@@ -46,7 +48,7 @@ export default function VisualizeData(props){
             <div>
                 {chartElement}
                 <div id="chartDesc">
-                    {setDesc()}
+                    {SetDescription()}
                     <p><a className="read-more-link" id="readmorelink" onClick={()=>{setReadMore(!readMore)}}>{linkName}</a></p>
                 </div>
                 <p>

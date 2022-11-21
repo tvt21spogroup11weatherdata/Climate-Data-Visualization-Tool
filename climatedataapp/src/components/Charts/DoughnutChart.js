@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
-////////////////////////////////////////////////////
-//RIKKI, KESKEN JNE
 export default function DoughnutChart(props){
     const [subChart, setSub] = useState(false)
     const [subChartIndex, setSubIndex] = useState(0)
