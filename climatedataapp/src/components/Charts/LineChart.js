@@ -24,6 +24,21 @@ export default function LineChart(props){
             dataPoints: props.data.set[i].points
         }
     }
+
+    function dynamicLoad(e){
+        if(e.trigger === "pan") return;
+
+        e.chart.options.axisX.interval = props.interval
+
+        if(e.trigger === "reset") return;
+
+        var diff = e.axisX[0].viewportMaximum - e.axisX[0].viewportMinimum;
+        var newInterval;
+        if(diff < 500) newInterval = 10;
+        if(diff < 200) newInterval = 1;
+        e.chart.options.axisX.interval = newInterval
+    }
+
 /*
     //IF REQUIRES HUMAN EVOLUTION SERIES
     if(props.human){
@@ -79,9 +94,9 @@ export default function LineChart(props){
             prefix: props.data.xPrefix,
             suffix: props.data.xSuffix,
             reversed: props.reversed,
-            interval: 1
+            interval: props.interval
         },
-        
+        rangeChanging: dynamicLoad,
         legend: {
             cursor: "pointer",
             itemclick: toggleSeries

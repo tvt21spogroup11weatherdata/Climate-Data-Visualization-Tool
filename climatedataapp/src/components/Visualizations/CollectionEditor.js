@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { DataConstructor } from "../../classes/Data";
 import V1 from "./V1"
 import V3 from "./V3"
+import V4 from "./V4"
 import V5 from "./V5"
 import V6 from "./V6"
 import V7 from "./V7"
@@ -94,6 +95,7 @@ export default function CollectionEditor(props){
 
             if(collection[i].dataIndex === 0) element.push(<V1 menu={false}/>)
             if(collection[i].dataIndex === 1) element.push(<V3 menu={false}/>)
+            if(collection[i].dataIndex === 2) element.push(<V4 menu={false}/>)
             if(collection[i].dataIndex === 3) element.push(<V5 menu={false}/>)
             if(collection[i].dataIndex === 4) element.push(<V6 menu={false}/>)
             if(collection[i].dataIndex === 5) element.push(<V7 menu={false}/>)
@@ -122,6 +124,7 @@ export default function CollectionEditor(props){
                 <option value="-1" disabled>Add new visualization</option>
                 <option value="0">Global historical surface temperature anomalies from January 1850 onwards</option>
                 <option value="1">Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958</option>
+                <option value="2">Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements</option>
                 <option value="3">Vostok Ice Core CO2 measurements, 417160 - 2342 years</option>
                 <option value="4">Ice core 800k year composite study CO2 measurements</option>
                 <option value="5">Evolution of global temperature over the past two million years</option>

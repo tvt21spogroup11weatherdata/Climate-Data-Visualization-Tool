@@ -313,7 +313,7 @@ export class DataConstructor{
         return data;
     }
 
-    V4Data(){
+    async V4Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements', 
             'https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat',
@@ -323,45 +323,109 @@ export class DataConstructor{
             'Years', ' ', ' ' , ' ', '2'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
-            'Mean Ice Depth',
-            ' ',
-            'm'
-        );
-        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'Ice Age',
-            ' ',
-            'A.D.'
-        );
-        data.set[2] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'Mean Air Age',
-            ' ',
-            'A.D.'
-        );
-        data.set[3] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'CO2 Mixing Ratio',
+            'Ice core DE08',
             ' ',
             'ppm'
         );
-        data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Ice core DE08-2',
+            ' ',
+            'ppm.'
+        );
+        data.set[2] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Ice core DSS',
+            ' ',
+            'ppm.'
+        );
+        data.set[3] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Atmospheric CO2 concentrations from Mauna Loa annual',
             ' ',
             'ppm'
         );
-        data.set[5] = new DataSet (
-            ' ',
-            'Human Evolution and Activities',
-            '',
-            ''
-        );
+        // data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+        //     ' ',
+        //     'Atmospheric CO2 concentrations from Mauna Loa annual',
+        //     ' ',
+        //     'ppm'
+        // );
+        // data.set[5] = new DataSet (
+        //     ' ',
+        //     'Human Evolution and Activities',
+        //     '',
+        //     ''
+        // );
         
         data.chartType="line";
 
         //GET DATA HERE
  //       this.InsertTestValues(data, 0, 400);
+        
+        
+        
+        
+        //SET 0
+        let set0 = new DataSet()
+        axios.get(this.url + '/lawdome/DE08', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin'
+            }
+        }).then((response) => {
+            for(var i = 0; i < response.data.length; i+=1){
+                const dataPoint1 = {x: response.data[i].Mean_Air_Age_year_AD, y: response.data[i].CO2_Mixing_Ratio_ppm};
+                set0.points.push(dataPoint1);
+            }
+        }).catch (error => {alert(error)})
+        data.set[0].points = set0.points
+
+        //SET 1
+        let set1 = new DataSet()
+        axios.get(this.url + '/lawdome/DE08-2', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin'
+            }
+        }).then((response) => {
+            for(var i = 0; i < response.data.length; i+=1){
+                const dataPoint1 = {x: response.data[i].Mean_Air_Age_year_AD, y: response.data[i].CO2_Mixing_Ratio_ppm};
+                set1.points.push(dataPoint1);
+            }
+        }).catch (error => {alert(error)})
+        data.set[1].points = set1.points
+
+        //SET 2
+        let set2 = new DataSet()
+        axios.get(this.url + '/lawdome/DSS', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin'
+            }
+        }).then((response) => {
+            for(var i = 0; i < response.data.length; i+=1){
+                const dataPoint1 = {x: response.data[i].Mean_Air_Age_year_AD, y: response.data[i].CO2_Mixing_Ratio_ppm};
+                set2.points.push(dataPoint1);
+            }
+        }).catch (error => {alert(error)})
+        data.set[2].points = set2.points
+
+        //SET 3
+        let set3 = new DataSet()
+        axios.get(this.url + '/maunaloaco2annual', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin'
+            }
+        }).then((response) => {
+            for(var i = 0; i < response.data.length; i+=1){
+                const dataPoint1 = {x: response.data[i].year, y: response.data[i].mean};
+                set3.points.push(dataPoint1);
+            }
+        }).catch (error => {alert(error)})
+        data.set[3].points = set3.points
+
         return data;
     }
 

@@ -22,7 +22,7 @@ export default function V1(props){
 
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData data={data} v2error="true" chartType="line"/>
+        else return <VisualizeData data={data} v2error="true" chartType="line" interval={1}/>
     }
 
     return (
