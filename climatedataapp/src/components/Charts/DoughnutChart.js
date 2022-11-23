@@ -54,7 +54,6 @@ export default function DoughnutChart(props){
             type: "doughnut",
             click: drilldownHandler,
             startAngle: 60,
-            //innerRadius: 60,
             indexLabelFontSize: 17,
             indexLabel: "{label} - #percent%",
             dataPoints: dataPoints

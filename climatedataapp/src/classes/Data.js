@@ -463,14 +463,13 @@ export class DataConstructor{
     }
 
     async V7Data(){
-        console.log("here")
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Evolution of global temperature over the past two million years', 
         'http://carolynsnyder.com/papers/Snyder_Data_Figures.zip',
         'https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf', 
         'Reconstructions of Earth’s past climate strongly influence our understanding of the dynamics and sensitivity of the climate system. Yet global temperature has been reconstructed for only a few isolated windows of time1,2, and continuous reconstructions across glacial cycles remain elusive. Here I present a spatially weighted proxy reconstruction of global temperature over the past 2 million years estimated from a multi-proxy database of over 20,000 sea surface temperature point reconstructions. Global temperature gradually cooled until roughly 1.2 million years ago and cooling then stalled until the present.',
         '',
-        'Ten Thousand Years Before Present (2016)', '', '' , '', '5'); 
+        'Years Before Present', '', '' , 'BP', '5'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             'Year',
             'Change in Global Average Surface Temperature',
@@ -501,7 +500,7 @@ export class DataConstructor{
             }
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
-                const dataPoint = {x: 0.1 * response.data[i].kyr_BP, y: response.data[i].l_97p5};
+                const dataPoint = {x: 1000 * response.data[i].kyr_BP, y: response.data[i].l_97p5};
                 set0.points.push(dataPoint);
             }
 
@@ -510,9 +509,10 @@ export class DataConstructor{
         })
         data.set[0].points = set0.points;
 
-        let set1 = new DataSet()
+        
 
-        //SET 0
+        //SET 1
+        let set1 = new DataSet()
         axios.get(this.url + '/icecore800kco2', {
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -521,7 +521,7 @@ export class DataConstructor{
             }).then((response) => {
 
             for(var i = 0; i < response.data.length; i++){
-                const dataPoint = {x: 0.0001 * response.data[i].years_before_2016, y: response.data[i].co2_ppm};
+                const dataPoint = {x: response.data[i].years_before_2016, y: response.data[i].co2_ppm};
                 set1.points.push(dataPoint);
             }
 
@@ -529,6 +529,26 @@ export class DataConstructor{
             alert(error)
         })
         data.set[1].points = set1.points;
+
+        //SET 2
+        let set2 = new DataSet()
+        axios.get(this.url + '/human_evolution', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+                
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: parseInt(response.data[i].BP), y: response.data[i].event};
+                set2.points.push(dataPoint);
+            }
+
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[2].points = set2.points;
+
 
         return data;
     }
@@ -611,42 +631,6 @@ export class DataConstructor{
             ' ',
             '%'
         );
-        
-        /*
-        //////////////////////////////////
-        // FIGURING OUT SUBSECTORS / SUBSUBSECTORS
-        // WIP
-        //foreach sector
-        subSectors[0] = new Data('Energy');
-        subSectors[1] = new Data('Industrial processes');
-        subSectors[2] = new Data('Waste');
-        subSectors[3] = new Data('Agriculture, Forestry & Land Use (AFOLU)');
-
-        var numberOfSectors = 4;
-
-        for(var i = 0; i < numberOfSectors; i++){
-            const dataPoint = {x: subSectors[i].title, y: Math.floor(Math.random() * (100 - 0) + 0)};
-            data.set[0].points[i] = dataPoint;
-            subSectors[i].set[0] = new DataSet();
-            
-            var numberOfSubSectors = 6
-            for(var j = 0; j < numberOfSubSectors; j++){
-                subSectors[i].set[0].points[j] = {x: "Subsector title", y: Math.floor(Math.random() * (100 - 0) + 0)};
-
-                var numberOfSubSubSectors = 4;
-
-                for(var k = 0; k < numberOfSubSubSectors; k++){
-                    subSubSectors[j] = new Data()
-                    subSubSectors[j].title = "Subsubsector title"
-                    subSubSectors[j].set[j] = new DataSet()
-                    subSubSectors[j].set[j].points[k] = {x: "Subsubsector title", y: Math.floor(Math.random() * (100 - 0) + 0)};
-                }
-            }
-        }
-        //foreach subsector
-        //subSectors.set[0] = new DataSet('Transport')
-        //////////////////////////////////
-        */
 
         data.chartType="doughnut";
 
@@ -699,7 +683,7 @@ export class DataConstructor{
             for(var i = 15; i < 17; i++){
                  const dataPoint = {x: response.data[i].Subsector, y: response.data[i].ghg_percentual};
                  set4.points.push(dataPoint);
-             }
+            }
 
         }).catch (error => {
             alert(error)
