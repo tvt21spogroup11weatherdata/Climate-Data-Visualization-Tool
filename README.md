@@ -7,4 +7,4 @@ Usage:
 
 >The CanvasJS library .zip is in the group's Teams files. Extract `canvasjs.min.js` and `canvasjs.react.js` to `src/`
 
->Run `npm start` to launch the app locally in `localhost:3000`
+>Run `npm start` to launch the app locally at `localhost:3000`
