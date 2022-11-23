@@ -39,16 +39,8 @@ export default function MultiAxisChart(props){
 
         var diff = e.axisX[0].viewportMaximum - e.axisX[0].viewportMinimum;
         var newInterval;
-        if(diff < 100) newInterval = 10;
-        if(diff < 50) newInterval = 1;
-        if(diff < 10) {
-            newInterval = 0.1;
-            e.chart.options.data.xValueFormatString="######"
-        }
-        if(diff < 5) {
-            newInterval = 0.01;
-            e.chart.options.data.xValueFormatString="######"
-        }
+        if(diff < 500) newInterval = 10;
+        if(diff < 200) newInterval = 1;
         e.chart.options.axisX.interval = newInterval
     }
 
@@ -83,15 +75,15 @@ export default function MultiAxisChart(props){
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
-        if(id === 1) content = e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
-        if(id === 2) content = e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[1].suffix
+        if(id === 1) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
+        if(id === 2) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[1].suffix
         if(id === 3) {
             var eventContent = "<ul>"
             for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
                 eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
             }
             eventContent += "</ul>"
-            content = e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[2].suffix
+            content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[2].suffix
         }
         return content
     }
