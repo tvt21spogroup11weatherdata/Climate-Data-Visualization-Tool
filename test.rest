@@ -57,3 +57,6 @@ GET http://localhost:3001/vostokicecoreco2
 GET http://localhost:3001/icecore800kco2/fromxyearstopresent/300
 ###
 GET http://localhost:3001/icecore800kco2
+
+### lawdome
+GET http://localhost:3001/lawdome/DSS
