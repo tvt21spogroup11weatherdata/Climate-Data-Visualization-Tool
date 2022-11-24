@@ -1,5 +1,5 @@
 import axios from "axios";
-require('dotenv')
+//require('dotenv')
 
 //Class for the descriptive data inserted into a chart
 export class Data{
@@ -345,18 +345,12 @@ export class DataConstructor{
             ' ',
             'ppm'
         );
-        // data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-        //     ' ',
-        //     'Atmospheric CO2 concentrations from Mauna Loa annual',
-        //     ' ',
-        //     'ppm'
-        // );
-        // data.set[5] = new DataSet (
-        //     ' ',
-        //     'Human Evolution and Activities',
-        //     '',
-        //     ''
-        // );
+        data.set[4] = new DataSet (
+            ' ',
+            'Human Evolution and Activities',
+            '',
+            ''
+        );
         
         data.chartType="line";
 
@@ -425,6 +419,24 @@ export class DataConstructor{
             }
         }).catch (error => {alert(error)})
         data.set[3].points = set3.points
+
+        //SET 4
+        let set4 = new DataSet()
+        axios.get(this.url + '/human_evolution/1022', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+                
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: 2022 - parseInt(response.data[i].BP), y: response.data[i].event};
+                set4.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[4].points = set4.points
 
         return data;
     }

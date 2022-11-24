@@ -17,6 +17,7 @@ export default function LineChart(props){
     
     for(var i = 0; i < props.data.set.length; i++){
         data[i] = {
+            id: i,
             type: "line",
             name: props.data.set[i].yTitle,
             toolTipContent: props.data.set[i].prefix + " {x}: {y}" + props.data.set[i].suffix,
@@ -39,18 +40,69 @@ export default function LineChart(props){
         e.chart.options.axisX.interval = newInterval
     }
 
-/*
+    function setHumanEvolutionPoints(){
+        if(loading) return
+        var set = []
+        var events = []
+
+        for(var i = 0; i < props.data.set[4].points.length; i++){
+            var multiple = false;
+            for(var p = 0; p < i; p++){
+                if(props.data.set[4].points[i].x === props.data.set[4].points[p].x) {
+                    multiple = true;
+                }
+            }
+            
+            if(multiple) {
+                events.push(props.data.set[4].points[i].y)
+            }
+            else {
+                events = []
+                events[0] = props.data.set[4].points[i].y;
+            }
+            set.push({x: props.data.set[4].points[i].x, y: 3, events: events})
+        }
+        return set;
+    }
+
+    //not done
+    function tooltipContent(e){
+        var id = e.entries[0].dataSeries.id;
+        console.log(id)
+        var content = ""
+        if(id === 1) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
+        if(id === 2) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[1].suffix
+        if(id === 4) {
+            var eventContent = "<ul>"
+            for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
+                eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
+            }
+            eventContent += "</ul>"
+            content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[4].suffix
+        }
+        return content
+    }
+
     //IF REQUIRES HUMAN EVOLUTION SERIES
     if(props.human){
         data[4] = {
             type: "scatter",
             color: "#1100ff",
             name: props.data.set[4].yTitle,
-            toolTipContent: props.data.set[4].prefix + " {x}: {y}" + props.data.set[4].suffix,
             showInLegend: true,
-            dataPoints: props.data.set[4].points
+            markerSize: 15,
+            markerType: "triangle",
+            axisYType: "secondary",
+            dataPoints: setHumanEvolutionPoints(),
+            toolTip: {
+                shared: false,
+                content: "{x}: {events}"
+            }
         }
     }
+
+/*
+    
 
     //FOR UNCERTAINTY VALUES IN SET V2
     if(props.v2error){
@@ -95,6 +147,13 @@ export default function LineChart(props){
             suffix: props.data.xSuffix,
             reversed: props.reversed,
             interval: props.interval
+        },
+        axisY2: {
+            title: "",
+            gridThickness: 0,
+            tickLength: 0,
+            lineThickness: 0,
+            labelFormatter: function(){return " ";}
         },
         rangeChanging: dynamicLoad,
         legend: {
