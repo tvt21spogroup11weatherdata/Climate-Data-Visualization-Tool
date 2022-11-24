@@ -75,15 +75,19 @@ export default function MultiAxisChart(props){
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
-        if(id === 1) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
-        if(id === 2) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[1].suffix
-        if(id === 3) {
-            var eventContent = "<ul>"
-            for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
-                eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
+        for(var i = 0; i < props.data.set.length; i++){
+            if(id === data[i].id + 1) {
+               content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
             }
-            eventContent += "</ul>"
-            content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[2].suffix
+        }
+        console.log(props.data.xPrefix)
+        if(props.data.set[id - 1].listDesc){
+            var eventContent = "<ul>"
+                for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
+                    eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
+                }
+                eventContent += "</ul>"
+                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[id - 1].suffix
         }
         return content
     }

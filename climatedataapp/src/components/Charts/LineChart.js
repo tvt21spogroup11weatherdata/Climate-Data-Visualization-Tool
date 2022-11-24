@@ -63,24 +63,23 @@ export default function LineChart(props){
         }
         return set;
     }
-    
+
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
         for(var i = 0; i < props.data.set.length; i++){
             if(id === data[i].id + 1) {
-               content = e.entries[0].dataPoint.x + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
+               content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
             }
         }
-        console.log(props.data.set[id - 1].listDesc)
-
+        console.log(props.data.xPrefix)
         if(props.data.set[id - 1].listDesc){
             var eventContent = "<ul>"
                 for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
                     eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
                 }
                 eventContent += "</ul>"
-                content = e.entries[0].dataPoint.x + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[4].suffix
+                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[id - 1].suffix
         }
         return content
     }

@@ -71,7 +71,7 @@ export class DataConstructor{
             'https://gml.noaa.gov/ccgg/about/co2_measurements.html', 
             'HadCRUT5 is a gridded dataset of global historical surface temperature anomalies relative to a 1961-1990 reference period. Data are available for each month from January 1850 onwards, on a 5 degree grid and as global and regional average time series. The dataset is a collaborative product of the Met Office Hadley Centre and the Climatic Research Unit at the University of East Anglia.',
             'Northern Hemisphere temperature reconstruction for the past 2,000 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.',
-            'Years', ' ', '' , 'A.D.', '0'); 
+            'Years', ' ', 'Year' , 'A.D.', '0'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Global Annual',
@@ -256,7 +256,7 @@ export class DataConstructor{
             'https://gml.noaa.gov/ccgg/about/co2_measurements.html', 
             'The graphs show monthly mean carbon dioxide measured at Mauna Loa Observatory, Hawaii. The carbon dioxide data on Mauna Loa constitute the longest record of direct measurements of CO2 in the atmosphere. They were started by C. David Keeling of the Scripps Institution of Oceanography in March of 1958 at a facility of the National Oceanic and Atmospheric Administration [Keeling, 1976]. NOAA started its own CO2 measurements in May of 1974, and they have run in parallel with those made by Scripps since then [Thoning, 1989].',
             '',
-            'Years', ' ', ' ' , ' ', '1'); 
+            'Years', ' ', 'Year' , 'A.D.', '1'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Monthly mean data',
@@ -321,7 +321,7 @@ export class DataConstructor{
             'https://cdiac.ess-dive.lbl.gov/trends/co2/lawdome.html', 
             'The CO2 records presented here are derived from three ice cores obtained at Law Dome, East Antarctica from 1987 to 1993. The Law Dome site satisfies many of the desirable characteristics of an ideal ice core site for atmospheric CO2 reconstructions including negligible melting of the ice sheet surface, low concentrations of impurities, regular stratigraphic layering undisturbed at the surface by wind or at depth by ice flow, and high snow accumulation rate. Further details on the site, drilling, and cores are provided in Etheridge et al. (1996), Etheridge and Wookey (1989), and Morgan et al (1997).',
             '',
-            'Years', ' ', ' ' , ' ', '2'); 
+            'Years', ' ', 'Year' , 'A.D.', '2'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Ice core DE08',
@@ -548,7 +548,7 @@ export class DataConstructor{
         'https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf', 
         'Reconstructions of Earth’s past climate strongly influence our understanding of the dynamics and sensitivity of the climate system. Yet global temperature has been reconstructed for only a few isolated windows of time1,2, and continuous reconstructions across glacial cycles remain elusive. Here I present a spatially weighted proxy reconstruction of global temperature over the past 2 million years estimated from a multi-proxy database of over 20,000 sea surface temperature point reconstructions. Global temperature gradually cooled until roughly 1.2 million years ago and cooling then stalled until the present.',
         '',
-        'Years Before Present', '', '' , '', '5'); 
+        'Years Before Present', '', 'Year' , 'BP', '5'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             'Year',
             'Change in Global Average Surface Temperature',
@@ -565,7 +565,7 @@ export class DataConstructor{
             ' ',
             'Human Evolution and Activities',
             '',
-            ''
+            'BP'
         );
         
 
@@ -672,8 +672,6 @@ export class DataConstructor{
 
 
     async V9Data(){
-        var subSectors = [];
-        var subSubSectors = [];
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by sectors', 
             'https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx',
