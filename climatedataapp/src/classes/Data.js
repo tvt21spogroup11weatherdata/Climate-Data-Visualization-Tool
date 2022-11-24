@@ -33,6 +33,7 @@ export class Data{
 export class DataSet {
     xTitle = "äks akseli"
     yTitle = "yy akseli"
+    listDesc = false
     prefix = ' '
     suffix = ' '
     points = []
@@ -351,6 +352,8 @@ export class DataConstructor{
             '',
             ''
         );
+
+        
         
         data.chartType="line";
 
@@ -437,7 +440,7 @@ export class DataConstructor{
             alert(error)
         })
         data.set[4].points = set4.points
-
+        data.set[4].listDesc = true;
         return data;
     }
 
@@ -564,6 +567,7 @@ export class DataConstructor{
             '',
             ''
         );
+        
 
         data.chartType="multiaxis";
         
@@ -625,6 +629,7 @@ export class DataConstructor{
         })
         data.set[2].points = set2.points;
 
+        data.set[2].listDesc = true;
 
         return data;
     }

@@ -20,7 +20,6 @@ export default function LineChart(props){
             id: i,
             type: "line",
             name: props.data.set[i].yTitle,
-            toolTipContent: props.data.set[i].prefix + " {x}: {y}" + props.data.set[i].suffix,
             showInLegend: true,
             dataPoints: props.data.set[i].points
         }
@@ -64,21 +63,24 @@ export default function LineChart(props){
         }
         return set;
     }
-
-    //not done
+    
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
-        console.log(id)
         var content = ""
-        if(id === 1) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
-        if(id === 2) content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[1].suffix
-        if(id === 4) {
-            var eventContent = "<ul>"
-            for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
-                eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
+        for(var i = 0; i < props.data.set.length; i++){
+            if(id === data[i].id + 1) {
+               content = e.entries[0].dataPoint.x + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[0].suffix
             }
-            eventContent += "</ul>"
-            content = e.entries[0].dataPoint.x + "BP " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[4].suffix
+        }
+        console.log(props.data.set[id - 1].listDesc)
+
+        if(props.data.set[id - 1].listDesc){
+            var eventContent = "<ul>"
+                for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
+                    eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
+                }
+                eventContent += "</ul>"
+                content = e.entries[0].dataPoint.x + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[4].suffix
         }
         return content
     }
@@ -86,6 +88,7 @@ export default function LineChart(props){
     //IF REQUIRES HUMAN EVOLUTION SERIES
     if(props.human){
         data[4] = {
+            id: 5,
             type: "scatter",
             color: "#1100ff",
             name: props.data.set[4].yTitle,
@@ -154,6 +157,10 @@ export default function LineChart(props){
             tickLength: 0,
             lineThickness: 0,
             labelFormatter: function(){return " ";}
+        },
+        toolTip: {
+            shared: false,
+            content: tooltipContent
         },
         rangeChanging: dynamicLoad,
         legend: {
