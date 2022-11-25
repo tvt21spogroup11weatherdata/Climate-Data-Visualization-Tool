@@ -1,10 +1,14 @@
+import { hover } from '@testing-library/user-event/dist/hover';
 import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     const [loading, setLoading] = useState(true)
+    const [accessibleDatapoint, setAccessibleDatapoint] = useState(null)
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
+   // var hoverValue;
+
     var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
     
     //Toggle series when clicking legend
@@ -21,8 +25,17 @@ export default function LineChart(props){
             type: "line",
             name: props.data.set[i].yTitle,
             showInLegend: true,
-            dataPoints: props.data.set[i].points
+            dataPoints: props.data.set[i].points,
+            mouseover: accessibility
         }
+    }
+
+    function accessibility(e){
+        var set = props.data.set[e.dataSeries.id]
+        if(props.human && e.dataSeries.id == 4) {
+            setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix)
+        }
+        else setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix)
     }
 
     function dynamicLoad(e){
@@ -67,6 +80,7 @@ export default function LineChart(props){
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
+
         for(var i = 0; i < props.data.set.length; i++){
             if(id === data[i].id + 1) {
                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
@@ -80,13 +94,14 @@ export default function LineChart(props){
                 eventContent += "</ul>"
                 content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[id - 1].suffix
         }
+
         return content
     }
 
     //IF REQUIRES HUMAN EVOLUTION SERIES
     if(props.human){
         data[4] = {
-            id: 5,
+            id: 4,
             type: "scatter",
             color: "#1100ff",
             name: props.data.set[4].yTitle,
@@ -98,7 +113,8 @@ export default function LineChart(props){
             toolTip: {
                 shared: false,
                 content: "{x}: {events}"
-            }
+            },
+            mouseover: accessibility
         }
     }
 
@@ -177,7 +193,9 @@ export default function LineChart(props){
     setTimeout(() => {setLoading(false)}, "500");
 
     if(!loading){
-        return( <div>{chart}</div> ) 
+        return( <div><div>{chart}</div><p>{accessibleDatapoint}</p> 
+        
+        </div> ) 
     }
     else {
         return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>

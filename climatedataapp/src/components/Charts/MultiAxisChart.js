@@ -3,7 +3,7 @@ import CanvasJSReact from '../../canvasjs.react';
 
 export default function MultiAxisChart(props){
     const [loading, setLoading] = useState(true)
-
+    const [accessibleDatapoint, setAccessibleDatapoint] = useState(null)
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var postedData ; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
     
@@ -26,7 +26,14 @@ export default function MultiAxisChart(props){
         e.chart.render();
     }
 
-   // console.log(props.data.set[2])
+    function accessibility(e){
+        console.log(e.dataSeries.id)
+        var set = props.data.set[e.dataSeries.id]
+        if(e.dataSeries.id == 2) {
+            setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix)
+        }
+        else setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix)
+    }
     
     function dynamicLoad(e){
         if(e.trigger === "pan") return;
@@ -98,7 +105,8 @@ export default function MultiAxisChart(props){
             color: "#C24642",
             axisYIndex: 0,
             showInLegend: true,
-            dataPoints: props.data.set[0].points
+            dataPoints: props.data.set[0].points,
+            mouseover: accessibility
         },
         {
             type: "line",
@@ -107,7 +115,8 @@ export default function MultiAxisChart(props){
             color: "#7F6084",
             axisYType: "secondary",
             showInLegend: true,
-            dataPoints: props.data.set[1].points
+            dataPoints: props.data.set[1].points,
+            mouseover: accessibility
         },
         {
             type: "scatter",
@@ -118,7 +127,8 @@ export default function MultiAxisChart(props){
             color: "#1100ff",
             axisYType: "secondary",
             showInLegend: true,
-            dataPoints: setHumanEvolutionPoints()
+            dataPoints: setHumanEvolutionPoints(),
+            mouseover: accessibility
         }]
 
     
@@ -177,11 +187,7 @@ export default function MultiAxisChart(props){
     if(loading) setTimeout(() => {setLoading(false)}, "500");
 
     if(!loading){
-        return(
-            <div>
-                {chart}
-            </div>
-        )
+        return( <div><div>{chart}</div><p>{accessibleDatapoint}</p> </div>)
     }
     else {
         return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>
