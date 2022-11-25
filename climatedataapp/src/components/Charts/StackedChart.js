@@ -100,9 +100,6 @@ export default function StackedChart(props){
         animationEnabled: true,
         zoomEnabled: true,
         height: 700,
-        title:{
-            text: testData.title
-        },
         axisX:{
             title: testData.xTitle,
             interval: 10,

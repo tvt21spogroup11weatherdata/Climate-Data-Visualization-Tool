@@ -47,9 +47,6 @@ export default function DoughnutChart(props){
 
     var options = {
         animationEnabled: true,
-        title:{
-            text: props.data.title,
-        },
         data: [{
             type: "doughnut",
             click: drilldownHandler,

@@ -46,6 +46,7 @@ export default function VisualizeData(props){
 
     return(
             <div>
+                <h1>{props.data.title}</h1>
                 {chartElement}
                 <div id="chartDesc">
                     {SetDescription()}

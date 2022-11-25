@@ -133,10 +133,6 @@ export default function LineChart(props){
         theme: "light2",
         animationEnabled: true,
         zoomEnabled: true,
-        title: {
-            text: props.data.title,
-            fontFamily: "Calibri" //MOVE TO ENV VAR
-        },
         axisY: {
             title:  props.data.yTitle,
             suffix: props.data.set[0].suffix,

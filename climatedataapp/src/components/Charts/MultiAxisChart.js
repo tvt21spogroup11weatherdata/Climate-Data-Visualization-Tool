@@ -125,10 +125,6 @@ export default function MultiAxisChart(props){
     //Chart options
     const options = {
         zoomEnabled: true,
-        title:{
-            text: props.data.title,
-            fontFamily: "Calibri"
-        },
         axisX: {
             title: props.data.xTitle,
             reversed: true,
