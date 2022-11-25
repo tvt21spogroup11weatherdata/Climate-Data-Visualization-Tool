@@ -15,8 +15,6 @@ export default function MultiAxisChart(props){
         } else { e.dataSeries.visible = true;}
 
         e.chart.options.axisX.interval = 100000
-
-        
         
         if(e.dataSeries.id === 0 && !e.dataSeries.visible) {
             e.chart.options.axisX.interval = 10000
@@ -67,7 +65,7 @@ export default function MultiAxisChart(props){
                 events = []
                 events[0] = props.data.set[2].points[i].y;
             }
-            set.push({x: props.data.set[2].points[i].x, y: 3, events: events})
+            set.push({x: parseInt(props.data.set[2].points[i].x), y: 3, events: events})
         }
         return set;
     }
@@ -80,7 +78,6 @@ export default function MultiAxisChart(props){
                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
             }
         }
-        console.log(props.data.xPrefix)
         if(props.data.set[id - 1].listDesc){
             var eventContent = "<ul>"
                 for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){

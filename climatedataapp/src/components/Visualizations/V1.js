@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import VisualizeData from "./VisualizeData";
-import { DataConstructor} from '../../classes/Data';
+import { Data, DataConstructor} from '../../classes/Data';
 import VisualizeTempData from "./VisualizeTempData";
 
 export default function V1(props){
@@ -9,14 +9,26 @@ export default function V1(props){
     var cnstr = new DataConstructor();
     
     useEffect(() => {
-        if(data === null){
-            setLoading(true);
-            cnstr.V1Data().then(res => {
-                setData(res);
-                setTimeout(() => {setLoading(false)}, "500");
-            })
+        if(loading){
+           if(data === null){    
+                if(window.sessionStorage.getItem("V1") === null){
+                    cnstr.V1Data().then(res => {
+                        setData(res)
+                        setTimeout(() => {storeData(res)}, "500");
+                    })
+                }
+                else {
+                    setData(JSON.parse(window.sessionStorage.getItem("V1")))
+                    setTimeout(() => {setLoading(false)}, "500");
+                }
+            }
         }
     })
+
+    function storeData(data){
+        window.sessionStorage.setItem("V1", JSON.stringify(data))
+        setLoading(false)
+    }
 
     function setMenu(){ if(props.menu) return <VisualizeTempData/>}
 

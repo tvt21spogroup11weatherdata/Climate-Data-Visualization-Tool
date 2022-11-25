@@ -6,7 +6,7 @@ export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
     var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
-
+    
     //Toggle series when clicking legend
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -72,7 +72,6 @@ export default function LineChart(props){
                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
             }
         }
-        console.log(props.data.xPrefix)
         if(props.data.set[id - 1].listDesc){
             var eventContent = "<ul>"
                 for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){

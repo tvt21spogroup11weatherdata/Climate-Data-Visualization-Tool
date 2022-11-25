@@ -9,14 +9,26 @@ export default function V4(props){
     var cnstr = new DataConstructor();
     
     useEffect(() => {
-        if(data === null){
-            setLoading(true);
-            cnstr.V4Data().then(res => {
-                setData(res);
-                setTimeout(() => {setLoading(false)}, "500");
-            })
+        if(loading){
+           if(data === null){    
+                if(window.sessionStorage.getItem("V4") === null){
+                    cnstr.V4Data().then(res => {
+                        setData(res)
+                        setTimeout(() => {storeData(res)}, "500");
+                    })
+                }
+                else {
+                    setData(JSON.parse(window.sessionStorage.getItem("V4")))
+                    setTimeout(() => {setLoading(false)}, "500");
+                }
+            }
         }
     })
+
+    function storeData(data){
+        window.sessionStorage.setItem("V4", JSON.stringify(data))
+        setLoading(false)
+    }
 
     function setMenu(){ if(props.menu) return <VisualizeTempData/>}
 

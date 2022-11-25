@@ -36,7 +36,7 @@ export class DataSet {
     listDesc = false
     prefix = ' '
     suffix = ' '
-    points = []
+    points = [];
     enabled = ' ' //Is the series enabled when the chart is loaded?
 
     constructor(xTitle, yTitle, prefix, suffix){
@@ -51,20 +51,40 @@ export class DataSet {
 export class DataConstructor{
     url = "http://localhost:3001"
     headers = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin'}
+    
+    testSet(){
+       // localStorage.setItem("name", "moi")
+        
+       var random = Math.floor(Math.random() * 4)
+       console.log(random)
+       if(random === 0) window.localStorage.setItem("name" + String(random), "anni")
+       if(random === 1) window.localStorage.setItem("name" + String(random), "terho")
+       if(random === 2) window.localStorage.setItem("name" + String(random), "tino")
+       if(random === 3) window.localStorage.setItem("name" + String(random), "ville")
+        console.log(window.localStorage)
+    }
+    
+    testGet(i){
+        //console.log(window.localStorage.getItem("name"+i))
+        if(window.localStorage.getItem("name"+i)){
+            
+        }
+    }
 
     //Construct Data object by index
-    GetByIndex(i){
-        if(i === 0) return this.V1Data();
-        if(i === 1) return this.V3Data();
-        if(i === 2) return this.V4Data();
-        if(i === 3) return this.V5Data();
-        if(i === 4) return this.V6Data();
-        if(i === 5) return this.V7Data();
-        if(i === 6) return this.V8Data();
-        if(i === 7) return this.V9Data();
+    async GetByIndex(i){
+        if(i === 0) return this.V1Data()
+        if(i === 1) return this.V3Data()
+        if(i === 2) return this.V4Data()
+        if(i === 3) return this.V5Data()
+        if(i === 4) return this.V6Data()
+        if(i === 5) return this.V7Data()
+        if(i === 6) return this.V8Data()
+        if(i === 7) return this.V9Data()
     }
 
     async V1Data(){
+        console.log("trigger only once")
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Global historical surface temperature anomalies from January 1850 onwards', 
             'https://www.metoffice.gov.uk/hadobs/hadcrut5/',
@@ -130,8 +150,8 @@ export class DataConstructor{
         );
 
         data.chartType="line"
-        let set0 = new DataSet()
-
+        var set0 = new DataSet()
+        
         //SET 0
         axios.get(this.url + '/hadcrutglobalannual', {
             headers: {
@@ -141,14 +161,16 @@ export class DataConstructor{
             }).then((response) => {
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: response.data[i].Year, y: response.data[i].Anomaly};
+               //const dataPoint = new DataPoint(response.data[i].Year,response.data[i].Anomaly)
               //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
                 set0.points.push(dataPoint);
             }
         }).catch (error => {
             alert(error)
         })
-        data.set[0].points = set0.points;
         
+        data.set[0].points = set0.points;
+
         //SET 1
         let set1 = new DataSet()
         axios.get(this.url + '/hadcrutglobalmonthly', {
@@ -240,12 +262,16 @@ export class DataConstructor{
                 //const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
                 set6.points.push(dataPoint);
             }
+            data.set[6].points = set6.points;
         }).catch (error => {
             alert(error)
         })
-        data.set[6].points = set6.points;
-        
-        return data;
+
+        var points = JSON.stringify(data.set[6])
+
+        window.sessionStorage.setItem("v1", JSON.stringify(data))
+
+        return data
     }
 
 
