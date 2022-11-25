@@ -634,39 +634,25 @@ export class DataConstructor{
         return data;
     }
 
-    V8Data(){
+    async V8Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by country', 
             'https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D',
             'https://www.icos-cp.eu/science-and-impact/global-carbon-budget/2021', 
             'Accurate assessment of anthropogenic carbon dioxide (CO2) emissions and their redistribution among the atmosphere, ocean, and terrestrial biosphere in a changing climate is critical to better understand the global carbon cycle, support the development of climate policies, and project future climate change. Here we describe and synthesize datasets and methodology to quantify the five major components of the global carbon budget and their uncertainties. Fossil CO2 emissions (EFOS) are based on energy statistics and cement production data, while emissions from land-use change (ELUC), mainly deforestation, are based on land use and land-use change data and bookkeeping models.',
             ' ',
-            'Years', ' ', ' ' , ' ', '6'); 
+            'Years', ' ', 'Year' , ' ', '6'); 
 
         //FOREACH COUNTRY ADD SET
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'CountryName',
             ' ',
-            ' '
-        );
-        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'CountryName',
-            ' ',
-            ' '
-        );
-        data.set[2] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'CountryName',
-            ' ',
-            ' '
+            'ppm'
         );
 
         data.chartType="stacked";
 
-        //GET DATA HERE
-    //    this.InsertTestValues(data, 0, 400);
         return data;
     }
 
