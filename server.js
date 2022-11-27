@@ -74,4 +74,8 @@ app.use('/ghg_global_subsector', ghgGlobalSubsector)
 const humanEvolution = require('./routes/human_evolution/human_evolution_Route')
 app.use('/human_evolution', humanEvolution)
 
+const nationalCarbonEmissions = require('./routes/national_carbon_emissions/national_carbon_emissions_Route')
+app.use('/national_carbon_emissions', nationalCarbonEmissions)
+
+
 app.listen(3001, () => console.log('Server started'))
