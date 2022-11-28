@@ -661,7 +661,7 @@ export class DataConstructor{
     }
 
     async V8Data(){
-        const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
+        let data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by country', 
             'https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D',
             'https://www.icos-cp.eu/science-and-impact/global-carbon-budget/2021', 
@@ -669,13 +669,57 @@ export class DataConstructor{
             ' ',
             'Years', ' ', 'Year' , ' ', '6'); 
 
+        //SET 2
+
+        axios.get(this.url + '/national_carbon_emissions', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+                //console.log([Object.keys(response.data[1])])
+                //console.log(Object.keys(response.data[0]))
+                for(var i = 2; i < Object.keys(response.data[0]).length; i++){
+                    data.set.push(new DataSet(
+                        ' ',
+                        Object.keys(response.data[0])[i],
+                        '',
+                        'ppm'
+                    ))
+                }
+                try {
+                    for(var j = 0; j < Object.keys(response.data[0]).length; j++){
+                        for(var i = 0; i < data.set.length; i++){
+                            if(Object.keys(response.data[j]) === undefined) continue;
+                            const dataPoint = {x: response.data[j][Object.keys(response.data[j])[1]], y: response.data[j][Object.keys(response.data[j])[i + 2]]}
+                            //points.push(dataPoint)
+                            data.set[i].points.push(dataPoint)
+                        }
+                    }
+                }
+                catch (TypeError){
+                    console.log(TypeError)
+                }
+
+                console.log(data)
+                
+
+        }).catch (error => {
+            alert(error)
+        })
+       // data.set[2].points = set2.points;
+
+       
+
+
+/*
         //FOREACH COUNTRY ADD SET
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'CountryName',
             ' ',
             'ppm'
-        );
+        );*/
 
         data.chartType="stacked";
 

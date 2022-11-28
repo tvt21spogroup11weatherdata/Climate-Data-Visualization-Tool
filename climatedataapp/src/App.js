@@ -16,7 +16,7 @@ import V4 from './components/Visualizations/V4'
 import V5 from './components/Visualizations/V5'
 import V6 from './components/Visualizations/V6'
 import V7 from './components/Visualizations/V7'
-//import V8 from './components/Visualizations/V8'
+import V8 from './components/Visualizations/V8'
 import V9 from './components/Visualizations/V9'
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
                 <Route path="/V5" element={<V5 menu={true}/>}/>
                 <Route path="/V6" element={<V6 menu={true}/>}/>
                 <Route path="/V7" element={<V7 menu={true}/>}/>
-                {/*<Route path="/V8" element={<V8 menu={true}/>}/>*/}
+                <Route path="/V8" element={<V8 menu={true}/>}/>
                 <Route path="/V9" element={<V9 menu={true}/>}/>
             </Routes>
         </div>

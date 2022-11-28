@@ -8,35 +8,7 @@ export default function StackedChart(props){
     const data = [];
     var amountOfToggledSeries = 0;
 
-    /////////////////////////////////////////////////
-    var testData; //remove when actual data
-    localTestData(); //remove when actual data
-
-    function localTestData(){ //remove when actual data
-        testData = props.data;
-        for(var i = 0; i < 219; i++){
-            testData.set[i] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'CountryName',
-            ' ',
-            ' '
-            );
-            for(var j = 0; j < 80; j++){
-                const dataPoint = {x: 1950 + j, y: (100 + Math.random(2)) * Math.random(3)}
-                testData.set[i].points.push(dataPoint)
-            }
-
-            data[i] = {
-                id: i,
-                visible: false,
-                type: "stackedArea",
-                name: testData.set[i].yTitle,
-                showInLegend: "true",
-                dataPoints: testData.set[i].points
-            }
-        }
-    }
-    /////////////////////////////////////////////////
+    setData()
 
 
     //use this when actual data
@@ -47,9 +19,9 @@ export default function StackedChart(props){
                 id: i,
                 visible: false,
                 type: "stackedArea",
-                name: testData.set[i].yTitle,
+                name: props.data.set[i].yTitle,
                 showInLegend: "true",
-                dataPoints: testData.set[i].points
+                dataPoints: props.data.set[i].points
             }
         }
     }
@@ -99,14 +71,14 @@ export default function StackedChart(props){
     const options = {
         animationEnabled: true,
         zoomEnabled: true,
-        height: 700,
+
         axisX:{
-            title: testData.xTitle,
+            title: props.data.xTitle,
             interval: 10,
             valueFormatString: "####",
         },
         axisY:{
-            title: testData.yTitle,
+            title: props.data.yTitle,
             interval: 100,
             maximum: 100
         },
