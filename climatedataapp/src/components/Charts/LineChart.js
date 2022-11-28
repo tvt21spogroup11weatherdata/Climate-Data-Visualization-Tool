@@ -4,13 +4,20 @@ import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     const [loading, setLoading] = useState(true)
-    const [accessibleDatapoint, setAccessibleDatapoint] = useState(null)
+    var accessibleDatapoint
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
+    var newInterval = props.interval
    // var hoverValue;
 
     var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
     
+    window.addEventListener('resize', handleResize)
+
+    function handleResize(){
+        
+    }
+
     //Toggle series when clicking legend
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -33,9 +40,9 @@ export default function LineChart(props){
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
         if(props.human && e.dataSeries.id == 4) {
-            setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix)
+            accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
         }
-        else setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix)
+        else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
     }
 
     function dynamicLoad(e){
@@ -46,10 +53,13 @@ export default function LineChart(props){
         if(e.trigger === "reset") return;
 
         var diff = e.axisX[0].viewportMaximum - e.axisX[0].viewportMinimum;
-        var newInterval;
+        
+       // console.log(diff)
         if(diff < 500) newInterval = 10;
         if(diff < 200) newInterval = 1;
+        
         e.chart.options.axisX.interval = newInterval
+        
     }
 
     function setHumanEvolutionPoints(){
@@ -94,7 +104,6 @@ export default function LineChart(props){
                 eventContent += "</ul>"
                 content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[id - 1].suffix
         }
-
         return content
     }
 
@@ -156,8 +165,6 @@ export default function LineChart(props){
         },
         axisX: {
             title: props.data.xTitle,
-            prefix: props.data.xPrefix,
-            suffix: props.data.xSuffix,
             reversed: props.reversed,
             interval: props.interval
         },

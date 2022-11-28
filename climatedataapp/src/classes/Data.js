@@ -91,7 +91,7 @@ export class DataConstructor{
             'https://gml.noaa.gov/ccgg/about/co2_measurements.html', 
             'HadCRUT5 is a gridded dataset of global historical surface temperature anomalies relative to a 1961-1990 reference period. Data are available for each month from January 1850 onwards, on a 5 degree grid and as global and regional average time series. The dataset is a collaborative product of the Met Office Hadley Centre and the Climatic Research Unit at the University of East Anglia.',
             'Northern Hemisphere temperature reconstruction for the past 2,000 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.',
-            'Years', ' ', 'Year' , 'A.D.', '0'); 
+            'Years', ' ', '' , '', '0'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Global Annual',
@@ -266,10 +266,6 @@ export class DataConstructor{
         }).catch (error => {
             alert(error)
         })
-
-        var points = JSON.stringify(data.set[6])
-
-        window.sessionStorage.setItem("v1", JSON.stringify(data))
 
         return data
     }
