@@ -77,5 +77,8 @@ app.use('/human_evolution', humanEvolution)
 const nationalCarbonEmissions = require('./routes/national_carbon_emissions/national_carbon_emissions_Route')
 app.use('/national_carbon_emissions', nationalCarbonEmissions)
 
+const collections = require('./routes/collections/collections_Route')
+app.use('/collections', collections)
+
 
 app.listen(3001, () => console.log('Server started'))
