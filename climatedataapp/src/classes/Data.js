@@ -701,7 +701,7 @@ export class DataConstructor{
                     console.log(TypeError)
                 }
 
-                console.log(data)
+            //   console.log(data)
                 
 
         }).catch (error => {
