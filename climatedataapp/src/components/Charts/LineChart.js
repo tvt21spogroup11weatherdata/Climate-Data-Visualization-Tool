@@ -11,12 +11,7 @@ export default function LineChart(props){
    // var hoverValue;
 
     var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
-    
-    window.addEventListener('resize', handleResize)
 
-    function handleResize(){
-        
-    }
 
     //Toggle series when clicking legend
     function toggleSeries(e) {
@@ -37,6 +32,7 @@ export default function LineChart(props){
         }
     }
 
+
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
         if(props.human && e.dataSeries.id == 4) {
@@ -47,19 +43,17 @@ export default function LineChart(props){
 
     function dynamicLoad(e){
         if(e.trigger === "pan") return;
-
         e.chart.options.axisX.interval = props.interval
-
         if(e.trigger === "reset") return;
 
         var diff = e.axisX[0].viewportMaximum - e.axisX[0].viewportMinimum;
         
-       // console.log(diff)
-        if(diff < 500) newInterval = 10;
-        if(diff < 200) newInterval = 1;
+      //  console.log(diff)
+        if(diff < 500) newInterval = 100;
+        if(diff < 200) newInterval = 10;
+        if(diff < 30) newInterval = 1;
         
         e.chart.options.axisX.interval = newInterval
-        
     }
 
     function setHumanEvolutionPoints(){
@@ -67,27 +61,28 @@ export default function LineChart(props){
         var set = []
         var events = []
 
-        for(var i = 0; i < props.data.set[4].points.length; i++){
+        for(var i = 0; i < props.data.set[5].points.length; i++){
             var multiple = false;
             for(var p = 0; p < i; p++){
-                if(props.data.set[4].points[i].x === props.data.set[4].points[p].x) {
+                if(props.data.set[5].points[i].x === props.data.set[5].points[p].x) {
                     multiple = true;
                 }
             }
             
             if(multiple) {
-                events.push(props.data.set[4].points[i].y)
+                events.push(props.data.set[5].points[i].y)
             }
             else {
                 events = []
-                events[0] = props.data.set[4].points[i].y;
+                events[0] = props.data.set[5].points[i].y;
             }
-            set.push({x: props.data.set[4].points[i].x, y: 3, events: events})
+            set.push({x: props.data.set[5].points[i].x, y: 3, events: events})
         }
         return set;
     }
 
     function tooltipContent(e){
+        //console.log(e)
         var id = e.entries[0].dataSeries.id;
         var content = ""
 
@@ -96,7 +91,7 @@ export default function LineChart(props){
                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
             }
         }
-        if(props.data.set[id - 1].listDesc){
+        if(props.data.set[e.entries[0].dataSeries.index].listDesc){
             var eventContent = "<ul>"
                 for(var i = 0; i < e.entries[0].dataPoint.events.length; i++){
                     eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
@@ -109,11 +104,11 @@ export default function LineChart(props){
 
     //IF REQUIRES HUMAN EVOLUTION SERIES
     if(props.human){
-        data[4] = {
-            id: 4,
+        data[5] = {
+            id: 5,
             type: "scatter",
             color: "#1100ff",
-            name: props.data.set[4].yTitle,
+            name: props.data.set[5].yTitle,
             showInLegend: true,
             markerSize: 15,
             markerType: "triangle",

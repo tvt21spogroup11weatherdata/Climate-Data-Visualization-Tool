@@ -84,7 +84,6 @@ export class DataConstructor{
     }
 
     async V1Data(){
-        console.log("trigger only once")
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Global historical surface temperature anomalies from January 1850 onwards', 
             'https://www.metoffice.gov.uk/hadobs/hadcrut5/',
@@ -368,7 +367,13 @@ export class DataConstructor{
             ' ',
             'ppm'
         );
-        data.set[4] = new DataSet (
+        data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+            ' ',
+            'Atmospheric CO2 concentrations from Mauna Loa monthly',
+            ' ',
+            'ppm'
+        );
+        data.set[5] = new DataSet (
             ' ',
             'Human Evolution and Activities',
             '',
@@ -445,8 +450,28 @@ export class DataConstructor{
         }).catch (error => {alert(error)})
         data.set[3].points = set3.points
 
-        //SET 4
         let set4 = new DataSet()
+
+        //SET 4
+        axios.get(this.url + '/maunaloaco2monthly', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+            for(var i = 0; i < response.data.length; i++){
+                const dataPoint = {x: response.data[i].year + (1/12) * response.data[i].month, y: response.data[i].average};
+              //  const uncertaintyPoint = {x: response.data[i].Year, y: [response.data[i].Lower_confidence_limit, response.data[i].Upper_confidence_limit]}
+                set4.points.push(dataPoint);
+            }
+        }).catch (error => {
+            alert(error)
+        })
+        data.set[4].points = set4.points;
+
+
+        //SET 5
+        let set5 = new DataSet()
         axios.get(this.url + '/human_evolution/1022', {
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -456,13 +481,15 @@ export class DataConstructor{
                 
             for(var i = 0; i < response.data.length; i++){
                 const dataPoint = {x: 2022 - parseInt(response.data[i].BP), y: response.data[i].event};
-                set4.points.push(dataPoint);
+                set5.points.push(dataPoint);
             }
         }).catch (error => {
             alert(error)
         })
-        data.set[4].points = set4.points
-        data.set[4].listDesc = true;
+        data.set[5].points = set5.points
+        data.set[5].listDesc = true;
+        console.log(data)
+
         return data;
     }
 
