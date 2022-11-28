@@ -4,11 +4,14 @@ import { Data, DataSet } from '../../classes/Data';
 
 export default function StackedChart(props){
     const [loading, setLoading] = useState(true)
+
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     const data = [];
     var amountOfToggledSeries = 0;
     var toggledMaxValues = []
     var chartYMax = 0;
+    var legendItemFontSize = 11
+    var chartHeight = window.innerHeight * 0.6
 
     setData()
 
@@ -107,7 +110,7 @@ export default function StackedChart(props){
     const options = {
         animationEnabled: true,
         zoomEnabled: true,
-
+        height: chartHeight,
         axisX:{
             title: props.data.xTitle,
             interval: 10,
@@ -124,7 +127,10 @@ export default function StackedChart(props){
         },
         legend: {
             cursor: "pointer",
-            itemclick: toggleSeries
+            itemclick: toggleSeries,
+            markerMargin: 0,
+            fontSize: legendItemFontSize,
+            horizontalAlign: "left"
         },
         rangeChanging: dynamicLoad,
         data: data
