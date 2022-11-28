@@ -570,7 +570,7 @@ export class DataConstructor{
         'https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf', 
         'Reconstructions of Earth’s past climate strongly influence our understanding of the dynamics and sensitivity of the climate system. Yet global temperature has been reconstructed for only a few isolated windows of time1,2, and continuous reconstructions across glacial cycles remain elusive. Here I present a spatially weighted proxy reconstruction of global temperature over the past 2 million years estimated from a multi-proxy database of over 20,000 sea surface temperature point reconstructions. Global temperature gradually cooled until roughly 1.2 million years ago and cooling then stalled until the present.',
         '',
-        'Years Before Present', '', 'Year' , 'BP', '5'); 
+        'Years Before Present', '', '' , '', '5'); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             'Year',
             'Change in Global Average Surface Temperature',

@@ -34,7 +34,7 @@ export default function V7(props){
 
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData data={data} reversed={true} chartType="multiaxis"/>
+        else return <VisualizeData data={data} reversed={true} chartType="multiaxis" interval={100000}/>
     }
 
     return (

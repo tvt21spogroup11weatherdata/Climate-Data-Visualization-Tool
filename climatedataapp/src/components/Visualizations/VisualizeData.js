@@ -15,7 +15,7 @@ export default function VisualizeData(props){
             break;
         case "stacked":     chartElement = (<StackedChart data={props.data} zoomable='true'/>)
             break;
-        case "multiaxis":   chartElement = (<MultiAxisChart data={props.data}/>)
+        case "multiaxis":   chartElement = (<MultiAxisChart data={props.data} interval={props.interval}/>)
             break;
         case "doughnut":    chartElement = (<DoughnutChart data={props.data}/>)
             break;

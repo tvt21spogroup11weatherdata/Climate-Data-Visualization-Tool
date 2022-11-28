@@ -35,7 +35,7 @@ export default function V3(props){
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
         else {
-            return <VisualizeData data={data} chartType="line" interval={1}/>
+            return <VisualizeData data={data} chartType="line" interval={10}/>
         }
     }
 

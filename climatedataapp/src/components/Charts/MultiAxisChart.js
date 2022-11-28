@@ -3,7 +3,7 @@ import CanvasJSReact from '../../canvasjs.react';
 
 export default function MultiAxisChart(props){
     const [loading, setLoading] = useState(true)
-    const [accessibleDatapoint, setAccessibleDatapoint] = useState(null)
+    var accessibleDatapoint
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var postedData ; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
     
@@ -30,9 +30,9 @@ export default function MultiAxisChart(props){
         console.log(e.dataSeries.id)
         var set = props.data.set[e.dataSeries.id]
         if(e.dataSeries.id == 2) {
-            setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix)
+            accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
         }
-        else setAccessibleDatapoint(props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix)
+        else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
     }
     
     function dynamicLoad(e){
@@ -138,9 +138,7 @@ export default function MultiAxisChart(props){
         axisX: {
             title: props.data.xTitle,
             reversed: true,
-            prefix: props.data.xPrefix,
-            suffix: props.data.xSuffix,
-            interval: 100000
+            interval: props.interval
         },
         axisY:{
             title: props.data.set[0].yTitle,
