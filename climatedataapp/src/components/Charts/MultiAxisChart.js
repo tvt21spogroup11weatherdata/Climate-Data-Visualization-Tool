@@ -14,7 +14,7 @@ export default function MultiAxisChart(props){
             e.dataSeries.visible = false;
         } else { e.dataSeries.visible = true;}
 
-        e.chart.options.axisX.interval = 100000
+        e.chart.options.axisX.interval = props.interval
         
         if(e.dataSeries.id === 0 && !e.dataSeries.visible) {
             e.chart.options.axisX.interval = 10000
@@ -38,7 +38,7 @@ export default function MultiAxisChart(props){
     function dynamicLoad(e){
         if(e.trigger === "pan") return;
 
-        e.chart.options.axisX.interval = 100000
+        e.chart.options.axisX.interval = props.interval
 
         if(e.trigger === "reset") return;
 

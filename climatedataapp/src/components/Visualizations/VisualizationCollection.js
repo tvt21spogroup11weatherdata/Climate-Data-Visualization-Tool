@@ -3,11 +3,11 @@ import { Collection, VisualizationsMeta } from "../../classes/UserCollection";
 import { useEffect, useState } from "react";
 import { DataConstructor } from "../../classes/Data";
 import V1 from "./V1"
-import V3 from "./V3"
 import V4 from "./V4"
 import V5 from "./V5"
 import V6 from "./V6"
 import V7 from "./V7"
+import V8 from "./V8"
 import V9 from "./V9"
 
 export default function CollectionEditor(props){
@@ -42,12 +42,12 @@ export default function CollectionEditor(props){
             var data = visualizationsData[i];
             var element = [];
             if(collection.visualizations[i].dataIndex === 0) element.push(<V1 menu={false}/>)
-            if(collection.visualizations[i].dataIndex === 1) element.push(<V3 menu={false}/>)
-            if(collection.visualizations[i].dataIndex === 2) element.push(<V4 menu={false}/>)
-            if(collection.visualizations[i].dataIndex === 3) element.push(<V5 menu={false}/>)
-            if(collection.visualizations[i].dataIndex === 4) element.push(<V6 menu={false}/>)
-            if(collection.visualizations[i].dataIndex === 5) element.push(<V7 menu={false}/>)
-            if(collection.visualizations[i].dataIndex === 7) element.push(<V9 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 1) element.push(<V4 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 2) element.push(<V5 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 3) element.push(<V6 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 4) element.push(<V7 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 5) element.push(<V8 menu={false}/>)
+            if(collection.visualizations[i].dataIndex === 6) element.push(<V9 menu={false}/>)
 
             element.push((<div><b>Description:</b> <p>{collection.visualizations[i].description}</p></div>))
     
