@@ -2,6 +2,7 @@
 import { Collection, VisualizationsMeta } from "../../classes/UserCollection";
 import { useEffect, useState } from "react";
 import { DataConstructor } from "../../classes/Data";
+import axios from "axios";
 import V1 from "./V1"
 import V4 from "./V4"
 import V5 from "./V5"
@@ -13,7 +14,9 @@ import V9 from "./V9"
 export default function CollectionEditor(props){
     const [formatType, setFormatType] = useState("2column");
     const [collection, setColl] = useState([])
+    const [posted, setPosted] = useState(false)
 
+    var url = "http://localhost:3001"
     var collectionElements = [];
     var column2 = [];
     var visualizationsData = [];
@@ -115,8 +118,20 @@ export default function CollectionEditor(props){
         }
     }
 
+    async function SaveAndShare(e){
+        e.preventDefault()
+        let text = "Are you sure you want to save this collection? Editing this collection later will not be possible.";
+       // if(window.confirm(text)){
+            axios.post(url + '/collections/create', {testData: 1}, {headers: {'content-type': 'application/x-www-form-urlencoded'}}).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
+        //}
+    }
+
     //Create menu elements
-    const saveButton = (<td><button className="btn btn-primary">Save & share</button></td>)
+    const saveButton = (<td><form onSubmit={e => SaveAndShare(e)}><input type="submit" className="btn btn-primary" value="Save & share"></input></form></td>)
     const formatSelect = (<td>Formatting:<br/><button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
     const addVisualization = (
         <td><br/>

@@ -51,25 +51,6 @@ export class DataSet {
 export class DataConstructor{
     url = "http://localhost:3001"
     headers = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin'}
-    
-    testSet(){
-       // localStorage.setItem("name", "moi")
-        
-       var random = Math.floor(Math.random() * 4)
-       console.log(random)
-       if(random === 0) window.localStorage.setItem("name" + String(random), "anni")
-       if(random === 1) window.localStorage.setItem("name" + String(random), "terho")
-       if(random === 2) window.localStorage.setItem("name" + String(random), "tino")
-       if(random === 3) window.localStorage.setItem("name" + String(random), "ville")
-        console.log(window.localStorage)
-    }
-    
-    testGet(i){
-        //console.log(window.localStorage.getItem("name"+i))
-        if(window.localStorage.getItem("name"+i)){
-            
-        }
-    }
 
     //Construct Data object by index
     async GetByIndex(i){
