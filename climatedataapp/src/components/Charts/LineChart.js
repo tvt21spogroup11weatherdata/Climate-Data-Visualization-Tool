@@ -185,10 +185,10 @@ export default function LineChart(props){
     //Define chart
     var chart = <CanvasJSChart options = {options}/>
 
-    //Set enabled series when loading user collection
     if(props.seriesEnabled !== undefined){
+        var seriesEnabled = JSON.parse(props.seriesEnabled)
         for(var i = 0; i < props.data.set.length; i++){
-            chart.props.options.data[i].visible = props.seriesEnabled[i];
+            chart.props.options.data[i].visible = seriesEnabled[i];
         }
     }
 

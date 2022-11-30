@@ -93,13 +93,13 @@ export default function CollectionEditor(props){
             var element = [];
             const index = collection[i].dataIndex;
 
-            if(collection[i].dataIndex === 0) element.push(<V1 menu={false}/>)
-            if(collection[i].dataIndex === 1) element.push(<V4 menu={false}/>)
-            if(collection[i].dataIndex === 2) element.push(<V5 menu={false}/>)
-            if(collection[i].dataIndex === 3) element.push(<V6 menu={false}/>)
-            if(collection[i].dataIndex === 4) element.push(<V7 menu={false}/>)
-            if(collection[i].dataIndex === 5) element.push(<V8 menu={false}/>)
-            if(collection[i].dataIndex === 6) element.push(<V9 menu={false}/>)
+            if(collection[i].dataIndex === 0) element.push(<V1 key="0" menu={false}/>)
+            if(collection[i].dataIndex === 1) element.push(<V4 key="1" menu={false}/>)
+            if(collection[i].dataIndex === 2) element.push(<V5 key="2" menu={false}/>)
+            if(collection[i].dataIndex === 3) element.push(<V6 key="3" menu={false}/>)
+            if(collection[i].dataIndex === 4) element.push(<V7 key="4" menu={false}/>)
+            if(collection[i].dataIndex === 5) element.push(<V8 key="5" menu={false}/>)
+            if(collection[i].dataIndex === 6) element.push(<V9 key="6" menu={false}/>)
 
             element.push((<div><b>Custom description:</b><textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>))
             element.push((<button value={index} onClick={(e) => RemoveVisualization(e)}>Remove visualization from collection</button>))
@@ -117,18 +117,18 @@ export default function CollectionEditor(props){
 
     //Create menu elements
     const saveButton = (<td><button className="btn btn-primary">Save & share</button></td>)
-    const formatSelect = (<td>Formatting: <button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
+    const formatSelect = (<td>Formatting:<br/><button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
     const addVisualization = (
         <td><br/>
-            <select class="form-select form-select-lg mb-3" defaultValue="-1" onChange={(e) => AddVisualization(e)}>
-                <option value="-1" disabled>Add new visualization</option>
-                <option value="0">Global historical surface temperature anomalies from January 1850 onwards</option>
-                <option value="1">Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements</option>
-                <option value="2">Vostok Ice Core CO2 measurements, 417160 - 2342 years</option>
-                <option value="3">Ice core 800k year composite study CO2 measurements</option>
-                <option value="4">Evolution of global temperature over the past two million years</option>
-                <option value="5">CO2 emissions by country</option>
-                <option value="6">Global CO2 emissions by sectors</option>
+            <select className="form-select form-select-lg mb-3" defaultValue="-1" onChange={(e) => AddVisualization(e)}>
+                <option key="-1" value="-1" disabled>Add new visualization</option>
+                <option key="0" value="0">Global historical surface temperature anomalies from January 1850 onwards</option>
+                <option key="1" value="1">Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements</option>
+                <option key="2" value="2">Vostok Ice Core CO2 measurements, 417160 - 2342 years</option>
+                <option key="3" value="3">Ice core 800k year composite study CO2 measurements</option>
+                <option key="4" value="4">Evolution of global temperature over the past two million years</option>
+                <option key="5" value="5">CO2 emissions by country</option>
+                <option key="6" value="6">Global CO2 emissions by sectors</option>
             </select>
         </td>)
     

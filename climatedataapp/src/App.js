@@ -1,4 +1,5 @@
 import './App.css';
+import { useParams } from 'react-router-dom';
 import VisualizeTempData from './components/Visualizations/VisualizeTempData';
 import VisualizeEmissionData from './components/Visualizations/VisualizeEmissionData';
 import CollectionEditor from './components/Visualizations/CollectionEditor';
@@ -19,7 +20,58 @@ import V7 from './components/Visualizations/V7'
 import V8 from './components/Visualizations/V8'
 import V9 from './components/Visualizations/V9'
 
+import axios from "axios";
+import { useState } from 'react';
+
 function App() {
+    const [routes, setRoutes] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [testPaths, setTestPaths] = useState([])
+    //console.log(routes)
+    //console.log(routes.length)
+    if(routes.length === 0 && loading){
+        //checkStorageForRoutes()
+        if(routes.length === 0) getRoutes()
+    }
+
+    function checkStorageForRoutes(){
+        var troutes = []
+        for(var i = 0; i < window.sessionStorage.length; i++){
+            var path = "route" + String(i)
+           troutes[i] = window.sessionStorage.getItem(path)
+           // console.log(JSON.parse(window.sessionStorage.getItem("route"+i)))
+           // if(sessionStorage[i].includes("route")) console.log(sessionStorage[i].value)
+        }
+       // setRoutes(troutes)
+       // console.log(routes)
+    }
+
+    function getRoutes(){
+        var url = 'http://localhost:3001'
+        let visualizationRoutes = []
+        axios.get(url + '/collections', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+            }
+            }).then((response) => {
+                var paths = []
+                for(var i = 0; i < response.data.length; i++){
+                    var path = "/collection/" + response.data[i]._id
+                    paths.push(path)
+                    const route = (<Route key="key" path={path} element={<VisualizationCollection id={response.data[i]._id}/>}/>)
+                    visualizationRoutes.push(route)
+                    setRoutes(visualizationRoutes)
+                    //window.sessionStorage.setItem("route" + i, response.data[i]._id)
+                }
+                setTestPaths(paths)
+        }).catch (error => {
+            alert(error)
+        }).finally(res => {
+            setRoutes(visualizationRoutes)
+        })
+        
+    }
 
     return (
         <>
@@ -27,7 +79,7 @@ function App() {
         <Navigation/>
         <div className="App" id="content">
             <Routes>
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={<Home testPaths={testPaths}/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
                 <Route path="/custompath" element={<CollectionEditor/>} />
@@ -35,7 +87,9 @@ function App() {
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/signup" element={<SignupForm/>} />
                 <Route path="/newcollection" element={<CollectionEditor/>}/>
-                <Route path="/usercollection" element={<VisualizationCollection/>}/>
+                {routes}
+                
+                
 
                 <Route path="/V1" element={<V1 menu={true}/>}/>
                 <Route path="/V4" element={<V4 menu={true}/>}/>

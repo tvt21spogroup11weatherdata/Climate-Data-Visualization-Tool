@@ -35,7 +35,7 @@ export default function V8(props){
 
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData data={data} chartType="stacked"/>
+        else return <VisualizeData seriesEnabled={props.seriesEnabled} data={data} chartType="stacked"/>
     }
 
     return (

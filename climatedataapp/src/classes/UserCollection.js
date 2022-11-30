@@ -17,4 +17,8 @@ export class VisualizationsMeta {
         this.seriesEnabled = seriesEnabled;
         this.description = description;
     }
+
+    getIndex(){
+        return this.dataIndex
+    }
 }

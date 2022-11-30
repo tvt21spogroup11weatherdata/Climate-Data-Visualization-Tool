@@ -11,11 +11,11 @@ export default function VisualizeData(props){
     var chartElement;
 
     switch(props.chartType){
-        case "line":        chartElement = (<LineChart  v2error={props.v2error} reversed={props.reversed} data={props.data} human={props.human} zoomable='true' interval={props.interval}/>)
+        case "line":        chartElement = (<LineChart seriesEnabled={props.seriesEnabled} v2error={props.v2error} reversed={props.reversed} data={props.data} human={props.human} zoomable='true' interval={props.interval}/>)
             break;
-        case "stacked":     chartElement = (<StackedChart data={props.data} zoomable='true'/>)
+        case "stacked":     chartElement = (<StackedChart seriesEnabled={props.seriesEnabled} data={props.data} zoomable='true'/>)
             break;
-        case "multiaxis":   chartElement = (<MultiAxisChart data={props.data} interval={props.interval}/>)
+        case "multiaxis":   chartElement = (<MultiAxisChart seriesEnabled={props.seriesEnabled} data={props.data} interval={props.interval}/>)
             break;
         case "doughnut":    chartElement = (<DoughnutChart data={props.data}/>)
             break;

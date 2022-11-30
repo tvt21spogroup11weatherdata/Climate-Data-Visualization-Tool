@@ -74,13 +74,12 @@ export class DataConstructor{
     //Construct Data object by index
     async GetByIndex(i){
         if(i === 0) return this.V1Data()
-        if(i === 1) return this.V3Data()
-        if(i === 2) return this.V4Data()
-        if(i === 3) return this.V5Data()
-        if(i === 4) return this.V6Data()
-        if(i === 5) return this.V7Data()
-        if(i === 6) return this.V8Data()
-        if(i === 7) return this.V9Data()
+        if(i === 1) return this.V4Data()
+        if(i === 2) return this.V5Data()
+        if(i === 3) return this.V6Data()
+        if(i === 4) return this.V7Data()
+        if(i === 5) return this.V8Data()
+        if(i === 6) return this.V9Data()
     }
 
     async V1Data(){
@@ -488,7 +487,7 @@ export class DataConstructor{
         })
         data.set[5].points = set5.points
         data.set[5].listDesc = true;
-        console.log(data)
+        //console.log(data)
 
         return data;
     }
