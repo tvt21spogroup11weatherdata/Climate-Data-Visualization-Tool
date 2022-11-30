@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 // mongoose connection setting, database URL is in .env
 mongoose.connect(process.env.DATABASE_URL)
