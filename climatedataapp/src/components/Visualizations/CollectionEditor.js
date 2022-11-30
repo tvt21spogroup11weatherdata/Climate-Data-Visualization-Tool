@@ -10,18 +10,20 @@ import V6 from "./V6"
 import V7 from "./V7"
 import V8 from "./V8"
 import V9 from "./V9"
+import App from "../../App";
 
 export default function CollectionEditor(props){
     const [formatType, setFormatType] = useState("2column");
     const [collection, setColl] = useState([])
-    const [posted, setPosted] = useState(false)
+    const [descriptions, setDescs] = useState([])
+    const [redirectID, setRedirect] = useState(null)
 
     var url = "http://localhost:3001"
     var collectionElements = [];
     var column2 = [];
     var visualizationsData = [];
     var tempCollection = new Collection();
-
+    var textInputs = []
 
     //Load data referred in the Visualizations MetaData
     function LoadVisualizationData(){
@@ -39,21 +41,13 @@ export default function CollectionEditor(props){
         if(tempCollection.length >= collection.length) LoadVisualizationData();
     })
 
-    /*
-    function SaveData(){
-        //GENERATE & POST UNIQUE ID
-        //POST FORMATTYPE
-        //POST VISUALIZATION IDS
-        //POST TOGGLED SERIES' IN VISUALIZATION
-        //POST CUSTOM DESCRIPTION
-    }*/
 
     //Update collection
     function UpdateData(props){
         tempCollection.formatType = '1column'
         tempCollection.visualizations = [];
         for(var i = 0; i < props.length; i++){
-            tempCollection.visualizations.push(new VisualizationsMeta(props[i], [true], "This is a description"))
+            tempCollection.visualizations.push(new VisualizationsMeta(props[i], [true], ""))
         }
         setColl(tempCollection.visualizations);
     }
@@ -89,6 +83,19 @@ export default function CollectionEditor(props){
         UpdateData(indexes)
     }
 
+    const onChange = ({target}) => {
+        textInputs[target.id] = target
+        let descs = []
+        for(var i = 0; i < textInputs.length; i++){
+            if(i == target.id) {
+                descs[i] = target.value
+            }
+            else descs[i] = descriptions[i]
+        }
+        setDescs(descs)
+    }
+    
+
     //Create the visualization elements
     function CreateElements(data){
         for(var i = 0; i < collection.length; i++){
@@ -104,7 +111,8 @@ export default function CollectionEditor(props){
             if(collection[i].dataIndex === 5) element.push(<V8 key="5" menu={false}/>)
             if(collection[i].dataIndex === 6) element.push(<V9 key="6" menu={false}/>)
 
-            element.push((<div><b>Custom description:</b><textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>))
+            textInputs.push(<textarea className="form-control" onChange={onChange} id={i} rows="3"></textarea>)
+            element.push((<div><b>Custom description:</b>{textInputs[i]}</div>))
             element.push((<button value={index} onClick={(e) => RemoveVisualization(e)}>Remove visualization from collection</button>))
 
             if(formatType === "2column") {
@@ -120,16 +128,34 @@ export default function CollectionEditor(props){
 
     async function SaveAndShare(e){
         e.preventDefault()
+        console.log(textInputs)
         let text = "Are you sure you want to save this collection? Editing this collection later will not be possible.";
-       // if(window.confirm(text)){
-            axios.post(url + '/collections/create', {testData: 1}, {headers: {'content-type': 'application/x-www-form-urlencoded'}}).then((response) => {
-                console.log(response)
+        var tempVisualizations = collection
+
+        for(var i = 0; i < collection.length; i++){
+            console.log(descriptions[i])
+            tempVisualizations[i].description = descriptions[i]
+        }
+        setColl(tempVisualizations)
+
+        var data = {
+            "formatType": formatType,
+            "visualizations": collection
+        }
+
+        if(window.confirm(text)){
+            var redirectID
+            axios.post(url + '/collections/create', data).then((response) => {
+                redirectID = response.data
             }).catch((error) => {
                 console.log(error)
+            }).finally(() => {
+                setRedirect(redirectID)
             })
-        //}
-    }
+        }
 
+    }
+    
     //Create menu elements
     const saveButton = (<td><form onSubmit={e => SaveAndShare(e)}><input type="submit" className="btn btn-primary" value="Save & share"></input></form></td>)
     const formatSelect = (<td>Formatting:<br/><button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
@@ -152,25 +178,29 @@ export default function CollectionEditor(props){
     
     LoadVisualizationData();
 
-
-    if(formatType === "1column"){
-        return(
-            <>
-            {menu}
-            <div>{collectionElements}</div>
-            </>
-        )
+    if(redirectID !== null){
+        window.location.href="/account"
     }
-    else if(formatType === "2column"){
-        return(
-            <>
-            {menu}
-            <table className="table" width="100%">
-                <tbody>
-                    {collectionElements}
-                </tbody>
-            </table>
-            </>
-        )
+    else {
+        if(formatType === "1column"){
+            return(
+                <>
+                {menu}
+                <div>{collectionElements}</div>
+                </>
+            )
+        }
+        else if(formatType === "2column"){
+            return(
+                <>
+                {menu}
+                <table className="table" width="100%">
+                    <tbody>
+                        {collectionElements}
+                    </tbody>
+                </table>
+                </>
+            )
+        }
     }
 }

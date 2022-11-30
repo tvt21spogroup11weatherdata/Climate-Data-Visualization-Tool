@@ -1,5 +1,5 @@
 export default function Home(props){
-    console.log(props.testPaths)
+    //console.log(props.testPaths)
 
     function testPaths(){
         var links = []

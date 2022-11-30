@@ -1,4 +1,12 @@
+import axios from "axios";
+import { useState } from "react";
+
 export default function UserAccount(){
+    const [links, setLinks] = useState(null)
+    const [linkElements, setElements] = useState(null)
+    var amountOfColls = 2; //test value
+    var wrapper = [];
+    
 
     function DeleteUserButton(){
         var deleteUserButton = 
@@ -8,21 +16,49 @@ export default function UserAccount(){
         
         return deleteUserButton
     }
+    
 
     function GetUserVisualizations(){
-        var wrapper = [];
-        var amountOfColls = 2; //test value
+        let tempLinks = []
+            var url = 'http://localhost:3001'
+            let visualizationRoutes = []
+            axios.get(url + '/collections/', {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'Origin',
+                }
+                }).then((response) => {
+                  //  console.log(response.data)
+                  amountOfColls = response.data.length
+                    for(var i = 0; i < response.data.length; i++){
+                        //console.log(response.data[i]._id)
+                        var path = "/collections/" + response.data[i]._id
+                        tempLinks.push(response.data[i]._id)
+                    }
+                    
+            }).catch (error => {
+                console.log(error)
+            }).finally(() => {
+                console.log(tempLinks)
+                    setLinks(tempLinks)
+                    console.log(links)
+            })
+    }
 
-        //get user visualization DB table here
-
+    function CreateElements(){
         for(var i = 0; i < amountOfColls; i++){
             var vLinkElements = []
-            vLinkElements.push(<td><a href="/usercollection">User-generated Visualization</a></td>)
+            var path = "/collection/" + links[i]
+            vLinkElements.push(<td><a href={path}>User-generated Visualization</a></td>)
             vLinkElements.push(<td><button id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>)
             wrapper.push(<tr>{vLinkElements}</tr>)
         }
-        return wrapper
+        setElements(wrapper)
     }
+
+    if(links === null) GetUserVisualizations();
+    else if(linkElements === null) CreateElements()
+
 
     return(
         <div>
@@ -39,7 +75,7 @@ export default function UserAccount(){
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {GetUserVisualizations()}
+                                    {linkElements}
                                 </tbody>
                             </table>
                         </td>

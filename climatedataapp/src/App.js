@@ -24,15 +24,13 @@ import axios from "axios";
 import { useState } from 'react';
 
 function App() {
-    const [routes, setRoutes] = useState([])
+    const [routes, setRoutes] = useState(null)
     const [loading, setLoading] = useState(true)
     const [testPaths, setTestPaths] = useState([])
-    //console.log(routes)
-    //console.log(routes.length)
-    if(routes.length === 0 && loading){
-        //checkStorageForRoutes()
-        if(routes.length === 0) getRoutes()
-    }
+
+    
+    if(routes === null) getRoutes()
+
 
     function checkStorageForRoutes(){
         var troutes = []
@@ -47,6 +45,7 @@ function App() {
     }
 
     function getRoutes(){
+      //  console.log("get routes")
         var url = 'http://localhost:3001'
         let visualizationRoutes = []
         axios.get(url + '/collections', {
@@ -56,6 +55,7 @@ function App() {
             }
             }).then((response) => {
                 var paths = []
+                //console.log(response.data.length + " vs " + routes.length)
                 for(var i = 0; i < response.data.length; i++){
                     var path = "/collection/" + response.data[i]._id
                     paths.push(path)
@@ -66,11 +66,10 @@ function App() {
                 }
                 setTestPaths(paths)
         }).catch (error => {
-            alert(error)
+            console.log(error)
         }).finally(res => {
             setRoutes(visualizationRoutes)
         })
-        
     }
 
     return (
