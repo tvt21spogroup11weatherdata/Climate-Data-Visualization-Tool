@@ -10,11 +10,16 @@ router.get('/', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
-router.get('/create', async (req, res) => {
+router.post('/create', async (req, res) => {
     try {
-        //const result =
-        //res.status(200).json(result) //return created object id
-        res.status(200).json(req.body)
+        //var testVisualizations = [{dataIndex: 4, seriesEnabled: [true,true,true], description: "desci"}, {dataIndex: 1, seriesEnabled: [true,true,true], description: "desci2"}]
+
+        var newCollection = new Collections({ formatType: req.body.formatType, visualizations: req.body.visualizations});
+        newCollection.save(function (err, coll) {
+        if (err) return console.error(err);
+            res.status(200).json(coll._id)
+        })
+
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
