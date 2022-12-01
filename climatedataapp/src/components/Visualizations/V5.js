@@ -13,7 +13,6 @@ export default function V5(props){
            if(data === null){    
                 if(window.sessionStorage.getItem("V5") === null){
                     cnstr.V5Data().then(res => {
-                        console.log("db")
                         setData(res)
                         setTimeout(() => {storeData(res)}, "500");
                     })
@@ -35,7 +34,7 @@ export default function V5(props){
 
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData seriesEnabled={props.seriesEnabled} data={data} reversed={true} chartType="line" interval={100}/>
+        else return <VisualizeData editorIndex={props.editorIndex} saveSeries={props.saveSeries} seriesEnabled={props.seriesEnabled} data={data} reversed={true} chartType="line" interval={100}/>
     }
 
     return (

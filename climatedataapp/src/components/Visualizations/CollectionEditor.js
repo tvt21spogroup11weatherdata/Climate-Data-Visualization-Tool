@@ -83,6 +83,7 @@ export default function CollectionEditor(props){
         UpdateData(indexes)
     }
 
+    //Set custom description values
     const onChange = ({target}) => {
         textInputs[target.id] = target
         let descs = []
@@ -95,7 +96,14 @@ export default function CollectionEditor(props){
         setDescs(descs)
     }
     
-
+    //Save state of enabled series
+    function saveSeries(index, series, stackedProps){
+        var coll = collection;
+        coll[index].seriesEnabled = series;
+        if(stackedProps !== undefined) coll[index].stackedProps = stackedProps
+        setColl(coll)
+    }
+    
     //Create the visualization elements
     function CreateElements(data){
         for(var i = 0; i < collection.length; i++){
@@ -103,13 +111,13 @@ export default function CollectionEditor(props){
             var element = [];
             const index = collection[i].dataIndex;
 
-            if(collection[i].dataIndex === 0) element.push(<V1 key="0" menu={false}/>)
-            if(collection[i].dataIndex === 1) element.push(<V4 key="1" menu={false}/>)
-            if(collection[i].dataIndex === 2) element.push(<V5 key="2" menu={false}/>)
-            if(collection[i].dataIndex === 3) element.push(<V6 key="3" menu={false}/>)
-            if(collection[i].dataIndex === 4) element.push(<V7 key="4" menu={false}/>)
-            if(collection[i].dataIndex === 5) element.push(<V8 key="5" menu={false}/>)
-            if(collection[i].dataIndex === 6) element.push(<V9 key="6" menu={false}/>)
+            if(collection[i].dataIndex === 0) element.push(<V1 editorIndex={i} saveSeries={saveSeries} key="0" menu={false}/>)
+            if(collection[i].dataIndex === 1) element.push(<V4 editorIndex={i} saveSeries={saveSeries} key="1" menu={false}/>)
+            if(collection[i].dataIndex === 2) element.push(<V5 editorIndex={i} saveSeries={saveSeries} key="2" menu={false}/>)
+            if(collection[i].dataIndex === 3) element.push(<V6 editorIndex={i} saveSeries={saveSeries} key="3" menu={false}/>)
+            if(collection[i].dataIndex === 4) element.push(<V7 editorIndex={i} saveSeries={saveSeries} key="4" menu={false}/>)
+            if(collection[i].dataIndex === 5) element.push(<V8 editorIndex={i} saveSeries={saveSeries} key="5" menu={false}/>)
+            if(collection[i].dataIndex === 6) element.push(<V9 editorIndex={i} saveSeries={saveSeries} key="6" menu={false}/>)
 
             textInputs.push(<textarea className="form-control" onChange={onChange} id={i} rows="3"></textarea>)
             element.push((<div><b>Custom description:</b>{textInputs[i]}</div>))
@@ -133,11 +141,12 @@ export default function CollectionEditor(props){
         var tempVisualizations = collection
 
         for(var i = 0; i < collection.length; i++){
-            console.log(descriptions[i])
             tempVisualizations[i].description = descriptions[i]
         }
         setColl(tempVisualizations)
 
+       // console.log(collection)
+        
         var data = {
             "formatType": formatType,
             "visualizations": collection
@@ -153,9 +162,9 @@ export default function CollectionEditor(props){
                 setRedirect(redirectID)
             })
         }
-
     }
-    
+
+
     //Create menu elements
     const saveButton = (<td><form onSubmit={e => SaveAndShare(e)}><input type="submit" className="btn btn-primary" value="Save & share"></input></form></td>)
     const formatSelect = (<td>Formatting:<br/><button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
@@ -186,7 +195,7 @@ export default function CollectionEditor(props){
             return(
                 <>
                 {menu}
-                <div>{collectionElements}</div>
+                {collectionElements}
                 </>
             )
         }

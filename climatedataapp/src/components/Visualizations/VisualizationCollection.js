@@ -32,6 +32,7 @@ export default function CollectionEditor(props){
                         tempColl.formatType = response.data[0].formatType;
                         for(var i = 0; i < response.data[0].visualizations.length; i++){
                             tempColl.visualizations.push(response.data[0].visualizations[i])
+                            if(response.data[0].visualizations[i].stackedProps !== undefined) tempColl.visualizations[i].stackedProps = response.data[0].visualizations[i].stackedProps
                         }
                         setCollection(tempColl)
                 }).catch (error => {
@@ -51,7 +52,7 @@ export default function CollectionEditor(props){
                         if(index == 2) element.push(<V5 seriesEnabled={seriesEnabled} menu={false}/>)
                         if(index == 3) element.push(<V6 seriesEnabled={seriesEnabled} menu={false}/>)
                         if(index == 4) element.push(<V7 seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 5) element.push(<V8 seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 5) element.push(<V8 stackedProps={collection.visualizations[i].stackedProps} seriesEnabled={seriesEnabled} menu={false}/>)
                         if(index == 6) element.push(<V9 menu={false}/>)
                         
                         element.push((<div><b>Description:</b> <p>{collection.visualizations[i].description}</p></div>))
@@ -69,7 +70,7 @@ export default function CollectionEditor(props){
                         }
                     }
                     setElements(collectionElements)
-                    setLoading(false)
+                    setTimeout(setLoading(false), 1000)
                 }
             }
         }

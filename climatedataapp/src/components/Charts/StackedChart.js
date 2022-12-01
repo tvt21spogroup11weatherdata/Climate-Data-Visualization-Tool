@@ -84,6 +84,11 @@ export default function StackedChart(props){
             toggledMaxValues[e.dataSeriesIndex] = seriesMax
         }
 
+        yAxisAdjust(e.chart)
+    }
+
+    function yAxisAdjust(chart, force){
+        console.log(chart)
         chartYMax = 0;
         for(var i = 0; i < toggledMaxValues.length; i++){
             if(toggledMaxValues[i] !== 0) chartYMax += toggledMaxValues[i]
@@ -93,19 +98,24 @@ export default function StackedChart(props){
         else if(chartYMax < 150) chartYMax = Math.ceil(chartYMax / 10) * 10
         else if(chartYMax < 50) chartYMax = chartYMax
 
-        e.chart.options.axisY.maximum = chartYMax
+        chart.options.axisY.maximum = chartYMax
         
-        if(e.chart.options.axisY.maximum < 10000) e.chart.options.axisY.interval = 1000
-        if(e.chart.options.axisY.maximum < 5000) e.chart.options.axisY.interval = 500
-        if(e.chart.options.axisY.maximum < 3000) e.chart.options.axisY.interval = 200
-        if(e.chart.options.axisY.maximum < 1000) e.chart.options.axisY.interval = 100
-        if(e.chart.options.axisY.maximum < 500) e.chart.options.axisY.interval = 50
-        if(e.chart.options.axisY.maximum < 100) e.chart.options.axisY.interval = 10
-        if(e.chart.options.axisY.maximum < 20) e.chart.options.axisY.interval = 1
+        if(chart.options.axisY.maximum < 10000) chart.options.axisY.interval = 1000
+        if(chart.options.axisY.maximum < 5000) chart.options.axisY.interval = 500
+        if(chart.options.axisY.maximum < 3000) chart.options.axisY.interval = 200
+        if(chart.options.axisY.maximum < 1000) chart.options.axisY.interval = 100
+        if(chart.options.axisY.maximum < 500) chart.options.axisY.interval = 50
+        if(chart.options.axisY.maximum < 100) chart.options.axisY.interval = 10
+        if(chart.options.axisY.maximum < 20) chart.options.axisY.interval = 1
 
-        e.chart.render();
+        chart.render();
+
+        var enabledSeries = []
+        for(var i = 0; i < chart.data.length; i++){
+            enabledSeries.push(chart.data[i].visible)
+        }
+        props.saveSeries(props.editorIndex, enabledSeries, {yMax: chart.options.axisY.maximum, yInterval: chart.options.axisY.interval});
     }
-
 
     const options = {
         animationEnabled: true,
@@ -138,6 +148,17 @@ export default function StackedChart(props){
 
     var chart = <CanvasJSChart options = {options}/>
     setTimeout(() => {setLoading(false)}, "500");
+
+    if(props.seriesEnabled !== undefined){
+        console.log(props.stackedProps)
+        var seriesEnabled = props.seriesEnabled
+        for(var i = 0; i < props.data.set.length; i++){
+            chart.props.options.data[i].visible = seriesEnabled[i];
+        }
+
+        chart.props.options.axisY.maximum = props.stackedProps.yMax
+        chart.props.options.axisY.interval = props.stackedProps.yInterval
+    }
 
     if(!loading){
         return(

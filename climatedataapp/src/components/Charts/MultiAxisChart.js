@@ -24,6 +24,12 @@ export default function MultiAxisChart(props){
         }
 
         e.chart.render();
+
+        var enabledSeries = []
+        for(var i = 0; i < e.chart.data.length; i++){
+            enabledSeries.push(e.chart.data[i].visible)
+        }
+        props.saveSeries(props.editorIndex, enabledSeries);
     }
 
     function accessibility(e){

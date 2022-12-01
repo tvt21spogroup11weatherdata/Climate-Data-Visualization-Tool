@@ -2,9 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 
 export default function UserAccount(){
-    const [links, setLinks] = useState(null)
+    const [collIDs, setIDs] = useState(null)
+   // const [links, setLinks] = useState(null)
     const [linkElements, setElements] = useState(null)
-    var amountOfColls = 2; //test value
+
+    let userCollIDs = []
     var wrapper = [];
     
 
@@ -18,45 +20,49 @@ export default function UserAccount(){
     }
     
 
-    function GetUserVisualizations(){
-        let tempLinks = []
-            var url = 'http://localhost:3001'
-            let visualizationRoutes = []
-            axios.get(url + '/collections/', {
+    function GetUserCollections(){
+        var url = 'http://localhost:3001'
+
+        /* //GET COLLECTION IDS FROM USER DOCUMENT
+        axios.get(url + '/user', {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Origin',
                 }
                 }).then((response) => {
-                  //  console.log(response.data)
-                  amountOfColls = response.data.length
-                    for(var i = 0; i < response.data.length; i++){
-                        //console.log(response.data[i]._id)
-                        var path = "/collections/" + response.data[i]._id
-                        tempLinks.push(response.data[i]._id)
-                    }
-                    
+                  
             }).catch (error => {
                 console.log(error)
-            }).finally(() => {
-                console.log(tempLinks)
-                    setLinks(tempLinks)
-                    console.log(links)
             })
+        */
+        
+        //test values
+        userCollIDs[0] = "63886d29b3cfa2767d294e42"
+        userCollIDs[1] = "63886dd2b3cfa2767d294e64"
+        
+        setIDs(userCollIDs)
+
+        let tempLinks = []
+        for(var i = 0; i < userCollIDs.length; i++){
+            var path = "/collections/" + userCollIDs[i]
+            tempLinks.push(path)
+        }
+        //setLinks(tempLinks)
     }
 
     function CreateElements(){
-        for(var i = 0; i < amountOfColls; i++){
+        console.log(collIDs.length)
+        for(var i = 0; i < collIDs.length; i++){
             var vLinkElements = []
-            var path = "/collection/" + links[i]
-            vLinkElements.push(<td><a href={path}>User-generated Visualization</a></td>)
+            var path = "/collection/" + collIDs[i]
+            vLinkElements.push(<td><a href={path}>{path}</a></td>)
             vLinkElements.push(<td><button id="button" type="button" className="btn btn-secondary">Delete visualization</button></td>)
             wrapper.push(<tr>{vLinkElements}</tr>)
         }
         setElements(wrapper)
     }
 
-    if(links === null) GetUserVisualizations();
+    if(collIDs === null) GetUserCollections();
     else if(linkElements === null) CreateElements()
 
 

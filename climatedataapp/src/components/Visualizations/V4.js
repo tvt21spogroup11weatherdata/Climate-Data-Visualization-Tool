@@ -34,7 +34,7 @@ export default function V4(props){
 
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData seriesEnabled={props.seriesEnabled} data={data} chartType="line" interval={100} human={true}/>
+        else return <VisualizeData editorIndex={props.editorIndex} saveSeries={props.saveSeries} seriesEnabled={props.seriesEnabled} data={data} chartType="line" interval={100} human={true}/>
     }
 
     return (

@@ -33,8 +33,9 @@ export default function V1(props){
     function setMenu(){ if(props.menu) return <VisualizeTempData/>}
 
     function setContent(){
+        
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData seriesEnabled={props.seriesEnabled} data={data} v2error="true" chartType="line" interval={10}/>
+        else return <VisualizeData editorIndex={props.editorIndex} saveSeries={props.saveSeries} seriesEnabled={props.seriesEnabled} data={data} v2error="true" chartType="line" interval={10}/>
     }
 
     return (

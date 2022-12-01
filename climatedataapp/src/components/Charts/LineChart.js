@@ -8,17 +8,20 @@ export default function LineChart(props){
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
     var newInterval = props.interval
-   // var hoverValue;
-
-    var postedData; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
-
 
     //Toggle series when clicking legend
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
         } else { e.dataSeries.visible = true;}
+
         e.chart.render();
+
+        var enabledSeries = []
+        for(var i = 0; i < e.chart.data.length; i++){
+            enabledSeries.push(e.chart.data[i].visible)
+        }
+        props.saveSeries(props.editorIndex, enabledSeries);
     }
     
     for(var i = 0; i < props.data.set.length; i++){
@@ -48,7 +51,6 @@ export default function LineChart(props){
 
         var diff = e.axisX[0].viewportMaximum - e.axisX[0].viewportMinimum;
         
-      //  console.log(diff)
         if(diff < 500) newInterval = 100;
         if(diff < 200) newInterval = 10;
         if(diff < 30) newInterval = 1;
@@ -82,7 +84,6 @@ export default function LineChart(props){
     }
 
     function tooltipContent(e){
-        //console.log(e)
         var id = e.entries[0].dataSeries.id;
         var content = ""
 
@@ -122,32 +123,6 @@ export default function LineChart(props){
         }
     }
 
-/*
-    
-
-    //FOR UNCERTAINTY VALUES IN SET V2
-    if(props.v2error){
-        data[7] = {
-            type: "error",
-            color: "#34eb6e",
-            name: props.data.set[7].yTitle,
-            toolTipContent: props.data.set[7].prefix + " {x}: {y}" + props.data.set[7].suffix,
-            showInLegend: true,
-            dataPoints: props.data.set[7].points
-        }
-
-        data[8] = {
-            type: "rangeArea",
-            color: "#8446f0",
-            name: props.data.set[8].yTitle,
-            toolTipContent: props.data.set[8].prefix + " {x}: {y}" + props.data.set[8].suffix,
-            showInLegend: true,
-            dataPoints: props.data.set[8].points
-        }
-    }
-
-*/
-
     //Chart options
     const options = {
         theme: "light2",
@@ -186,7 +161,9 @@ export default function LineChart(props){
     var chart = <CanvasJSChart options = {options}/>
 
     if(props.seriesEnabled !== undefined){
-        var seriesEnabled = JSON.parse(props.seriesEnabled)
+        console.log("here")
+        console.log(props.seriesEnabled)
+        var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];
         }

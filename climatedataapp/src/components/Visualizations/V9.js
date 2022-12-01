@@ -34,7 +34,7 @@ export default function V9(props){
 
     function setContent(){
         if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
-        else return <VisualizeData data={data} chartType="doughnut"/>
+        else return <VisualizeData editorIndex={props.editorIndex} saveSeries={props.saveSeries} data={data} chartType="doughnut"/>
     }
 
     return (
