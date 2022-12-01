@@ -5,6 +5,4 @@ React application for displaying visualizations of climate related data from 10 
 Usage:
 >Install dependencies with `npm i --legacy-peer-deps`
 
->The CanvasJS library .zip is in the group's Teams files. Extract `canvasjs.min.js` and `canvasjs.react.js` to `src/`
-
 >Run `npm start` to launch the app locally at `localhost:3000`
