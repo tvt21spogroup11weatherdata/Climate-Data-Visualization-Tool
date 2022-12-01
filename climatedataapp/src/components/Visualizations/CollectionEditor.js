@@ -62,14 +62,13 @@ export default function CollectionEditor(props){
         UpdateData(indexes);
     }
 
-    //Remove visualization from editor (not working)
+    //Remove visualization from editor
     function RemoveVisualization(select){
         var dataIndex = select.target.value;
         var flaggedIndex;
         for(var i = 0; i < 10; i++){ //for amount of visualizations
             if(collection[i] !== undefined && collection[i].dataIndex == dataIndex) {
                 flaggedIndex = i;
-                console.log(flaggedIndex)
                 break;
             }
         }
@@ -119,14 +118,14 @@ export default function CollectionEditor(props){
             if(collection[i].dataIndex === 5) element.push(<V8 editorIndex={i} saveSeries={saveSeries} key="5" menu={false}/>)
             if(collection[i].dataIndex === 6) element.push(<V9 editorIndex={i} saveSeries={saveSeries} key="6" menu={false}/>)
 
-            textInputs.push(<textarea className="form-control" onChange={onChange} id={i} rows="3"></textarea>)
-            element.push((<div><b>Custom description:</b>{textInputs[i]}</div>))
-            element.push((<button value={index} onClick={(e) => RemoveVisualization(e)}>Remove visualization from collection</button>))
+            textInputs.push(<textarea key={String(i) + String(index)} className="form-control" onChange={onChange} id={i} rows="3"></textarea>)
+            element.push((<div key={String(i) + String(index)}><b>Custom description:</b>{textInputs[i]}</div>))
+            element.push((<button key={"remove" + String(i) + String(index)} className="btn btn-danger" value={index} onClick={(e) => RemoveVisualization(e)}>Remove visualization from collection</button>))
 
             if(formatType === "2column") {
-                column2.push((<td>{element}</td>));
+                column2.push((<td key={String(i) + String(index)}>{element}</td>));
                 if(column2.length === 2 || i === collection.length - 1) { 
-                    collectionElements.push((<tr>{column2}</tr>));
+                    collectionElements.push((<tr key={String(i) + String(index)}>{column2}</tr>));
                     column2 = []
                 }
             }
@@ -165,8 +164,14 @@ export default function CollectionEditor(props){
 
 
     //Create menu elements
-    const saveButton = (<td><form onSubmit={e => SaveAndShare(e)}><input type="submit" className="btn btn-primary" value="Save & share"></input></form></td>)
-    const formatSelect = (<td>Formatting:<br/><button className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> <button className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button></td>);
+    const saveButton = (<td key=""><form key="" onSubmit={e => SaveAndShare(e)}><input key="" type="submit" className="btn btn-primary" value="Save & share"></input></form></td>)
+    const formatSelect = (
+        <td key="0">Formatting:<br/>
+            <button key="0" className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> 
+            <button key="1" className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button>
+        </td>);
+
+
     const addVisualization = (
         <td><br/>
             <select className="form-select form-select-lg mb-3" defaultValue="-1" onChange={(e) => AddVisualization(e)}>

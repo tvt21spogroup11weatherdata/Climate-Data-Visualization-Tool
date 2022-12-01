@@ -29,11 +29,10 @@ export default function MultiAxisChart(props){
         for(var i = 0; i < e.chart.data.length; i++){
             enabledSeries.push(e.chart.data[i].visible)
         }
-        props.saveSeries(props.editorIndex, enabledSeries);
+        if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
     }
 
     function accessibility(e){
-        console.log(e.dataSeries.id)
         var set = props.data.set[e.dataSeries.id]
         if(e.dataSeries.id == 2) {
             accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
@@ -189,6 +188,13 @@ export default function MultiAxisChart(props){
     
     var chart = <CanvasJSChart options = {options}/>
     if(loading) setTimeout(() => {setLoading(false)}, "500");
+
+    if(props.seriesEnabled !== undefined){
+        var seriesEnabled = props.seriesEnabled
+        for(var i = 0; i < props.data.set.length; i++){
+            chart.props.options.data[i].visible = seriesEnabled[i];
+        }
+    }
 
     if(!loading){
         return( <div><div>{chart}</div><p>{accessibleDatapoint}</p> </div>)

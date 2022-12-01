@@ -146,7 +146,7 @@ export class DataConstructor{
                 set0.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         
         data.set[0].points = set0.points;
@@ -162,7 +162,7 @@ export class DataConstructor{
                 set1.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[1].points = set1.points;
 
@@ -178,7 +178,7 @@ export class DataConstructor{
                 set2.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[2].points = set2.points;
 
@@ -194,7 +194,7 @@ export class DataConstructor{
                 set3.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[3].points = set3.points;
 
@@ -209,7 +209,7 @@ export class DataConstructor{
                 set4.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[4].points = set4.points;
 
@@ -225,7 +225,7 @@ export class DataConstructor{
                 set5.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[5].points = set5.points;
 
@@ -244,7 +244,7 @@ export class DataConstructor{
             }
             data.set[6].points = set6.points;
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
 
         return data
@@ -290,7 +290,7 @@ export class DataConstructor{
                 set0.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[0].points = set0.points;
 
@@ -306,7 +306,7 @@ export class DataConstructor{
                 set1.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
 
         data.set[1].points = set1.points;
@@ -383,7 +383,7 @@ export class DataConstructor{
                 const dataPoint1 = {x: response.data[i].Mean_Air_Age_year_AD, y: response.data[i].CO2_Mixing_Ratio_ppm};
                 set0.points.push(dataPoint1);
             }
-        }).catch (error => {alert(error)})
+        }).catch (error => {console.log(error)})
         data.set[0].points = set0.points
 
         //SET 1
@@ -398,7 +398,7 @@ export class DataConstructor{
                 const dataPoint1 = {x: response.data[i].Mean_Air_Age_year_AD, y: response.data[i].CO2_Mixing_Ratio_ppm};
                 set1.points.push(dataPoint1);
             }
-        }).catch (error => {alert(error)})
+        }).catch (error => {console.log(error)})
         data.set[1].points = set1.points
 
         //SET 2
@@ -413,7 +413,7 @@ export class DataConstructor{
                 const dataPoint1 = {x: response.data[i].Mean_Air_Age_year_AD, y: response.data[i].CO2_Mixing_Ratio_ppm};
                 set2.points.push(dataPoint1);
             }
-        }).catch (error => {alert(error)})
+        }).catch (error => {console.log(error)})
         data.set[2].points = set2.points
 
         //SET 3
@@ -428,7 +428,7 @@ export class DataConstructor{
                 const dataPoint1 = {x: response.data[i].year, y: response.data[i].mean};
                 set3.points.push(dataPoint1);
             }
-        }).catch (error => {alert(error)})
+        }).catch (error => {console.log(error)})
         data.set[3].points = set3.points
 
         let set4 = new DataSet()
@@ -446,7 +446,7 @@ export class DataConstructor{
                 set4.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[4].points = set4.points;
 
@@ -465,7 +465,7 @@ export class DataConstructor{
                 set5.points.push(dataPoint);
             }
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[5].points = set5.points
         data.set[5].listDesc = true;
@@ -514,7 +514,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[0].points = set0.points;
         data.set[1].points = set1.points;
@@ -563,7 +563,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[0].points = set0.points;
         data.set[1].points = set1.points;
@@ -615,7 +615,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[0].points = set0.points;
 
@@ -636,7 +636,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[1].points = set1.points;
 
@@ -655,7 +655,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[2].points = set2.points;
 
@@ -681,8 +681,6 @@ export class DataConstructor{
                 'Access-Control-Allow-Headers': 'Origin',
             }
             }).then((response) => {
-                //console.log([Object.keys(response.data[1])])
-                //console.log(Object.keys(response.data[0]))
                 for(var i = 2; i < Object.keys(response.data[0]).length; i++){
                     data.set.push(new DataSet(
                         ' ',
@@ -704,29 +702,11 @@ export class DataConstructor{
                 catch (TypeError){
                     console.log(TypeError)
                 }
-
-            //   console.log(data)
-                
-
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
-       // data.set[2].points = set2.points;
-
-       
-
-
-/*
-        //FOREACH COUNTRY ADD SET
-        data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            'CountryName',
-            ' ',
-            'ppm'
-        );*/
 
         data.chartType="stacked";
-
         return data;
     }
 
@@ -787,7 +767,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[0].points = set0.points;
 
@@ -825,7 +805,7 @@ export class DataConstructor{
             }
 
         }).catch (error => {
-            alert(error)
+            console.log(error)
         })
         data.set[1].points = set1.points;
         data.set[2].points = set2.points;

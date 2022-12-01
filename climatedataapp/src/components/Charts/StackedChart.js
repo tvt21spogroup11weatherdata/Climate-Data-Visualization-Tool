@@ -88,7 +88,6 @@ export default function StackedChart(props){
     }
 
     function yAxisAdjust(chart, force){
-        console.log(chart)
         chartYMax = 0;
         for(var i = 0; i < toggledMaxValues.length; i++){
             if(toggledMaxValues[i] !== 0) chartYMax += toggledMaxValues[i]
@@ -114,7 +113,8 @@ export default function StackedChart(props){
         for(var i = 0; i < chart.data.length; i++){
             enabledSeries.push(chart.data[i].visible)
         }
-        props.saveSeries(props.editorIndex, enabledSeries, {yMax: chart.options.axisY.maximum, yInterval: chart.options.axisY.interval});
+
+        if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries, {yMax: chart.options.axisY.maximum, yInterval: chart.options.axisY.interval});
     }
 
     const options = {
@@ -150,7 +150,6 @@ export default function StackedChart(props){
     setTimeout(() => {setLoading(false)}, "500");
 
     if(props.seriesEnabled !== undefined){
-        console.log(props.stackedProps)
         var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];

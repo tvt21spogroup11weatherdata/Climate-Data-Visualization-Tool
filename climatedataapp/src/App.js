@@ -28,10 +28,9 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [testPaths, setTestPaths] = useState([])
 
-    
     if(routes === null) getRoutes()
 
-
+    /*
     function checkStorageForRoutes(){
         var troutes = []
         for(var i = 0; i < window.sessionStorage.length; i++){
@@ -42,7 +41,7 @@ function App() {
         }
        // setRoutes(troutes)
        // console.log(routes)
-    }
+    }*/
 
     function getRoutes(){
       //  console.log("get routes")
@@ -57,7 +56,7 @@ function App() {
                 var paths = []
                 //console.log(response.data.length + " vs " + routes.length)
                 for(var i = 0; i < response.data.length; i++){
-                    var path = "/collection/" + response.data[i]._id
+                    var path = "/c/" + response.data[i]._id
                     paths.push(path)
                     const route = (<Route key="key" path={path} element={<VisualizationCollection id={response.data[i]._id}/>}/>)
                     visualizationRoutes.push(route)
@@ -87,8 +86,6 @@ function App() {
                 <Route path="/signup" element={<SignupForm/>} />
                 <Route path="/newcollection" element={<CollectionEditor/>}/>
                 {routes}
-                
-                
 
                 <Route path="/V1" element={<V1 menu={true}/>}/>
                 <Route path="/V4" element={<V4 menu={true}/>}/>

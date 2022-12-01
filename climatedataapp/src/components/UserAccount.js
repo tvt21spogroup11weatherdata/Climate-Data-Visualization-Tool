@@ -12,18 +12,37 @@ export default function UserAccount(){
 
     function DeleteUserButton(){
         var deleteUserButton = 
-            (<form>
+            (<form onSubmit={() => DeleteUser()}>
                 <input type="submit" id="button" className="btn btn-secondary" value="Delete account"/>
             </form>)
         
         return deleteUserButton
     }
 
+    function DeleteUser(){
+        if(window.confirm("Are you sure? This operation can't be undone")){
+            //GET COLLECTION IDS FROM USER DOCUMENT
+            //DELETE ALL COLLECTIONS FOUND
+
+            //DELETE USER:
+            /*
+            axios.get(url + '/users/delete/' + id, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'Origin',
+                }
+                }).then((response) => {
+                  console.log(response)
+                  window.location.reload()
+            }).catch (error => {
+                console.log(error)
+            })*/
+        }
+    }
+
     function DeleteCollection(e){
         e.preventDefault()
-        console.log("delete at index " + e.target.id)
         var id = collIDs[e.target.id]
-        console.log(collIDs[e.target.id])
         
         if(window.confirm("Are you sure? This operation can't be undone")){
             axios.get(url + '/collections/delete/' + id, {
@@ -32,7 +51,6 @@ export default function UserAccount(){
                     'Access-Control-Allow-Headers': 'Origin',
                 }
                 }).then((response) => {
-                  console.log(response)
                   window.location.reload()
             }).catch (error => {
                 console.log(error)
@@ -66,23 +84,23 @@ export default function UserAccount(){
         var vTable = []
 
         if(collIDs.length === 0){
-            vTableHeader.push(<tr><td>No collections</td></tr>)
+            vTableHeader.push(<tr key="0"><td key="0">No collections</td></tr>)
         }
         else {
-            vTableHeader.push( <thead className="md-col-2">
-                <tr>
-                <th scope="col">Url</th>
-                <th scope="col">Delete</th>
+            vTableHeader.push( <thead key="head" className="md-col-2">
+                <tr key="0">
+                <th key="0" scope="col">Url</th>
+                <th key="1" scope="col">Delete</th>
             </tr></thead>)
             var linkWrapper = [];
             for(var i = 0; i < collIDs.length; i++){
                 var vLinkElements = []
-                var path = "/collection/" + collIDs[i]
-                vLinkElements.push(<td><a href={path}>{path}</a></td>) 
-                vLinkElements.push(<td><form id={i} onSubmit={e => DeleteCollection(e)}><input id="button" type="submit" className="btn btn-secondary" value="Delete collection"></input></form> </td>)
-                linkWrapper.push(<tr>{vLinkElements}</tr>)
+                var path = "/c/" + collIDs[i]
+                vLinkElements.push(<td key="0"><a  key="0" href={path}>{path}</a></td>) 
+                vLinkElements.push(<td key="1"><form id={i} onSubmit={e => DeleteCollection(e)}><input id="button" type="submit" className="btn btn-secondary" value="Delete collection"></input></form> </td>)
+                linkWrapper.push(<tr key={i}>{vLinkElements}</tr>)
             }
-            vTableBody.push(<tbody>{linkWrapper}</tbody>)
+            vTableBody.push(<tbody key="">{linkWrapper}</tbody>)
         }
         vTable.push(vTableHeader)
         vTable.push(vTableBody)

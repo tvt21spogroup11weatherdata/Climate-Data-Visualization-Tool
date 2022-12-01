@@ -9,7 +9,7 @@ import V7 from "./V7"
 import V8 from "./V8"
 import V9 from "./V9"
 
-export default function CollectionEditor(props){
+export default function VisualizationCollection(props){
     //GET FORMATTYPE
     const [formatType, setFormatType] = useState("2column");
     const [loading, setLoading] = useState(true);
@@ -36,7 +36,7 @@ export default function CollectionEditor(props){
                         }
                         setCollection(tempColl)
                 }).catch (error => {
-                    alert(error)
+                    console.log(error)
                 })
             }
             else if(collection.visualizations !== null && elements === null){
@@ -47,20 +47,20 @@ export default function CollectionEditor(props){
                         var index = collection.visualizations[i].dataIndex
                         var seriesEnabled = collection.visualizations[i].seriesEnabled
 
-                        if(index == 0) element.push(<V1 seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 1) element.push(<V4 seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 2) element.push(<V5 seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 3) element.push(<V6 seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 4) element.push(<V7 seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 5) element.push(<V8 stackedProps={collection.visualizations[i].stackedProps} seriesEnabled={seriesEnabled} menu={false}/>)
-                        if(index == 6) element.push(<V9 menu={false}/>)
+                        if(index == 0) element.push(<V1 key={String(i) + String(index)} seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 1) element.push(<V4 key={String(i) + String(index)} seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 2) element.push(<V5 key={String(i) + String(index)} seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 3) element.push(<V6 key={String(i) + String(index)} seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 4) element.push(<V7 key={String(i) + String(index)} seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 5) element.push(<V8 key={String(i) + String(index)} stackedProps={collection.visualizations[i].stackedProps} seriesEnabled={seriesEnabled} menu={false}/>)
+                        if(index == 6) element.push(<V9 key={String(i) + String(index)} menu={false}/>)
                         
-                        element.push((<div><b>Description:</b> <p>{collection.visualizations[i].description}</p></div>))
+                        element.push((<div key="0"><b>Description:</b> <p>{collection.visualizations[i].description}</p></div>))
 
                         if(collection.formatType === "2column") {
-                            column2.push((<td>{element}</td>));
+                            column2.push((<td key={i}>{element}</td>));
                             if(column2.length === 2 || i === collection.visualizations.length - 1) { 
-                                collectionElements.push((<tr>{column2}</tr>));
+                                collectionElements.push((<tr key={i}>{column2}</tr>));
                                 column2 = []
                             }
                             setFormatType("2column")
@@ -83,7 +83,7 @@ export default function CollectionEditor(props){
         else if(formatType === "2column"){
             return(<>
                 <table className="table" width="100%">
-                    <tbody>
+                    <tbody key="">
                         {elements}
                     </tbody>
                 </table></>

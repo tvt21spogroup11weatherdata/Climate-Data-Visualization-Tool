@@ -21,7 +21,7 @@ export default function LineChart(props){
         for(var i = 0; i < e.chart.data.length; i++){
             enabledSeries.push(e.chart.data[i].visible)
         }
-        props.saveSeries(props.editorIndex, enabledSeries);
+        if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
     }
     
     for(var i = 0; i < props.data.set.length; i++){
@@ -161,8 +161,6 @@ export default function LineChart(props){
     var chart = <CanvasJSChart options = {options}/>
 
     if(props.seriesEnabled !== undefined){
-        console.log("here")
-        console.log(props.seriesEnabled)
         var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];
