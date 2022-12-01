@@ -23,7 +23,7 @@ export default function Navigation(props){
     return (
         <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Home</Navbar.Brand>
+        <Navbar.Brand href="/">Home Page</Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse key="basic-navbar-nav">
