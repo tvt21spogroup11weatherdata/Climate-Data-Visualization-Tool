@@ -17,6 +17,7 @@ export default function CollectionEditor(props){
     const [collection, setColl] = useState([])
     const [descriptions, setDescs] = useState([])
     const [redirectID, setRedirect] = useState(null)
+    const [help, setHelp] = useState(false)
 
     var url = "http://localhost:3001"
     var collectionElements = [];
@@ -188,7 +189,29 @@ export default function CollectionEditor(props){
     
     const menu = (<table width="100%"><tbody><tr>{formatSelect}{addVisualization}{saveButton}</tr></tbody></table>);
     
+    const helpLink=help?'Close':"How to use the editor"
+    const helpElement = (<><div style={{width:"80%", margin: "auto", textAlign: "left"}}>{SetHelpText()}</div>
+    <p><a className="link-info" id="readmorelink" onClick={()=>{setHelp(!help)}}>{helpLink}</a></p></>)
     
+    function SetHelpText(){
+        var helpContent = ""
+
+        if(help) {
+            helpContent = (<>
+                <b>How to use the editor</b>
+                <ul className="extraContent">
+                <li>Add new visualizations to the collection from the dropdown menu</li>
+                <li>Switching between format types will reset the description and activated series in the visualizations</li>
+                <li>Further editing after saving is not possible</li>
+                </ul>
+                </>           
+            )
+        }
+        else helpContent = ""
+        return helpContent
+
+    }
+
     LoadVisualizationData();
 
     if(redirectID !== null){
@@ -199,6 +222,7 @@ export default function CollectionEditor(props){
             return(
                 <>
                 {menu}
+                {helpElement}
                 {collectionElements}
                 </>
             )
@@ -207,6 +231,7 @@ export default function CollectionEditor(props){
             return(
                 <>
                 {menu}
+                {helpElement}
                 <table className="table" width="100%">
                     <tbody>
                         {collectionElements}
