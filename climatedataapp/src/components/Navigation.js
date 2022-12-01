@@ -1,60 +1,43 @@
 import { useEffect, useState } from "react";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+export default function Navigation(props){
+    var userElement = []
 
-export default function Navbar(props){
-    var userElement;
     const [loggedIn, setLoggedIn] = useState(false);
+
+    function signOut(){
+        console.log("sign out")
+    }
 
     //////////////////////////////////////////
     ///for testing switching views
-    var loginTestElement = (<ul className="navbar-nav ms-auto"><li><button onClick= {() => setLoggedIn(!loggedIn)}>Switch login navs</button></li></ul>);
+    var loginTestElement = (<ul className="navbar-nav ms-auto"><li><button style={{height: "10px"}} onClick= {() => setLoggedIn(!loggedIn)}>Switch login navs</button></li></ul>);
     //////////////////////////////////////////
     if(loggedIn){
-        userElement = (<ul className="navbar-nav ms-auto">
-        <li className="nav-item">
-            <a className="nav-link" href="/newcollection">New Collection</a>
-        </li>
-        <li className="nav-item">
-            <a className="nav-link" href="/account">Account</a>
-        </li>
-        <li className="nav-item">
-            <a className="nav-link" href="#">Sign out</a> {/* NOTHING HAPPENING YET */}
-        </li>
-    </ul>)
+        userElement.push(<Nav.Link href="/newcollection">New Collection</Nav.Link>)
+        userElement.push(<Nav.Link href="/account">Account</Nav.Link>)
+        userElement.push(<Nav.Link onClick= {() => signOut()}>Sign out</Nav.Link>)
     }
     else {
-        userElement = (<ul className="navbar-nav ms-auto">
-        <li className="nav-item">
-            <a className="nav-link" href="/login">Login</a>
-        </li>
-        <li className="nav-item">
-            <a className="nav-link" href="/signup">Sign up</a>
-        </li>
-    </ul>)
+        userElement.push(<Nav.Link href="/login">Login</Nav.Link>)
+        userElement.push(<Nav.Link href="/signup">Sign up</Nav.Link>)
     }
 
-
-
     return (
-        <>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">Home</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button>
+        <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">Home</Navbar.Brand>
 
-        <div data-bs-toggle="collapse" className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                    <a className="nav-link" href="/temp">Temperature/CO<sub>2</sub> Visualizations</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/emission">Emission Visualization</a>
-                </li>
-            </ul>
-            {loginTestElement}
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/temp">Temperature/CO<sub>2</sub> Visualizations</Nav.Link>
+            <Nav.Link href="/emission">Emission Visualization</Nav.Link>
+            <Nav.Link><button onClick= {() => setLoggedIn(!loggedIn)}>Switch login navs</button></Nav.Link>
             {userElement}
-        </div>
-        </nav>
-        </>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
     )
 }
