@@ -98,8 +98,8 @@ export default function StackedChart(props){
         else if(chartYMax < 50) chartYMax = chartYMax
 
         chart.options.axisY.maximum = chartYMax
-        
-        if(chart.options.axisY.maximum < 10000) chart.options.axisY.interval = 1000
+
+        if(chart.options.axisY.maximum < 20000) chart.options.axisY.interval = 1000
         if(chart.options.axisY.maximum < 5000) chart.options.axisY.interval = 500
         if(chart.options.axisY.maximum < 3000) chart.options.axisY.interval = 200
         if(chart.options.axisY.maximum < 1000) chart.options.axisY.interval = 100
