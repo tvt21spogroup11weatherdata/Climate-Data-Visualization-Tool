@@ -105,7 +105,7 @@ export default function CollectionEditor(props){
     }
     
     //Create the visualization elements
-    function CreateElements(data){
+    function CreateElements(){
         for(var i = 0; i < collection.length; i++){
             if(collection[i] === null) continue;
             var element = [];
@@ -137,7 +137,6 @@ export default function CollectionEditor(props){
     async function SaveAndShare(e){
         e.preventDefault()
         console.log(textInputs)
-        let text = "Are you sure you want to save this collection? Editing this collection later will not be possible.";
         var tempVisualizations = collection
 
         for(var i = 0; i < collection.length; i++){
@@ -152,7 +151,7 @@ export default function CollectionEditor(props){
             "visualizations": collection
         }
 
-        if(window.confirm(text)){
+        if(window.confirm("Are you sure you want to save this collection? Editing this collection later will not be possible.")){
             var redirectID
             axios.post(url + '/collections/create', data).then((response) => {
                 redirectID = response.data
