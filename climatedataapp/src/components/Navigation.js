@@ -21,13 +21,12 @@ export default function Navigation(props){
     }
 
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Home Page</Navbar.Brand>
-
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse key="basic-navbar-nav">
           <Nav className="me-auto">
+            <Nav.Link href="/" key="8">Home</Nav.Link>
             <Nav.Link href="/temp" key="5" >Temperature/CO<sub>2</sub> Visualizations</Nav.Link>
             <Nav.Link href="/emission" key="6" >Emission Visualization</Nav.Link>
             <Nav.Link key="7" ><button onClick= {() => setLoggedIn(!loggedIn)}>Switch login navs</button></Nav.Link>

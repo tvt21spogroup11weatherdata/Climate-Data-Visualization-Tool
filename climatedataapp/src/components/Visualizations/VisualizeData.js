@@ -68,7 +68,7 @@ export default function VisualizeData(props){
             <div>
                 <h1>{props.data.title}</h1>
                 {chartElement}
-                <div style={{width:"1000px", margin: "auto", textAlign: "left"}} id="chartDesc">
+                <div style={{margin: "auto", textAlign: "left"}} id="chartDesc">
                     {SetDescription()}
                     <p><a className="read-more-link" id="readmorelink" onClick={()=>{setReadMore(!readMore)}}>{readMoreLink}</a></p>
                 </div>
