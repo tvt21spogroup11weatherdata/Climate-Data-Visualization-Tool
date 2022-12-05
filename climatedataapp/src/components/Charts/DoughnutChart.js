@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CanvasJSReact from '../../canvasjs.react';
+import { Spinner } from 'react-bootstrap';
 
 export default function DoughnutChart(props){
     const [loading, setLoading] = useState(true)
@@ -104,7 +105,11 @@ export default function DoughnutChart(props){
             </div>)
     }
     else {
-        return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>
+        return (
+            <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        )
     }
     
 }

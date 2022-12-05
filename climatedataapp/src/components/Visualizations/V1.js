@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import VisualizeData from "./VisualizeData";
 import { Data, DataConstructor} from '../../classes/Data';
 import VisualizeTempData from "./VisualizeTempData";
+import { Spinner } from 'react-bootstrap';
 
 export default function V1(props){
     const [loading, setLoading] = useState(true);
@@ -34,7 +35,11 @@ export default function V1(props){
 
     function setContent(){
         
-        if(loading) return (<img src="https://i.imgur.com/Pdr7Mvk.gif"/>)
+        if(loading) return (
+            <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        )
         else return <VisualizeData editorIndex={props.editorIndex} saveSeries={props.saveSeries} seriesEnabled={props.seriesEnabled} data={data} v2error="true" chartType="line" interval={10}/>
     }
 
