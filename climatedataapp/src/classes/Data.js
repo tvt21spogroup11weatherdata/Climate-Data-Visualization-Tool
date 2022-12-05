@@ -71,7 +71,7 @@ export class DataConstructor{
             'https://gml.noaa.gov/ccgg/about/co2_measurements.html', 
             'HadCRUT5 is a gridded dataset of global historical surface temperature anomalies relative to a 1961-1990 reference period. Data are available for each month from January 1850 onwards, on a 5 degree grid and as global and regional average time series. The dataset is a collaborative product of the Met Office Hadley Centre and the Climatic Research Unit at the University of East Anglia.',
             'Northern Hemisphere temperature reconstruction for the past 2,000 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.',
-            'Years', ' ', '' , '', 0); 
+            'Years', ' ', 'Year' , '', 0); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             'Global Annual',
@@ -578,7 +578,7 @@ export class DataConstructor{
         'https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf', 
         'Reconstructions of Earth’s past climate strongly influence our understanding of the dynamics and sensitivity of the climate system. Yet global temperature has been reconstructed for only a few isolated windows of time1,2, and continuous reconstructions across glacial cycles remain elusive. Here I present a spatially weighted proxy reconstruction of global temperature over the past 2 million years estimated from a multi-proxy database of over 20,000 sea surface temperature point reconstructions. Global temperature gradually cooled until roughly 1.2 million years ago and cooling then stalled until the present.',
         '',
-        'Years Before Present', '', '' , '', 4); 
+        'Years Before Present', '', 'Year' , 'BP', 4); 
         data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             'Year',
             'Change in Global Average Surface Temperature',
@@ -719,37 +719,14 @@ export class DataConstructor{
             'The above charts looked total greenhouse gas emissions – this included other gases such as methane, nitrous oxide, and smaller trace gases. How does this breakdown look if we focus only on carbon dioxide (CO2) emissions? Where does our CO2 come from? This chart shows the distribution of CO2 emissions across sectors.',
             '',
             'Years', ' ', ' ' , ' ', 6); 
-        //foreach sector create set
-        data.set[0] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
+
+        for(var i = 0; i < 20; i++){
+            data.set[i] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
             ' ',
             ' ',
             ' ',
-            '%'
-        );
-        data.set[1] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            ' ',
-            ' ',
-            '%'
-        );
-        data.set[2] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            ' ',
-            ' ',
-            '%'
-        );
-        data.set[3] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            ' ',
-            ' ',
-            '%'
-        );
-        data.set[4] = new DataSet( ////constructor(xTitle, yTitle, prefix, suffix){}
-            ' ',
-            ' ',
-            ' ',
-            '%'
-        );
+            '%')
+        }
 
         data.chartType="doughnut";
 

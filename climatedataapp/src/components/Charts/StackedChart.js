@@ -4,28 +4,33 @@ import { Data, DataSet } from '../../classes/Data';
 
 export default function StackedChart(props){
     const [loading, setLoading] = useState(true)
+    const [accessibleD, setPoint] = useState(null)
+    const [accessibleS, setSeries] = useState(null)
 
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     const data = [];
-    var amountOfToggledSeries = 0;
     var toggledMaxValues = []
     var chartYMax = 0;
     var legendItemFontSize = 11
     var chartHeight = window.innerHeight * 0.6
 
-    setData()
-
-    function setData(){
-        for(var i = 0; i < props.data.set.length; i++){
-            data[i] = {
-                id: i,
-                visible: false,
-                type: "stackedArea",
-                name: props.data.set[i].yTitle,
-                showInLegend: "true",
-                dataPoints: props.data.set[i].points
-            }
+    
+    for(var i = 0; i < props.data.set.length; i++){
+        data[i] = {
+            id: i,
+            visible: false,
+            type: "stackedArea",
+            name: props.data.set[i].yTitle,
+            showInLegend: "true",
+            dataPoints: props.data.set[i].points,
+           // mouseover: accessibility
         }
+    }
+
+    function accessibility(e){
+        var set = props.data.set[e.dataSeries.id]
+        var accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
+        setPoint(accessibleDatapoint)
     }
 
     function tooltipContent(e){
@@ -47,7 +52,6 @@ export default function StackedChart(props){
         if(e.trigger === "reset") return;
 
         var diff = e.axisX[0].viewportMaximum - e.axisX[0].viewportMinimum;
-        console.log(diff)
         var newInterval;
         if(diff < 100) newInterval = 1;
         e.chart.options.axisX.interval = newInterval
@@ -63,18 +67,14 @@ export default function StackedChart(props){
                 toggledMaxValues[i] = 0;
             }
             e.chart.options.axisY.maximum = 0;
-            
         }
 
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
-            amountOfToggledSeries--
-
             toggledMaxValues[e.dataSeriesIndex] = 0;
             
         } else { 
             e.dataSeries.visible = true;
-            amountOfToggledSeries++
 
             var seriesMax = 0;
             for(var i = 0; i < e.dataSeries.dataPoints.length; i++){
@@ -85,6 +85,12 @@ export default function StackedChart(props){
         }
 
         yAxisAdjust(e.chart)
+        
+        /*
+        var toggleInfo = ""
+        if(e.dataSeries.visible) toggleInfo =" was toggled on"
+        else toggleInfo =" was toggled off"
+        setSeries(e.dataSeries.name + toggleInfo)*/
     }
 
     function yAxisAdjust(chart, force){
@@ -146,10 +152,12 @@ export default function StackedChart(props){
         data: data
     }
 
-    var chart = <CanvasJSChart options = {options}/>
-    setTimeout(() => {setLoading(false)}, "500");
+    
 
-    if(props.seriesEnabled !== undefined){
+    var chart = <CanvasJSChart options = {options}/>
+    if(loading) setTimeout(() => {setLoading(false)}, "500");
+
+    if(loading && props.seriesEnabled !== undefined){
         var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];
@@ -160,11 +168,12 @@ export default function StackedChart(props){
     }
 
     if(!loading){
-        return(
-            <div>
-                {chart}
-            </div>
-        )
+        return( 
+        <div>
+            <div>{chart}</div>
+            <div className="accessibleDiv" aria-live="assertive">{accessibleD}</div>
+            <div className="accessibleDiv" aria-live="assertive">{accessibleS}</div>
+        </div> )
     }
     else {
         return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>

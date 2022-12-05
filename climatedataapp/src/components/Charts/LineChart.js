@@ -3,6 +3,9 @@ import CanvasJSReact from '../../canvasjs.react';
 
 export default function LineChart(props){
     const [loading, setLoading] = useState(true)
+    const [accessibleD, setPoint] = useState(null)
+    const [accessibleS, setSeries] = useState(null)
+
     var accessibleDatapoint
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var data = [];
@@ -21,6 +24,11 @@ export default function LineChart(props){
             enabledSeries.push(e.chart.data[i].visible)
         }
         if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
+
+        var toggleInfo = ""
+        if(e.dataSeries.visible) toggleInfo =" was toggled on"
+        else toggleInfo =" was toggled off"
+        setSeries(e.dataSeries.name + toggleInfo)
     }
     
     for(var i = 0; i < props.data.set.length; i++){
@@ -37,10 +45,11 @@ export default function LineChart(props){
 
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
-        if(props.human && e.dataSeries.id == 4) {
+        if(props.human && e.dataSeries.id === 5) {
             accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
         }
         else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
+        setPoint(accessibleDatapoint)
     }
 
     function dynamicLoad(e){
@@ -169,8 +178,11 @@ export default function LineChart(props){
     setTimeout(() => {setLoading(false)}, "500");
 
     if(!loading){
-        return( <div><div>{chart}</div><p>{accessibleDatapoint}</p> 
-        
+        return( 
+        <div>
+            <div>{chart}</div>
+            <div className="accessibleDiv" aria-live="assertive">{accessibleD}</div>
+            <div className="accessibleDiv" aria-live="assertive">{accessibleS}</div>
         </div> ) 
     }
     else {

@@ -3,6 +3,9 @@ import CanvasJSReact from '../../canvasjs.react';
 
 export default function MultiAxisChart(props){
     const [loading, setLoading] = useState(true)
+    const [accessibleD, setPoint] = useState(null)
+    const [accessibleS, setSeries] = useState(null)
+
     var accessibleDatapoint
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var postedData ; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
@@ -30,14 +33,20 @@ export default function MultiAxisChart(props){
             enabledSeries.push(e.chart.data[i].visible)
         }
         if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
+
+        var toggleInfo = ""
+        if(e.dataSeries.visible) toggleInfo =" was toggled on"
+        else toggleInfo =" was toggled off"
+        setSeries(e.dataSeries.name + toggleInfo)
     }
 
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
-        if(e.dataSeries.id == 2) {
-            accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
+        if(e.dataSeries.id === 2) {
+            accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events
         }
         else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
+        setPoint(accessibleDatapoint)
     }
     
     function dynamicLoad(e){
@@ -85,6 +94,7 @@ export default function MultiAxisChart(props){
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
+        console.log(props.data.xPrefix)
         for(var i = 0; i < props.data.set.length; i++){
             if(id === data[i].id + 1) {
                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
@@ -96,7 +106,7 @@ export default function MultiAxisChart(props){
                     eventContent += "<li>" + e.entries[0].dataPoint.events[i] + "</li>"
                 }
                 eventContent += "</ul>"
-                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent + " " + props.data.set[id - 1].suffix
+                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + eventContent
         }
         return content
     }
@@ -197,7 +207,12 @@ export default function MultiAxisChart(props){
     }
 
     if(!loading){
-        return( <div><div>{chart}</div><p>{accessibleDatapoint}</p> </div>)
+        return( 
+        <div>
+            <div>{chart}</div>
+            <div className="accessibleDiv" aria-live="assertive">{accessibleD}</div>
+            <div className="accessibleDiv" aria-live="assertive">{accessibleS}</div>
+        </div> )
     }
     else {
         return <img src="https://i.imgur.com/Pdr7Mvk.gif"/>

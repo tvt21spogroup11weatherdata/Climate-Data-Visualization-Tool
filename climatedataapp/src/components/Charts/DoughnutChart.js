@@ -5,6 +5,8 @@ export default function DoughnutChart(props){
     const [loading, setLoading] = useState(true)
     const [subChart, setSub] = useState(false)
     const [subSectorOpt, setSubOptions] = useState({})
+    const [accessibleD, setPoint] = useState(null)
+    const [accessibleS, setSeries] = useState(null)
 
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -25,9 +27,16 @@ export default function DoughnutChart(props){
         subData[j - 1] = subDataPoints;
     }
 
+    function tooltipContent(e){
+        var set = props.data.set[e.entries[0].index]
+        var content = ""
+        content = props.data.xPrefix + " " + e.entries[0].dataPoint.label + " " + props.data.xSuffix + " " + e.entries[0].dataPoint.y + " " + set.suffix
+        return content
+    }
+
     function drilldownHandler(e) {
         setSub(true)
-
+        accessibility(e)
         setSubOptions({
             animationEnabled: false,
             axisY: {
@@ -40,16 +49,28 @@ export default function DoughnutChart(props){
             data: [{
                 type: "column",
                 color: "#E7823A",
-                dataPoints: subData[e.dataPointIndex]
+                dataPoints: subData[e.dataPointIndex],
+                mouseover: accessibility
             }]
         })
 	}
 
+    function accessibility(e){
+        var set = props.data.set[e.dataSeriesIndex]
+        var accessibleDatapoint = e.dataPoint.label + " " + e.dataPoint.y + set.suffix
+        setPoint(accessibleDatapoint)
+    }
+
     var options = {
         animationEnabled: true,
+        toolTip:{
+            shared: false,
+            content: tooltipContent
+        },
         data: [{
             type: "doughnut",
             click: drilldownHandler,
+            mouseover: accessibility,
             startAngle: 60,
             indexLabelFontSize: 17,
             indexLabel: "{label} - #percent%",
@@ -76,8 +97,10 @@ export default function DoughnutChart(props){
     if(!loading){
         return(
             <div>
-                {backButton}
-                {chart}
+                <div>{backButton}</div>
+                <div>{chart}</div>
+                <div className="accessibleDiv" aria-live="assertive">{accessibleD}</div>
+                <div className="accessibleDiv" aria-live="assertive">{accessibleS}</div>
             </div>)
     }
     else {
