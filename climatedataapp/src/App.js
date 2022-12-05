@@ -1,5 +1,4 @@
 import './App.css';
-import { useParams } from 'react-router-dom';
 import VisualizeTempData from './components/Visualizations/VisualizeTempData';
 import VisualizeEmissionData from './components/Visualizations/VisualizeEmissionData';
 import CollectionEditor from './components/Visualizations/CollectionEditor';

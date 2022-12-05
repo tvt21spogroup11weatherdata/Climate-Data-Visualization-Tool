@@ -13,7 +13,7 @@ export default function UserAccount(){
     function DeleteUserButton(){
         var deleteUserButton = 
             (<form onSubmit={() => DeleteUser()}>
-                <input type="submit" id="button" className="btn btn-secondary" value="Delete account"/>
+                <input type="submit" data-testid="submit"id="button" className="btn btn-secondary" value="Delete account"/>
             </form>)
         
         return deleteUserButton

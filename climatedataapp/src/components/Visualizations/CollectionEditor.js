@@ -136,7 +136,6 @@ export default function CollectionEditor(props){
 
     async function SaveAndShare(e){
         e.preventDefault()
-        console.log(textInputs)
         var tempVisualizations = collection
 
         for(var i = 0; i < collection.length; i++){
