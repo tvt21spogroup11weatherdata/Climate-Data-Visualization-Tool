@@ -80,5 +80,13 @@ app.use('/national_carbon_emissions', nationalCarbonEmissions)
 const collections = require('./routes/collections/collections_Route')
 app.use('/collections', collections)
 
+const userSignUp = require('./routes/user/userSignup_Route')
+app.use('/signup', userSignUp)
+
+const userLogin = require('./routes/user/userLogin_Route')
+app.use('/login', userLogin)
+
+const userDelete = require('./routes/user/userDelete_Route')
+app.use('/deleteuser', userDelete)
 
 app.listen(3001, () => console.log('Server started'))
