@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
+import { setAuthToken } from "./SetAuthToken"
 
 export default function SignupForm (){
     const [signedUp, setSignedUp] = useState("")
@@ -22,6 +23,7 @@ export default function SignupForm (){
         axios.post("https://reqres.in/api/register", signupPayload)
         .then(response => {
             setErrorMessage(false)
+            setAuthToken(response.data.token)
             window.localStorage.setItem("token", response.data.token);
             window.location.href = '/account'
         }).catch(error => {

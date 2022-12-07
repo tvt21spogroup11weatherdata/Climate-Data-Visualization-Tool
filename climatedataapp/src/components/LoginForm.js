@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
+import { setAuthToken } from "./SetAuthToken"
 
 export default function LoginForm (props){
     const [loggedIn, setLoggedIn] = useState("")
@@ -29,6 +30,7 @@ export default function LoginForm (props){
         axios.post("https://reqres.in/api/login", loginPayload)
         .then(response => {
             setErrorMessage(false)
+            setAuthToken(response.data.token)
             window.localStorage.setItem("token", response.data.token);
             window.location.href = '/account'
         }).catch(error => {
