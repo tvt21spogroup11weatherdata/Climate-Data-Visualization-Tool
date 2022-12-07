@@ -19,6 +19,10 @@ import V7 from './components/Visualizations/V7'
 import V8 from './components/Visualizations/V8'
 import V9 from './components/Visualizations/V9'
 
+import ProtectedRoute from "./components/ProtectedRoute"
+import NotFound from './components/NotFound';
+import CollectionNotFound from './components/CollectionNotFound';
+
 import axios from "axios";
 import { useState } from 'react';
 
@@ -27,6 +31,8 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [testPaths, setTestPaths] = useState([])
 
+    const [user, setUser] = useState(false);
+    
     if(routes === null) getRoutes()
 
     /*
@@ -73,17 +79,26 @@ function App() {
     return (
         <>
         <Header/>
-        <Navigation/>
+        <Navigation user={user}/>
         <div className="App" id="content">
             <Routes>
+
                 <Route path="/" element={<Home testPaths={testPaths}/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
-                <Route path="/custompath" element={<CollectionEditor/>} />
-                <Route path="/account" element={<UserAccount/>} />
-                <Route path="/login" element={<LoginForm/>} />
-                <Route path="/signup" element={<SignupForm/>} />
-                <Route path="/newcollection" element={<CollectionEditor/>}/>
+                <Route path="/login" setUser={setUser} element={<LoginForm/>} />
+                <Route path="/signup" setUser={setUser} element={<SignupForm/>} />
+
+                <Route path="/newcollection" element={
+                <ProtectedRoute token={localStorage.getItem("token")}>
+                    <CollectionEditor/>
+                </ProtectedRoute>}/>
+
+                <Route path="/account" element={
+                <ProtectedRoute token={localStorage.getItem("token")}>
+                    <UserAccount/>
+                </ProtectedRoute>}/>
+
                 {routes}
 
                 <Route path="/V1" element={<V1 menu={true}/>}/>
@@ -93,6 +108,9 @@ function App() {
                 <Route path="/V7" element={<V7 menu={true}/>}/>
                 <Route path="/V8" element={<V8 menu={true}/>}/>
                 <Route path="/V9" element={<V9 menu={true}/>}/>
+
+                <Route path="/*" element={<NotFound />} />
+                <Route path="/c/*" element={<CollectionNotFound />} />
             </Routes>
         </div>
         </>
