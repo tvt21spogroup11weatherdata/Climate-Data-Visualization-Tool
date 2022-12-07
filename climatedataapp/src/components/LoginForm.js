@@ -2,40 +2,31 @@ import { useState } from "react"
 import axios from "axios"
 import { setAuthToken } from "./SetAuthToken"
 
-export default function LoginForm (props){
+export default function LoginForm ({setUser}){
     const [loggedIn, setLoggedIn] = useState("")
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
 
     function logIn(){
-        //REQRES TEST
-        const loginPayload = {
-            email: 'eve.holt@reqres.in',
-            password: 'cityslicka'
-        }
-        //REQRES TEST
-        const falseLogin = {
-            email: 'peter@klaven',
-            password: ''
+        const loginPayLoad = {
+            "username": userName,
+            "pwd": password
         }
 
-        //USE THIS 
-        const loginLoad = {
-            userName: userName,
-            password: password
-        }
-
-        //REQRES TEST
-        axios.post("https://reqres.in/api/login", loginPayload)
+        axios.post("http://localhost:3001/login", loginPayLoad)
         .then(response => {
             setErrorMessage(false)
             setAuthToken(response.data.token)
-            window.localStorage.setItem("token", response.data.token);
+            window.localStorage.setItem("username", userName)
+            window.localStorage.setItem("userID", response.data.id)
+            window.localStorage.setItem("token", response.data.accessToken);
             window.location.href = '/account'
+            setUser(userName)
         }).catch(error => {
-            if(error.response.status === 400) setErrorMessage("Wrong username or password")
             console.log(error)
+            setErrorMessage(error.response.statusText)
+            
         })
     }
 
@@ -51,7 +42,7 @@ export default function LoginForm (props){
         e.preventDefault()
         logIn()
     }
-
+    
     return(
         <div>
             <h1>Log in</h1>

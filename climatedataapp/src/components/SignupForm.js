@@ -2,32 +2,29 @@ import { useState } from "react"
 import axios from "axios"
 import { setAuthToken } from "./SetAuthToken"
 
-export default function SignupForm (){
+export default function SignupForm (props){
     const [signedUp, setSignedUp] = useState("")
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
 
     function signUp(){
-        //REQRES TEST
         const signupPayload = {
-            "email": "eve.holt@reqres.in",
-            "password": "pistol"
+            "username": userName,
+            "pwd": password
         }
 
-        const invalidSignupPayload = {
-            "email": "sydney@fife"
-        }
-
-        //REQRES TEST
-        axios.post("https://reqres.in/api/register", signupPayload)
+        axios.post("http://localhost:3001/signup", signupPayload)
         .then(response => {
             setErrorMessage(false)
             setAuthToken(response.data.token)
-            window.localStorage.setItem("token", response.data.token);
+            window.localStorage.setItem("username", userName)
+            window.localStorage.setItem("userID", response.data.id)
+            window.localStorage.setItem("token", response.data.accessToken);
             window.location.href = '/account'
         }).catch(error => {
-            if(error.response.status === 400) setErrorMessage("Username already exists")
+            console.log(error)
+            setErrorMessage("Username already exists")
             console.log(error)
         })
     }

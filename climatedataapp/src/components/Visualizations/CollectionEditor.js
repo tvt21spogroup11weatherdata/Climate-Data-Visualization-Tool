@@ -147,7 +147,8 @@ export default function CollectionEditor(props){
         
         var data = {
             "formatType": formatType,
-            "visualizations": collection
+            "visualizations": collection,
+            "username": window.localStorage.getItem("username")
         }
 
         if(window.confirm("Are you sure you want to save this collection? Editing this collection later will not be possible.")){

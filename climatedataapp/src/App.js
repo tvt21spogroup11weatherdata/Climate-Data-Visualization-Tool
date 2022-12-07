@@ -23,6 +23,8 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import NotFound from './components/NotFound';
 import CollectionNotFound from './components/CollectionNotFound';
 
+import { setAuthToken } from './components/SetAuthToken';
+
 import axios from "axios";
 import { useState } from 'react';
 
@@ -31,9 +33,14 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [testPaths, setTestPaths] = useState([])
 
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState("");
     
     if(routes === null) getRoutes()
+
+    const token = localStorage.getItem("token");
+    if (token) {
+        setAuthToken(token);
+    }
 
     /*
     function checkStorageForRoutes(){
@@ -86,8 +93,8 @@ function App() {
                 <Route path="/" element={<Home testPaths={testPaths}/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
-                <Route path="/login" setUser={setUser} element={<LoginForm/>} />
-                <Route path="/signup" setUser={setUser} element={<SignupForm/>} />
+                <Route path="/login" element={<LoginForm setUser={setUser} />} />
+                <Route path="/signup" element={<SignupForm setUser={setUser} />} />
 
                 <Route path="/newcollection" element={
                 <ProtectedRoute token={localStorage.getItem("token")}>
@@ -115,6 +122,7 @@ function App() {
         </div>
         </>
     )
+    
 }
 
 export default App;

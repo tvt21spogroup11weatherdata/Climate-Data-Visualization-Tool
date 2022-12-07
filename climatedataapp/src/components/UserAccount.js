@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { logOut } from "./Logout";
 
-export default function UserAccount(){
+export default function UserAccount(props){
     const [collIDs, setIDs] = useState(null)
     const [collectionTableElements, setElements] = useState(null)
 
@@ -10,33 +11,35 @@ export default function UserAccount(){
 
     var url = 'http://localhost:3001'
 
-    function DeleteUserButton(){
-        var deleteUserButton = 
-            (<form onSubmit={() => DeleteUser()}>
-                <input type="submit" data-testid="submit"id="button" className="btn btn-secondary" value="Delete account"/>
-            </form>)
-        
-        return deleteUserButton
-    }
+    async function DeleteUser(e){
+        e.preventDefault()
 
-    function DeleteUser(){
         if(window.confirm("Are you sure? This operation can't be undone")){
-            //GET COLLECTION IDS FROM USER DOCUMENT
-            //DELETE ALL COLLECTIONS FOUND
 
-            //DELETE USER:
-            /*
-            axios.get(url + '/users/delete/' + id, {
+            const username = window.localStorage.getItem("username")
+            
+            const deletePayLoad = {
+                "username": username
+            }
+
+            const token = window.localStorage.getItem("token")
+
+
+            const result = await axios.get(url + '/deleteuser', deletePayLoad, {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Origin',
+                    'Authorization' : token
                 }
                 }).then((response) => {
                   console.log(response)
-                  window.location.reload()
+                  window.location.href = '/'
+                  
             }).catch (error => {
-                console.log(error)
-            })*/
+                console.log(error.response.data.message)
+            })
+
+            logOut()
         }
     }
 
@@ -51,11 +54,12 @@ export default function UserAccount(){
                     'Access-Control-Allow-Headers': 'Origin',
                 }
                 }).then((response) => {
-                  window.location.reload()
+                    window.location.href = '/account'
             }).catch (error => {
                 console.log(error)
             })
         }
+        logOut()
     }
     
 
@@ -110,9 +114,9 @@ export default function UserAccount(){
     if(collIDs === null) GetUserCollections();
     else if(collectionTableElements === null) CreateElements()
 
-
     return(
         <div>
+            <h1>Hello, {localStorage.getItem("username")}</h1>
             <table id="useraccount-table">
                 <tbody>
                     <tr>
@@ -123,7 +127,9 @@ export default function UserAccount(){
                             </table>
                         </td>
                         <td>
-                            {DeleteUserButton()}
+                            <form onSubmit={(e) => DeleteUser(e)}>
+                                <input type="submit" data-testid="submit" id="button" className="btn btn-secondary" value="Delete account"/>
+                            </form>
                         </td>
                     </tr>
                 </tbody>

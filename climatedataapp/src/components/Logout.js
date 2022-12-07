@@ -1,6 +1,6 @@
 import axios from 'axios';
  
 export const logOut = () => {
-    localStorage.removeItem("token")
+    localStorage.clear()
     delete axios.defaults.headers.common["Authorization"];
 }
