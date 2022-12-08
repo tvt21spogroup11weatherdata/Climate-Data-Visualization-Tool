@@ -33,14 +33,18 @@ export default function MultiAxisChart(props){
         for(var i = 0; i < e.chart.data.length; i++){
             enabledSeries.push(e.chart.data[i].visible)
         }
+        console.log("editorindex " + props.editorIndex + " enabled series " + enabledSeries)
         if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
 
+        //Accessibility feature; does not work, prevents chart from rendering right
+        /*
         var toggleInfo = ""
         if(e.dataSeries.visible) toggleInfo =" was toggled on"
         else toggleInfo =" was toggled off"
-        setSeries(e.dataSeries.name + toggleInfo)
+        setSeries(e.dataSeries.name + toggleInfo)*/
     }
 
+    //Accessibility feature; does not work, prevents chart from rendering right
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
         if(e.dataSeries.id === 2) {
@@ -95,7 +99,6 @@ export default function MultiAxisChart(props){
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
-        console.log(props.data.xPrefix)
         for(var i = 0; i < props.data.set.length; i++){
             if(id === data[i].id + 1) {
                content = props.data.xPrefix + " " + e.entries[0].dataPoint.x + " " + props.data.xSuffix + "<br/>" + e.entries[0].dataPoint.y + " " + props.data.set[id - 1].suffix
@@ -122,7 +125,7 @@ export default function MultiAxisChart(props){
             axisYIndex: 0,
             showInLegend: true,
             dataPoints: props.data.set[0].points,
-            mouseover: accessibility
+           // mouseover: accessibility
         },
         {
             type: "line",
@@ -132,7 +135,7 @@ export default function MultiAxisChart(props){
             axisYType: "secondary",
             showInLegend: true,
             dataPoints: props.data.set[1].points,
-            mouseover: accessibility
+            //mouseover: accessibility
         },
         {
             type: "scatter",
@@ -144,7 +147,7 @@ export default function MultiAxisChart(props){
             axisYType: "secondary",
             showInLegend: true,
             dataPoints: setHumanEvolutionPoints(),
-            mouseover: accessibility
+           // mouseover: accessibility
         }]
 
     
@@ -205,6 +208,13 @@ export default function MultiAxisChart(props){
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];
         }
+    }
+    else if(props.editorIndex !== undefined) {
+        var seriesEnabled = []
+        for(var i = 0; i < props.data.set.length; i++){
+            seriesEnabled[i] = true
+        }
+        props.saveSeries(props.editorIndex, seriesEnabled);
     }
 
     if(!loading){

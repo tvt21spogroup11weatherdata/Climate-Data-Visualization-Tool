@@ -18,6 +18,7 @@ export default function CollectionEditor(props){
     const [descriptions, setDescs] = useState([])
     const [redirectID, setRedirect] = useState(null)
     const [help, setHelp] = useState(false)
+    const [loadingChart, setLoadingChart] = useState(false)
 
     var url = "http://localhost:3001"
     var collectionElements = [];
@@ -51,10 +52,14 @@ export default function CollectionEditor(props){
             tempCollection.visualizations.push(new VisualizationsMeta(props[i], [true], ""))
         }
         setColl(tempCollection.visualizations);
+
+        setTimeout(setLoadingChart(false), 1500)
     }
 
     //Add new chart
     function AddVisualization(select){
+        setLoadingChart(true)
+        
         var indexes = [];
         for(var i = 0; i <= collection.length; i++){
             if(i === collection.length) indexes[i] = parseInt(select.target.value);
@@ -65,6 +70,8 @@ export default function CollectionEditor(props){
 
     //Remove visualization from editor
     function RemoveVisualization(select){
+        if(loadingChart) return
+        setLoadingChart(true)
         var dataIndex = select.target.value;
         var flaggedIndex;
         for(var i = 0; i < 10; i++){ //for amount of visualizations
@@ -149,6 +156,8 @@ export default function CollectionEditor(props){
             "username": window.localStorage.getItem("username")
         }
 
+        console.log(collection)
+
         if(window.confirm("Are you sure you want to save this collection? Editing this collection later will not be possible.")){
             var redirectID
             axios.post(url + '/collections/create', data).then((response) => {
@@ -173,7 +182,7 @@ export default function CollectionEditor(props){
 
     const addVisualization = (
         <td><br/>
-            <select className="form-select form-select-lg mb-3" defaultValue="-1" onChange={(e) => AddVisualization(e)}>
+            <select className="form-select form-select-lg mb-3" defaultValue="-1" onChange={(e) => AddVisualization(e)} disabled={loadingChart}>
                 <option key="-1" value="-1" disabled>Add new visualization</option>
                 <option key="0" value="0">Global historical surface temperature anomalies from January 1850 onwards</option>
                 <option key="1" value="1">Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements</option>
@@ -199,6 +208,7 @@ export default function CollectionEditor(props){
                 <b>How to use the editor</b>
                 <ul className="extraContent">
                 <li>Add new visualizations to the collection from the dropdown menu</li>
+                <li>Please wait for all visualizations to load properly before adding/removing more visualizations</li>
                 <li>Switching between format types will reset the description and activated series in the visualizations</li>
                 <li>Further editing after saving is not possible</li>
                 </ul>

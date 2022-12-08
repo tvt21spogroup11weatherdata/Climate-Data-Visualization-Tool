@@ -26,10 +26,12 @@ export default function LineChart(props){
         }
         if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
 
+        //Accessibility feature; does not work, prevents chart from rendering right
+        /*
         var toggleInfo = ""
         if(e.dataSeries.visible) toggleInfo =" was toggled on"
         else toggleInfo =" was toggled off"
-        setSeries(e.dataSeries.name + toggleInfo)
+        setSeries(e.dataSeries.name + toggleInfo)*/
     }
     
     for(var i = 0; i < props.data.set.length; i++){
@@ -39,11 +41,11 @@ export default function LineChart(props){
             name: props.data.set[i].yTitle,
             showInLegend: true,
             dataPoints: props.data.set[i].points,
-            mouseover: accessibility
+            //mouseover: accessibility
         }
     }
 
-
+    //Accessibility feature; does not work, prevents chart from rendering right
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
         if(props.human && e.dataSeries.id === 5) {
@@ -128,7 +130,7 @@ export default function LineChart(props){
                 shared: false,
                 content: "{x}: {events}"
             },
-            mouseover: accessibility
+            //mouseover: accessibility
         }
     }
 
@@ -169,14 +171,23 @@ export default function LineChart(props){
     //Define chart
     var chart = <CanvasJSChart options = {options}/>
 
-    if(props.seriesEnabled !== undefined){
+   if(props.seriesEnabled !== undefined){
         var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];
         }
     }
+    else if(props.editorIndex !== undefined) {
+        var seriesEnabled = []
+        for(var i = 0; i < props.data.set.length; i++){
+            seriesEnabled[i] = true
+        }
+        props.saveSeries(props.editorIndex, seriesEnabled);
+    }
+
 
     setTimeout(() => {setLoading(false)}, "500");
+    
 
     if(!loading){
         return( 

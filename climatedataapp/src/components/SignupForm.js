@@ -1,9 +1,8 @@
 import { useState } from "react"
 import axios from "axios"
-import { setAuthToken } from "./SetAuthToken"
 
 export default function SignupForm (props){
-    const [signedUp, setSignedUp] = useState("")
+    const [signedUp, setSignedUp] = useState("") //for jest
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
@@ -20,18 +19,16 @@ export default function SignupForm (props){
             window.localStorage.setItem("username", userName)
             window.localStorage.setItem("userID", response.data.id)
             window.location.href = '/account'
+            setTimeout(alert('Successfully signed up! Please log in'), 500)
         }).catch(error => {
             console.log(error)
             setErrorMessage("Username already exists")
-            console.log(error)
         })
     }
 
     function errorElement(){
         if(errorMessage !== null && errorMessage) {
-            return(
-                <p>{errorMessage}</p>
-            )
+            return(<p>{errorMessage}</p>)
         }
     }
 

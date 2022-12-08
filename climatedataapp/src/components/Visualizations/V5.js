@@ -11,23 +11,16 @@ export default function V5(props){
     
     useEffect(() => {
         if(loading){
-           if(data === null){    
-                if(window.sessionStorage.getItem("V5") === null){
-                    cnstr.V5Data().then(res => {
-                        setData(res)
-                        setTimeout(() => {storeData(res)}, "500");
-                    })
-                }
-                else {
-                    setData(JSON.parse(window.sessionStorage.getItem("V5")))
-                    setTimeout(() => {setLoading(false)}, "500");
-                }
-            }
+           if(data === null){   
+                cnstr.V5Data().then(res => {
+                    setTimeout(() => {storeData(res)}, "500");
+                })
+            }  
         }
     })
 
     function storeData(data){
-        window.sessionStorage.setItem("V5", JSON.stringify(data))
+        setData(data)
         setLoading(false)
     }
 

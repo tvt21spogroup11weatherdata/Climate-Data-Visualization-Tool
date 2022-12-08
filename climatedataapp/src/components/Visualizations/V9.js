@@ -11,23 +11,16 @@ export default function V9(props){
     
     useEffect(() => {
         if(loading){
-           if(data === null){    
-                if(window.sessionStorage.getItem("V9") === null){
-                    cnstr.V9Data().then(res => {
-                        setData(res)
-                        setTimeout(() => {storeData(res)}, "500");
-                    })
-                }
-                else {
-                    setData(JSON.parse(window.sessionStorage.getItem("V9")))
-                    setTimeout(() => {setLoading(false)}, "500");
-                }
-            }
+           if(data === null){   
+                cnstr.V9Data().then(res => {
+                    setTimeout(() => {storeData(res)}, "500");
+                })
+            }  
         }
     })
 
     function storeData(data){
-        window.sessionStorage.setItem("V9", JSON.stringify(data))
+        setData(data)
         setLoading(false)
     }
 

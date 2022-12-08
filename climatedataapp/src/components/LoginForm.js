@@ -3,7 +3,7 @@ import axios from "axios"
 import { setAuthToken } from "./SetAuthToken"
 
 export default function LoginForm ({setUser}){
-    const [loggedIn, setLoggedIn] = useState("")
+    const [loggedIn, setLoggedIn] = useState("") //for jest ??
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
@@ -26,7 +26,6 @@ export default function LoginForm ({setUser}){
         }).catch(error => {
             console.log(error)
             setErrorMessage(error.response.statusText)
-            
         })
     }
 

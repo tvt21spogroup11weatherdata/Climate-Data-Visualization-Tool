@@ -51,7 +51,6 @@ export default function UserAccount(props){
                 console.log(error)
             })
         }
-        logOut()
     }
     
 
