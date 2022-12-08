@@ -6,7 +6,7 @@ const User = require('../../models/user/user_Model')
 var jwt = require("jsonwebtoken");
 const config = require("../../auth.config");
 
-// Get all data
+/* Get all collections (for debugging) */ 
 router.get('/', async (req, res) => {
     try {
         const result = await Collections.find()
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
-// Get all by user
+/* Get all collections by user */
 router.get('/:username', async (req, res) => {
     try {
         const result = await Collections.find({createdBy: req.params.username})
@@ -23,38 +23,34 @@ router.get('/:username', async (req, res) => {
 })
 
 
-
+/* If user found and authorized, create new collection with user tagged*/
 router.post('/create', async (req, res) => {
     let collID
     try{
-    User.findOne({
-        username: req.body.username
-      })
-        .exec((error) => {
-            let token = req.headers["x-access-token"];
-            if (!token) return res.status(403).send({ message: "No token provided!" });
+        User.findOne({
+            username: req.body.username
+        })
+            .exec((error) => {
+                let token = req.headers["x-access-token"];
+                if (!token) return res.status(403).send({ message: "No token provided!" });
 
-            jwt.verify(token, config.secret, (err, decoded) => {
-                if (err) return res.status(401).send({ message: "Unauthorized!" });
-                req.userId = decoded.id;
-                try {
-                    var newCollection = new Collections({ formatType: req.body.formatType, visualizations: req.body.visualizations, createdBy: req.body.username});
-                    newCollection.save(function (err, coll) {
-                        if (err) return console.error(err);
-                        collID = coll._id
-                        res.status(200).json(collID)
-                    })
-                } catch (err) {res.status(500).json({message: err.message})}
-            });
-    })
-    }   catch (err) {res.status(500).json({message: err.message})}
+                jwt.verify(token, config.secret, (err, decoded) => {
+                    if (err) return res.status(401).send({ message: "Unauthorized!" });
+                    req.userId = decoded.id;
+                    try {
+                        var newCollection = new Collections({ formatType: req.body.formatType, visualizations: req.body.visualizations, createdBy: req.body.username});
+                        newCollection.save(function (err, coll) {
+                            if (err) return console.error(err);
+                            collID = coll._id
+                            res.status(200).json(collID)
+                        })
+                    } catch (err) {res.status(500).json({message: err.message})}
+                });
+            })
+    }  catch (err) {res.status(500).json({message: err.message})}
 })
 
-router.get('/test', async (req, res) => {
-    res.status(200).json.message("Yes")
-})
-
-//Get collection with id
+/* Get collection by id */
 router.get('/c/:collectionID', async (req, res) => {
     try {
         const result = await Collections.find({"_id": req.params.collectionID})
@@ -62,13 +58,27 @@ router.get('/c/:collectionID', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
+/* If user found and authorized, delete collection */
 router.get('/delete/:collectionID', async (req, res) => {
-    try {
-        const result = await Collections.deleteOne({"_id": req.params.collectionID });
-        res.status(200).json(result)
-    } catch(err) {res.status(500).json({message: err.message})}
-})
+    try{
+        User.findOne({
+            username: req.body.username
+        })
+            .exec((error) => {
+                let token = req.headers["x-access-token"];
+                if (!token) return res.status(403).send({ message: "No token provided!" });
 
+                jwt.verify(token, config.secret, async (err, decoded) => {
+                    if (err) return res.status(401).send({ message: "Unauthorized!" });
+                    req.userId = decoded.id;
+                    try {
+                        const result = await Collections.deleteOne({"_id": req.params.collectionID });
+                        res.status(200).json(result)
+                    } catch(err) {res.status(500).json({message: err.message})}
+                });
+            })
+    }  catch (err) {res.status(500).json({message: err.message})}
+})
 
 
 module.exports = router

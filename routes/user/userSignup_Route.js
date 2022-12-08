@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require('../../models/user/user_Model')
 var bcrypt = require("bcryptjs");
 
-
+/* If username not found, encrypt password and create user */
 router.post('/', async (req, res) => {
     User.findOne({
         username: req.body.username

@@ -5,7 +5,7 @@ const User = require('../../models/user/user_Model')
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
-
+/* Return token if user found, posts right username and password */
 router.post('/', async (req, res) => {
     User.findOne({
         username: req.body.username
