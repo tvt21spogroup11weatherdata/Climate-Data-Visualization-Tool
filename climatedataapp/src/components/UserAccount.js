@@ -13,26 +13,18 @@ export default function UserAccount(props){
 
     async function DeleteUser(e){
         e.preventDefault()
+        var user = window.localStorage.getItem("username")
+        const userLoad = {
+            "username": user
+        }
 
         if(window.confirm("Are you sure? This operation can't be undone")){
-
-            const username = window.localStorage.getItem("username")
-            
-            const deletePayLoad = {
-                "username": username
-            }
-
-            const token = window.localStorage.getItem("token")
-
-
-            const result = await axios.get(url + '/deleteuser', deletePayLoad, {
+            const result = await axios.post(url + '/deleteuser', userLoad, {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Origin',
-                    'Authorization' : token
                 }
                 }).then((response) => {
-                  console.log(response)
                   window.location.href = '/'
                   
             }).catch (error => {
@@ -54,7 +46,7 @@ export default function UserAccount(props){
                     'Access-Control-Allow-Headers': 'Origin',
                 }
                 }).then((response) => {
-                    window.location.href = '/account'
+                    window.location.reload()
             }).catch (error => {
                 console.log(error)
             })
@@ -66,7 +58,7 @@ export default function UserAccount(props){
     function GetUserCollections(){
         //GET COLLECTION IDS FROM USER DOCUMENT
         // this just gets all collections for testing
-        axios.get(url + '/collections/', {
+        axios.get(url + '/collections/' + window.localStorage.getItem("username"), {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Origin',

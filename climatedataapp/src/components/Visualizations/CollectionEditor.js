@@ -143,8 +143,6 @@ export default function CollectionEditor(props){
         }
         setColl(tempVisualizations)
 
-       // console.log(collection)
-        
         var data = {
             "formatType": formatType,
             "visualizations": collection,

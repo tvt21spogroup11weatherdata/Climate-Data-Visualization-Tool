@@ -17,10 +17,8 @@ export default function SignupForm (props){
         axios.post("http://localhost:3001/signup", signupPayload)
         .then(response => {
             setErrorMessage(false)
-            setAuthToken(response.data.token)
             window.localStorage.setItem("username", userName)
             window.localStorage.setItem("userID", response.data.id)
-            window.localStorage.setItem("token", response.data.accessToken);
             window.location.href = '/account'
         }).catch(error => {
             console.log(error)

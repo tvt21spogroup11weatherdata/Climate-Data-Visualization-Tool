@@ -15,20 +15,21 @@ export default function VisualizationCollection(props){
     const [loading, setLoading] = useState(true);
     const [collection, setCollection] = useState(null)
     const [elements, setElements] = useState(null)
-
+    const [createdBy, setCreatedBy] = useState("")
     var url = "http://localhost:3001"
     var column2 = [];
 
     useEffect(() => {
         if(loading){
            if(collection === null){ 
-                axios.get(url + '/collections/' + props.id, {
+                axios.get(url + '/collections/c/' + props.id, {
                     headers: {
                         'Access-Control-Allow-Origin': '*',
                         'Access-Control-Allow-Headers': 'Origin',
                     }
                     }).then((response) => {
                         var tempColl = new Collection();
+                        setCreatedBy(response.data[0].createdBy)
                         tempColl.formatType = response.data[0].formatType;
                         for(var i = 0; i < response.data[0].visualizations.length; i++){
                             tempColl.visualizations.push(response.data[0].visualizations[i])
@@ -75,13 +76,18 @@ export default function VisualizationCollection(props){
             }
         }
     })
+
+    function createdByElement(){
+        return(<p><b>Collection created by user {createdBy}</b></p>)
+    }
     
     if(!loading) {
+        
         if(formatType === "1column"){
-                return(<><div>{elements}</div></>)
+                return(<>{createdByElement()}<div>{elements}</div></>)
             }
         else if(formatType === "2column"){
-            return(<>
+            return(<>{createdByElement()}
                 <table className="table" width="100%">
                     <tbody key="">
                         {elements}
