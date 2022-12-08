@@ -5,7 +5,7 @@ const User = require('../../models/user/user_Model')
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
-// Get all data
+
 router.get('/', async (req, res) => {
     var u = null
     User.findOne({

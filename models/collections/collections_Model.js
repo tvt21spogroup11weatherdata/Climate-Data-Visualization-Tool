@@ -6,6 +6,9 @@ const collectionsSchema = new mongoose.Schema({
     },
     visualizations: {
         type: Array
+    },
+    createdBy: {
+        type: String
     }
 })
 

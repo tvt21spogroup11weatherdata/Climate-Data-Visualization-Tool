@@ -14,6 +14,15 @@ router.get('/', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
+// Get all by user
+router.get('/:username', async (req, res) => {
+    try {
+        const result = await Collections.find({createdBy: {$gte: req.params.username}})
+        res.status(200).json(result)
+    } catch (err) {res.status(500).json({message: err.message})}
+})
+
+
 router.post('/create', async (req, res) => {
     User.findOne({
         username: req.body.username
@@ -33,35 +42,15 @@ router.post('/create', async (req, res) => {
             createColl(req, res, u)
             });
     })
-
-    
-    
 })
 
 async function createColl(req, res, u){
-    let collID
-    var tcollections = u.collections
-
     try {
-        var newCollection = new Collections({ formatType: req.body.formatType, visualizations: req.body.visualizations});
+        var newCollection = new Collections({ formatType: req.body.formatType, visualizations: req.body.visualizations, createdBy: username});
         newCollection.save(function (err, coll) {
             if (err) return console.error(err);
-            collID = coll._id
-            tcollections.push(collID)
-            console.log("tcol" + tcollections)
-            updateUserColl(req, res, u, tcollections)
+            res.status(200).json(coll._id)
         })
-    } catch (err) {res.status(500).json({message: err.message})}
-
-}
-
-async function updateUserColl(req, res, u, tcollections){
-    try {
-        const result = await User.updateOne({ username: u.username}, {
-            $set: { "collections": tcollections }
-        });
-
-        res.status(200).send({message: "Collection created successfully"})
     } catch (err) {res.status(500).json({message: err.message})}
 }
 
