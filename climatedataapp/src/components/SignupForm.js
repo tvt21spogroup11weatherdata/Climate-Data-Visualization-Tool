@@ -7,13 +7,15 @@ export default function SignupForm (props){
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
 
+    var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     function signUp(){
         const signupPayload = {
             "username": userName,
             "pwd": password
         }
 
-        axios.post("http://localhost:3001/signup", signupPayload)
+        axios.post(url + "/signup", signupPayload)
         .then(response => {
             setErrorMessage(false)
             window.localStorage.setItem("username", userName)

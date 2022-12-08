@@ -15,7 +15,7 @@ export default function StackedChart(props){
     var legendItemFontSize = 11
     var chartHeight = window.innerHeight * 0.6
 
-    
+    /* Set datapoints */
     for(var i = 0; i < props.data.set.length; i++){
         data[i] = {
             id: i,
@@ -28,12 +28,16 @@ export default function StackedChart(props){
         }
     }
 
+    //Accessibility feature; does not work, prevents chart from rendering right
+    /*
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
         var accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
         setPoint(accessibleDatapoint)
-    }
+    }*/
 
+
+    /* Dynamically set tooltip content */
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
@@ -45,6 +49,7 @@ export default function StackedChart(props){
         return content
     }
 
+    /* Dynamically tighten X Axis interval when zooming in */
     function dynamicLoad(e){
         if(e.trigger === "pan") return;
 
@@ -60,7 +65,7 @@ export default function StackedChart(props){
 
 
 
-    //Toggle series when clicking legend
+    /* Toggle series when clicking legend */
     function toggleSeries(e) {
         //if empty, populate max values of all series with 0
         if(toggledMaxValues.length === 0){
@@ -87,13 +92,14 @@ export default function StackedChart(props){
 
         yAxisAdjust(e.chart)
         
-        /*
+        /* //Accessibility feature; does not work, prevents chart from rendering right
         var toggleInfo = ""
         if(e.dataSeries.visible) toggleInfo =" was toggled on"
         else toggleInfo =" was toggled off"
         setSeries(e.dataSeries.name + toggleInfo)*/
     }
 
+    /* Dynamically adjust Y Axis based on max value of enabled series */
     function yAxisAdjust(chart, force){
         chartYMax = 0;
         for(var i = 0; i < toggledMaxValues.length; i++){
@@ -124,6 +130,7 @@ export default function StackedChart(props){
         if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries, {yMax: chart.options.axisY.maximum, yInterval: chart.options.axisY.interval});
     }
 
+    /* Set chart options */
     const options = {
         animationEnabled: true,
         zoomEnabled: true,
@@ -153,20 +160,26 @@ export default function StackedChart(props){
         data: data
     }
 
-    
-
+    /* Render */
     var chart = <CanvasJSChart options = {options}/>
+    
+    
+    /* Check if is shared chart, enable/disable series based on VisualizationsMeta */
+    /* Check if chart is in editing, disable all series before edits */
+    if(props.seriesEnabled !== undefined){
+        var seriesEnabled = props.seriesEnabled
+        if(chart !== undefined){
+            for(var i = 0; i < props.data.set.length; i++){
+                chart.props.options.data[i].visible = seriesEnabled[i];
+            }
+
+            chart.props.options.axisY.maximum = props.stackedProps.yMax
+            chart.props.options.axisY.interval = props.stackedProps.yInterval
+        }
+    }
+
     if(loading) setTimeout(() => {setLoading(false)}, "500");
 
-    if(loading && props.seriesEnabled !== undefined){
-        var seriesEnabled = props.seriesEnabled
-        for(var i = 0; i < props.data.set.length; i++){
-            chart.props.options.data[i].visible = seriesEnabled[i];
-        }
-
-        chart.props.options.axisY.maximum = props.stackedProps.yMax
-        chart.props.options.axisY.interval = props.stackedProps.yInterval
-    }
 
     if(!loading){
         return( 

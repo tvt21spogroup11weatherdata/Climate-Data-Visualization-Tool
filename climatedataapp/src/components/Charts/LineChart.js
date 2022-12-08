@@ -12,7 +12,7 @@ export default function LineChart(props){
     var data = [];
     var newInterval = props.interval
 
-    //Toggle series when clicking legend
+    /* Toggle series when clicking legend */
     function toggleSeries(e) {
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
@@ -33,7 +33,21 @@ export default function LineChart(props){
         else toggleInfo =" was toggled off"
         setSeries(e.dataSeries.name + toggleInfo)*/
     }
-    
+
+    //Accessibility feature; does not work, prevents chart from rendering right
+    /*
+    function accessibility(e){
+        var set = props.data.set[e.dataSeries.id]
+        if(props.human && e.dataSeries.id === 5) {
+            accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
+        }
+        else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
+        setPoint(accessibleDatapoint)
+    }
+    */
+
+        
+    /* Set datapoints */
     for(var i = 0; i < props.data.set.length; i++){
         data[i] = {
             id: i,
@@ -45,16 +59,52 @@ export default function LineChart(props){
         }
     }
 
-    //Accessibility feature; does not work, prevents chart from rendering right
-    function accessibility(e){
-        var set = props.data.set[e.dataSeries.id]
-        if(props.human && e.dataSeries.id === 5) {
-            accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.events + " " + set.suffix
+    /* Set "human event" points */
+    function setHumanEvolutionPoints(){
+        if(loading) return
+        var set = []
+        var events = []
+
+        for(var i = 0; i < props.data.set[5].points.length; i++){
+            var multiple = false;
+            for(var p = 0; p < i; p++){
+                if(props.data.set[5].points[i].x === props.data.set[5].points[p].x) {
+                    multiple = true;
+                }
+            }
+    
+            if(multiple) events.push(props.data.set[5].points[i].y)
+
+            else {
+                events = []
+                events[0] = props.data.set[5].points[i].y;
+            }
+            set.push({x: props.data.set[5].points[i].x, y: 3, events: events})
         }
-        else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
-        setPoint(accessibleDatapoint)
+        return set;
     }
 
+    if(props.human){
+        data[5] = {
+            id: 5,
+            type: "scatter",
+            color: "#1100ff",
+            name: props.data.set[5].yTitle,
+            showInLegend: true,
+            markerSize: 15,
+            markerType: "triangle",
+            axisYType: "secondary",
+            dataPoints: setHumanEvolutionPoints(),
+            toolTip: {
+                shared: false,
+                content: "{x}: {events}"
+            },
+            //mouseover: accessibility
+        }
+    }
+
+
+    /* Dynamically tighten X Axis interval when zooming in */
     function dynamicLoad(e){
         if(e.trigger === "pan") return;
         e.chart.options.axisX.interval = props.interval
@@ -69,31 +119,7 @@ export default function LineChart(props){
         e.chart.options.axisX.interval = newInterval
     }
 
-    function setHumanEvolutionPoints(){
-        if(loading) return
-        var set = []
-        var events = []
-
-        for(var i = 0; i < props.data.set[5].points.length; i++){
-            var multiple = false;
-            for(var p = 0; p < i; p++){
-                if(props.data.set[5].points[i].x === props.data.set[5].points[p].x) {
-                    multiple = true;
-                }
-            }
-            
-            if(multiple) {
-                events.push(props.data.set[5].points[i].y)
-            }
-            else {
-                events = []
-                events[0] = props.data.set[5].points[i].y;
-            }
-            set.push({x: props.data.set[5].points[i].x, y: 3, events: events})
-        }
-        return set;
-    }
-
+    /* Dynamically set tooltip content */
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
@@ -114,27 +140,8 @@ export default function LineChart(props){
         return content
     }
 
-    //IF REQUIRES HUMAN EVOLUTION SERIES
-    if(props.human){
-        data[5] = {
-            id: 5,
-            type: "scatter",
-            color: "#1100ff",
-            name: props.data.set[5].yTitle,
-            showInLegend: true,
-            markerSize: 15,
-            markerType: "triangle",
-            axisYType: "secondary",
-            dataPoints: setHumanEvolutionPoints(),
-            toolTip: {
-                shared: false,
-                content: "{x}: {events}"
-            },
-            //mouseover: accessibility
-        }
-    }
-
-    //Chart options
+    
+    /* Set chart options */
     const options = {
         theme: "light2",
         animationEnabled: true,
@@ -168,10 +175,12 @@ export default function LineChart(props){
         data: data
     }
 
-    //Define chart
+    /* Render */
     var chart = <CanvasJSChart options = {options}/>
 
-   if(props.seriesEnabled !== undefined){
+    /* Check if is shared chart, enable/disable series based on VisualizationsMeta */
+    /* Check if chart is in editing, enable all series before edits */
+    if(props.seriesEnabled !== undefined){
         var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
             chart.props.options.data[i].visible = seriesEnabled[i];
@@ -184,10 +193,8 @@ export default function LineChart(props){
         }
         props.saveSeries(props.editorIndex, seriesEnabled);
     }
-
-
-    setTimeout(() => {setLoading(false)}, "500");
     
+    setTimeout(() => {setLoading(false)}, "500");
 
     if(!loading){
         return( 

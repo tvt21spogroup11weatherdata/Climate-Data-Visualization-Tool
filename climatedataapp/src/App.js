@@ -11,7 +11,6 @@ import Header from './components/Header';
 import Home from './components/Home';
 import UserAccount from './components/UserAccount';
 import V1 from './components/Visualizations/V1'
-//import V3 from './components/Visualizations/V3'
 import V4 from './components/Visualizations/V4'
 import V5 from './components/Visualizations/V5'
 import V6 from './components/Visualizations/V6'
@@ -30,34 +29,18 @@ import { useState } from 'react';
 
 function App() {
     const [routes, setRoutes] = useState(null)
-    const [loading, setLoading] = useState(true)
     const [testPaths, setTestPaths] = useState([])
-
     const [user, setUser] = useState("");
     
+    /* Set headers if token in localStorage */
+    const token = localStorage.getItem("token");
+    if (token) setAuthToken(token);
+
+    /* Generate routes based on collection IDs */
     if(routes === null) getRoutes()
 
-    const token = localStorage.getItem("token");
-    if (token) {
-        setAuthToken(token);
-    }
-
-    /*
-    function checkStorageForRoutes(){
-        var troutes = []
-        for(var i = 0; i < window.sessionStorage.length; i++){
-            var path = "route" + String(i)
-           troutes[i] = window.sessionStorage.getItem(path)
-           // console.log(JSON.parse(window.sessionStorage.getItem("route"+i)))
-           // if(sessionStorage[i].includes("route")) console.log(sessionStorage[i].value)
-        }
-       // setRoutes(troutes)
-       // console.log(routes)
-    }*/
-
     function getRoutes(){
-      //  console.log("get routes")
-        var url = 'http://localhost:3001'
+        var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         let visualizationRoutes = []
         axios.get(url + '/collections', {
             headers: {
@@ -66,14 +49,12 @@ function App() {
             }
             }).then((response) => {
                 var paths = []
-                //console.log(response.data.length + " vs " + routes.length)
                 for(var i = 0; i < response.data.length; i++){
                     var path = "/c/" + response.data[i]._id
                     paths.push(path)
                     const route = (<Route key="key" path={path} element={<VisualizationCollection id={response.data[i]._id}/>}/>)
                     visualizationRoutes.push(route)
                     setRoutes(visualizationRoutes)
-                    //window.sessionStorage.setItem("route" + i, response.data[i]._id)
                 }
                 setTestPaths(paths)
         }).catch (error => {
@@ -83,13 +64,13 @@ function App() {
         })
     }
 
+    /* Render routes */
     return (
         <>
         <Header/>
         <Navigation user={user}/>
         <div className="App" id="content">
             <Routes>
-
                 <Route path="/" element={<Home testPaths={testPaths}/>} />
                 <Route path="/temp" element={<VisualizeTempData/>} />
                 <Route path="/emission" element={<VisualizeEmissionData/>} />
@@ -122,7 +103,6 @@ function App() {
         </div>
         </>
     )
-    
 }
 
 export default App;

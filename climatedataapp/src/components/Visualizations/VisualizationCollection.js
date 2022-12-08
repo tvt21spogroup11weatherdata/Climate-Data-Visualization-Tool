@@ -10,13 +10,13 @@ import V8 from "./V8"
 import V9 from "./V9"
 
 export default function VisualizationCollection(props){
-    //GET FORMATTYPE
     const [formatType, setFormatType] = useState("2column");
     const [loading, setLoading] = useState(true);
     const [collection, setCollection] = useState(null)
     const [elements, setElements] = useState(null)
     const [createdBy, setCreatedBy] = useState("")
-    var url = "http://localhost:3001"
+
+    var url = "http://localhost:3001" // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     var column2 = [];
 
     useEffect(() => {

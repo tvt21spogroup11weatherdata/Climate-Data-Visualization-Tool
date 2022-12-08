@@ -7,9 +7,8 @@ export default function UserAccount(props){
     const [collectionTableElements, setElements] = useState(null)
 
     let userCollIDs = []
-    
 
-    var url = 'http://localhost:3001'
+    var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     async function DeleteUser(e){
         e.preventDefault()

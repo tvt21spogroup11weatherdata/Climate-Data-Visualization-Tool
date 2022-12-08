@@ -7,6 +7,7 @@ export default function LoginForm ({setUser}){
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
+    var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     function logIn(){
         const loginPayLoad = {
@@ -14,7 +15,7 @@ export default function LoginForm ({setUser}){
             "pwd": password
         }
 
-        axios.post("http://localhost:3001/login", loginPayLoad)
+        axios.post(url + "/login", loginPayLoad)
         .then(response => {
             setErrorMessage(false)
             setAuthToken(response.data.token)

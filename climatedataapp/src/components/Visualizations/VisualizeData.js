@@ -4,12 +4,13 @@ import StackedChart from "../Charts/StackedChart";
 import MultiAxisChart from "../Charts/MultiAxisChart";
 import { useState } from "react";
 
-//Creates visualization with defined chartType and data + the source links & descriptions required
+/* Creates visualization with defined chartType and data + the source links & descriptions required */
 export default function VisualizeData(props){
     const [readMore, setReadMore] = useState(false)
     const [help, setHelp] = useState(false)
     const [chartElement, setChartElement] = useState(null)
 
+    /* Check chart type */
     if(chartElement === null){
         switch(props.chartType){
             case "line":        setChartElement(<LineChart editorIndex={props.editorIndex} saveSeries={props.saveSeries} seriesEnabled={props.seriesEnabled} v2error={props.v2error} reversed={props.reversed} data={props.data} human={props.human} zoomable='true' interval={props.interval}/>)
@@ -22,7 +23,8 @@ export default function VisualizeData(props){
                 break;
         }
     }
-    
+
+    /* Readmore, Helptext */
     const readMoreLink=readMore?'Read Less':'Read More >> '
     const helpLink=help?'Close':"How to use chart"
 
@@ -40,7 +42,6 @@ export default function VisualizeData(props){
         }
         else helpContent = ""
         return helpContent
-
     }
 
     function SetDescription(){
@@ -63,7 +64,7 @@ export default function VisualizeData(props){
         return descContent
     }
     
-    
+    /* Render */
     return(
             <div>
                 <h1>{props.data.title}</h1>

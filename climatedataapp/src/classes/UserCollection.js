@@ -1,14 +1,13 @@
-//To hold info of the user-created collection
+/* To hold info of the user-created collection */
 export class Collection {
-    formatType = '' //1column or 2column
-    visualizations = []; //CollectionData
-
+    formatType = ''         // 1column or 2column
+    visualizations = [];    // VisualizationsMeta objects
     constructor(){}
 }
 
-//Metadata pointing to the actual data that will be drawn from when regenerating user-defined collection
+/* Metadata pointing to the actual data that will be drawn from when regenerating user-defined collection */
 export class VisualizationsMeta {
-    dataIndex = ''
+    dataIndex = ''          //Index of the data for DataConstructor.GetByIndex()
     seriesEnabled = [true]; //What series' are enabled when loading chart
     description = ''        //Custom description given in editor
 
@@ -16,9 +15,5 @@ export class VisualizationsMeta {
         this.dataIndex = dataIndex;
         this.seriesEnabled = seriesEnabled;
         this.description = description;
-    }
-
-    getIndex(){
-        return this.dataIndex
     }
 }

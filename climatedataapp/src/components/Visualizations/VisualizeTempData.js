@@ -1,7 +1,6 @@
-import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse"
 import { Navbar, Container, Nav } from "react-bootstrap";
 
-//Navigation for visualizations 1-7 + 10
+/* Navigation for visualizations 1-7 + 10 */
 export default function VisualizeTempData(){
     return (
         <Navbar bg="primary" className="tempNav" expand="lg">

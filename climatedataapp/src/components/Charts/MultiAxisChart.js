@@ -7,11 +7,9 @@ export default function MultiAxisChart(props){
     const [accessibleD, setPoint] = useState(null)
     const [accessibleS, setSeries] = useState(null)
 
-    var accessibleDatapoint
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-    var postedData ; //METADATA THAT WILL BE POSTED TO A COLLECTION TABLE
     
-    //Toggle series when clicking legend
+    /* Toggle series when clicking legend */
     function toggleSeries(e) {
         
         if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -36,8 +34,8 @@ export default function MultiAxisChart(props){
         console.log("editorindex " + props.editorIndex + " enabled series " + enabledSeries)
         if(props.editorIndex !== undefined) props.saveSeries(props.editorIndex, enabledSeries);
 
-        //Accessibility feature; does not work, prevents chart from rendering right
-        /*
+        
+        /* //Accessibility feature; does not work, prevents chart from rendering right
         var toggleInfo = ""
         if(e.dataSeries.visible) toggleInfo =" was toggled on"
         else toggleInfo =" was toggled off"
@@ -45,6 +43,7 @@ export default function MultiAxisChart(props){
     }
 
     //Accessibility feature; does not work, prevents chart from rendering right
+    /*
     function accessibility(e){
         var set = props.data.set[e.dataSeries.id]
         if(e.dataSeries.id === 2) {
@@ -53,7 +52,9 @@ export default function MultiAxisChart(props){
         else accessibleDatapoint = props.data.xPrefix + " " + e.dataPoint.x + " " + props.data.xSuffix + ", " + set.prefix + " " + e.dataPoint.y + " " + set.suffix
         setPoint(accessibleDatapoint)
     }
+    */
     
+    /* Dynamically tighten X Axis interval when zooming in */
     function dynamicLoad(e){
         if(e.trigger === "pan") return;
 
@@ -68,6 +69,7 @@ export default function MultiAxisChart(props){
         e.chart.options.axisX.interval = newInterval
     }
 
+    /* Set "human event" points */
     function setHumanEvolutionPoints(){
         if(loading) return
         var set = []
@@ -96,6 +98,7 @@ export default function MultiAxisChart(props){
         return set;
     }
 
+    /* Dynamically set tooltip content */
     function tooltipContent(e){
         var id = e.entries[0].dataSeries.id;
         var content = ""
@@ -115,7 +118,7 @@ export default function MultiAxisChart(props){
         return content
     }
 
-    //Set datapoints
+    /* Set datapoints */
     var data = [
         {
             type: "line",
@@ -151,7 +154,7 @@ export default function MultiAxisChart(props){
         }]
 
     
-    //Chart options
+    /* Set chart options */
     const options = {
         zoomEnabled: true,
         axisX: {
@@ -199,10 +202,13 @@ export default function MultiAxisChart(props){
         },
         data: data
     }
-    
-    var chart = <CanvasJSChart options = {options}/>
-    if(loading) setTimeout(() => {setLoading(false)}, "500");
 
+    /* Render */
+    var chart = <CanvasJSChart options = {options}/>
+    
+    
+    /* Check if is shared chart, enable/disable series based on VisualizationsMeta */
+    /* Check if chart is in editing, enable all series before edits */
     if(props.seriesEnabled !== undefined){
         var seriesEnabled = props.seriesEnabled
         for(var i = 0; i < props.data.set.length; i++){
@@ -216,6 +222,9 @@ export default function MultiAxisChart(props){
         }
         props.saveSeries(props.editorIndex, seriesEnabled);
     }
+
+    if(loading) setTimeout(() => {setLoading(false)}, "500");
+
 
     if(!loading){
         return( 

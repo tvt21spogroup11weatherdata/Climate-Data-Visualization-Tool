@@ -10,7 +10,6 @@ import V6 from "./V6"
 import V7 from "./V7"
 import V8 from "./V8"
 import V9 from "./V9"
-import App from "../../App";
 
 export default function CollectionEditor(props){
     const [formatType, setFormatType] = useState("2column");
@@ -27,7 +26,7 @@ export default function CollectionEditor(props){
     var tempCollection = new Collection();
     var textInputs = []
 
-    //Load data referred in the Visualizations MetaData
+    /* Load data referred in the Visualizations MetaData */
     function LoadVisualizationData(){
         var dataC = new DataConstructor();
         for(var i = 0; i < collection.length; i++){
@@ -44,7 +43,7 @@ export default function CollectionEditor(props){
     })
 
 
-    //Update collection
+    /* Update collection data */
     function UpdateData(props){
         tempCollection.formatType = '1column'
         tempCollection.visualizations = [];
@@ -56,7 +55,7 @@ export default function CollectionEditor(props){
         setTimeout(setLoadingChart(false), 1500)
     }
 
-    //Add new chart
+    /* Add new visualization to editor */
     function AddVisualization(select){
         setLoadingChart(true)
         
@@ -68,7 +67,7 @@ export default function CollectionEditor(props){
         UpdateData(indexes);
     }
 
-    //Remove visualization from editor
+    /* Remove visualization from editor */
     function RemoveVisualization(select){
         if(loadingChart) return
         setLoadingChart(true)
@@ -90,7 +89,7 @@ export default function CollectionEditor(props){
         UpdateData(indexes)
     }
 
-    //Set custom description values
+    /* Set custom description values */
     const onChange = ({target}) => {
         textInputs[target.id] = target
         let descs = []
@@ -103,7 +102,7 @@ export default function CollectionEditor(props){
         setDescs(descs)
     }
     
-    //Save state of enabled series
+    /* Save state of enabled series */
     function saveSeries(index, series, stackedProps){
         var coll = collection;
         coll[index].seriesEnabled = series;
@@ -111,7 +110,7 @@ export default function CollectionEditor(props){
         setColl(coll)
     }
     
-    //Create the visualization elements
+    /* Create the visualization elements */
     function CreateElements(){
         for(var i = 0; i < collection.length; i++){
             if(collection[i] === null) continue;
@@ -141,6 +140,7 @@ export default function CollectionEditor(props){
         }
     }
 
+    /* Save the collection to database */
     async function SaveAndShare(e){
         e.preventDefault()
         var tempVisualizations = collection
@@ -171,14 +171,13 @@ export default function CollectionEditor(props){
     }
 
 
-    //Create menu elements
+    /* Create menu elements */
     const saveButton = (<td key=""><form key="" onSubmit={e => SaveAndShare(e)}><input key="" type="submit" className="btn btn-primary" value="Save & share"></input></form></td>)
     const formatSelect = (
         <td key="0">Formatting:<br/>
             <button key="0" className="btn btn-primary" onClick={() => setFormatType("1column")}>1 column</button> 
             <button key="1" className="btn btn-primary" onClick={() => setFormatType("2column")}>2 columns</button>
         </td>);
-
 
     const addVisualization = (
         <td><br/>
@@ -195,11 +194,11 @@ export default function CollectionEditor(props){
         </td>)
     
     const menu = (<table width="100%"><tbody><tr>{formatSelect}{addVisualization}{saveButton}</tr></tbody></table>);
-    
     const helpLink=help?'Close':"How to use the editor"
     const helpElement = (<><div style={{width:"80%", margin: "auto", textAlign: "left"}}>{SetHelpText()}</div>
     <p><a className="link-info" id="readmorelink" onClick={()=>{setHelp(!help)}}>{helpLink}</a></p></>)
     
+    /* Set Helptext */
     function SetHelpText(){
         var helpContent = ""
 
@@ -217,11 +216,13 @@ export default function CollectionEditor(props){
         }
         else helpContent = ""
         return helpContent
-
     }
+
+    /* Render */
 
     LoadVisualizationData();
 
+    /* Redirect after collection creation */
     if(redirectID !== null){
         window.location.href="/account"
     }

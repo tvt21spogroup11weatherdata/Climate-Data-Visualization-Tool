@@ -1,7 +1,7 @@
 import axios from "axios";
 //require('dotenv')
 
-//Class for the descriptive data inserted into a chart
+/* Descriptive class for the data inserted into a chart */
 export class Data{
     title = 'Title'
     index = 0
@@ -30,7 +30,7 @@ export class Data{
     }
 }
 
-//Class for the actual data inserted into the chart
+/* Class for the chart's data series */
 export class DataSet {
     xTitle = "äks akseli"
     yTitle = "yy akseli"
@@ -38,7 +38,7 @@ export class DataSet {
     prefix = ' '
     suffix = ' '
     points = [];
-    enabled = ' ' //Is the series enabled when the chart is loaded?
+    enabled = ' ' //Is the series enabled when the chart is loaded
 
     constructor(xTitle, yTitle, prefix, suffix){
         this.xTitle = xTitle;
@@ -48,12 +48,12 @@ export class DataSet {
     }
 }
 
-//Class for constructing the Data objects as per the Visualization requirements
+/* Class for constructing the Data objects as per the Visualization requirements */
 export class DataConstructor{
-    url = "http://localhost:3001"
+    url = "http://localhost:3001"  // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     headers = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin'}
 
-    //Construct Data object by index
+    /* Construct Data object by index */
     async GetByIndex(i){
         if(i === 0) return this.V1Data()
         if(i === 1) return this.V4Data()
@@ -64,6 +64,7 @@ export class DataConstructor{
         if(i === 6) return this.V9Data()
     }
 
+    /* Get data for visualization 1 */
     async V1Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Global historical surface temperature anomalies from January 1850 onwards', 
@@ -250,7 +251,8 @@ export class DataConstructor{
         return data
     }
 
-/*
+    /* V3 data did not require its own chart, has been combined to V4 data
+    /*  
     async V3Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958', 
@@ -316,6 +318,7 @@ export class DataConstructor{
         return data;
     }*/
 
+    /* Construct data for visualization 4 */
     async V4Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements', 
@@ -361,16 +364,8 @@ export class DataConstructor{
             ''
         );
 
-        
-        
         data.chartType="line";
 
-        //GET DATA HERE
- //       this.InsertTestValues(data, 0, 400);
-        
-        
-        
-        
         //SET 0
         let set0 = new DataSet()
         axios.get(this.url + '/lawdome/DE08', {
@@ -474,6 +469,7 @@ export class DataConstructor{
         return data;
     }
 
+    /* Get data for visualization 5 */
     async V5Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Vostok Ice Core CO2 measurements, 417160 - 2342 years', 
@@ -521,6 +517,7 @@ export class DataConstructor{
         return data;
     }
 
+    /* Get data for visualization 6 */
     async V6Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Ice core 800k year composite study CO2 measurement', 
@@ -571,6 +568,7 @@ export class DataConstructor{
         return data;
     }
 
+    /* Get data for visualization 7 */
     async V7Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
         'Evolution of global temperature over the past two million years combined with ice core 800k year composite study CO2 measurement and human evolution and activities', 
@@ -664,6 +662,7 @@ export class DataConstructor{
         return data;
     }
 
+    /* Get data for visualization 8 */
     async V8Data(){
         let data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by country', 
@@ -710,7 +709,7 @@ export class DataConstructor{
         return data;
     }
 
-
+    /* Get data for visualization 9 */
     async V9Data(){
         const data = new Data( //constructor(title, source, desc, longDesc, xTitle, yTitle, xPrefix, xSuffix){}
             'CO2 emissions by sectors', 

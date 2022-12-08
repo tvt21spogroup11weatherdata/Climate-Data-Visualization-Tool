@@ -1,7 +1,6 @@
-import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse"
 import { Navbar, Container, Nav } from "react-bootstrap";
 
-//Navigation for visualizations 8 & 9
+/* Navigation for visualizations 8 & 9 */
 export default function VisualizeEmissionData(){
     return (
         <Navbar bg="primary" className="tempNav" expand="lg">
@@ -19,12 +18,5 @@ export default function VisualizeEmissionData(){
             </Navbar.Collapse>
         </Container>
         </Navbar>
-    )
-    return (
-        <><p>
-        <a className="btn btn-primary" href="/V8">Global CO2 emissions by country</a>&nbsp;
-        <a className="btn btn-primary" href="/V9">Global CO2 emissions by sectors</a></p>
-        </>
-    )
-         
- }
+    )  
+}
