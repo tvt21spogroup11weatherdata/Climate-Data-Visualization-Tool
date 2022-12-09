@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
-// Get data after speciic year
+// Get data after specific year
 router.get('/:year', async (req, res) => {
     try {
         const result = await HumanEvolution.find({"BP": {$lte: req.params.year}}).sort({BP:1})
@@ -18,4 +18,12 @@ router.get('/:year', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
+
+// Get one data entry for testing
+router.get('/test/datatest', async (req, res) => {
+    try {
+        const result = await HumanEvolution.findOne()
+        res.status(200).json(result)
+    } catch (err) {res.status(500).json({message: err.message})}
+})
 module.exports = router

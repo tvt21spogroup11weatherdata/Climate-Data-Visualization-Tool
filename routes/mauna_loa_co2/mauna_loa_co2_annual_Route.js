@@ -18,13 +18,10 @@ router.get('/fromyear/:year', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
-// Get request with custom query from body for dev purposes. Remove before publication.
-router.get('/freeform', async (req, res) => {
+// Get one data entry for testing
+router.get('/datatest', async (req, res) => {
     try {
-        console.log(req.body.query)
-        let query = JSON.parse(req.body.query)
-        console.log(query)
-        const result = await MaunaLoaCO2Annual.find(query)
+        const result = await MaunaLoaCO2Annual.findOne()
         res.status(200).json(result)
     } catch (err) {res.status(500).json({message: err.message})}
 })

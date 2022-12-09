@@ -58,6 +58,8 @@ router.get('/c/:collectionID', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
+
+//Delete collection with id
 /* If user found and authorized, delete collection */
 router.get('/delete/:collectionID', async (req, res) => {
     try{
@@ -67,7 +69,6 @@ router.get('/delete/:collectionID', async (req, res) => {
             .exec((error) => {
                 let token = req.headers["x-access-token"];
                 if (!token) return res.status(403).send({ message: "No token provided!" });
-
                 jwt.verify(token, config.secret, async (err, decoded) => {
                     if (err) return res.status(401).send({ message: "Unauthorized!" });
                     req.userId = decoded.id;
@@ -80,5 +81,12 @@ router.get('/delete/:collectionID', async (req, res) => {
     }  catch (err) {res.status(500).json({message: err.message})}
 })
 
+// Get one data entry for testing
+router.get('/test/datatest', async (req, res) => {
+    try {
+        const result = await Collections.findOne()
+        res.status(200).json(result)
+    } catch (err) {res.status(500).json({message: err.message})}
+})
 
 module.exports = router

@@ -60,3 +60,68 @@ GET http://localhost:3001/icecore800kco2
 
 ### lawdome
 GET http://localhost:3001/lawdome/DSS
+
+### human evolution
+GET http://localhost:3001/human_evolution/0
+
+### global ghg emissions
+# by sector
+GET http://localhost:3001/ghg_global_sector/
+### by subsector
+GET http://localhost:3001/ghg_global_subsector/
+
+### snyder temperature evolution
+GET http://localhost:3001/snyder_temperature_evolution/
+
+### national carbon emissions
+GET http://localhost:3001/national_carbon_emissions/
+###
+GET http://localhost:3001/national_carbon_emissions/datatest
+
+### collections
+GET http://localhost:3001/collections/
+
+
+### testing
+
+GET http://localhost:3001/collections/test/datatest
+### global ghg emissions
+# by sector
+GET http://localhost:3001/ghg_global_sector/datatest
+### by subsector
+GET http://localhost:3001/ghg_global_subsector/datatest
+###
+GET http://localhost:3001/hadcrutglobalannual/datatest
+###
+GET http://localhost:3001/hadcrutglobalmonthly/datatest
+###
+GET http://localhost:3001/hadcrutnorthernhemisphereannual/datatest
+###
+GET http://localhost:3001/hadcrutnorthernhemispheremonthly/datatest
+###
+GET http://localhost:3001/hadcrutsouthernhemisphereannual/datatest
+###
+GET http://localhost:3001/hadcrutsouthernhemispheremonthly/datatest
+### human evolution
+GET http://localhost:3001/human_evolutions/test/datatest
+###
+GET http://localhost:3001/icecore800kco2/datatest
+###
+GET http://localhost:3001/lawdome/test/datatest
+
+### mauna loa co2 annual
+GET http://localhost:3001/maunaloaco2annual/datatest
+
+### mauna loa co2 monthly
+GET http://localhost:3001/maunaloaco2monthly/datatest
+### national carbon emissions
+GET http://localhost:3001/national_carbon_emissions/datatest
+
+### Northern temp reconstruction
+GET http://localhost:3001/northerntempreconstruction/datatest
+
+### snyder temperature evolution
+GET http://localhost:3001/snyder_temperature_evolution/datatest
+
+###
+GET http://localhost:3001/vostokicecoreco2/datatest

@@ -10,4 +10,11 @@ router.get('/', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
+// Get one data entry for testing
+router.get('/datatest', async (req, res) => {
+    try {
+        const result = await snyder_temperature_evolution.findOne()
+        res.status(200).json(result)
+    } catch (err) {res.status(500).json({message: err.message})}
+})
 module.exports = router
