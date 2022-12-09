@@ -3,6 +3,7 @@ import { useState } from "react";
 import { logOut } from "./Logout";
 
 export default function UserAccount(props){
+    const [deleted, setDeleted] = useState("") //for jest
     const [collIDs, setIDs] = useState(null)
     const [collectionTableElements, setElements] = useState(null)
 
@@ -32,6 +33,7 @@ export default function UserAccount(props){
 
             logOut()
         }
+        setDeleted("deleted user")
     }
 
     function DeleteCollection(e){
@@ -118,10 +120,12 @@ export default function UserAccount(props){
                         </td>
                         <td>
                             <form onSubmit={(e) => DeleteUser(e)}>
-                                <input type="submit" data-testid="submit" id="button" className="btn btn-secondary" value="Delete account"/>
+                                <input type="submit" data-testid="deleteuser" id="button" className="btn btn-secondary" value="Delete account"/>
                             </form>
+                            <input data-testid="deleted" defaultValue={deleted} hidden/> {/*jest*/}
                         </td>
                     </tr>
+                    
                 </tbody>
             </table>
         </div>

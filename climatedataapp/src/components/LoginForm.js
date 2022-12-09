@@ -6,7 +6,7 @@ export default function LoginForm ({setUser}){
     const [loggedIn, setLoggedIn] = useState("") //for jest ??
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
-    const [errorMessage, setErrorMessage]= useState(null)
+    const [errorMessage, setErrorMessage]= useState(false)
     var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     function logIn(){
@@ -15,6 +15,8 @@ export default function LoginForm ({setUser}){
             "pwd": password
         }
 
+        var loggedIn
+
         axios.post(url + "/login", loginPayLoad)
         .then(response => {
             setErrorMessage(false)
@@ -22,12 +24,15 @@ export default function LoginForm ({setUser}){
             window.localStorage.setItem("username", userName)
             window.localStorage.setItem("userID", response.data.id)
             window.localStorage.setItem("token", response.data.accessToken);
-            window.location.href = '/account'
             setUser(userName)
+            setLoggedIn("logged in")
+            window.location.assign('/account')
         }).catch(error => {
             console.log(error)
-            setErrorMessage(error.response.statusText)
+            setLoggedIn("not logged in")
+            setErrorMessage(error.response !== undefined)
         })
+ 
     }
 
     function errorElement(){
@@ -52,7 +57,7 @@ export default function LoginForm ({setUser}){
                 <p><input data-testid="submit" type="submit" value="Log in"/></p>
                 {errorElement()}
             </form>
-            <input data-testid="loggedin" defaultValue={loggedIn} hidden/>
+            <input data-testid="loggedin" value={loggedIn} onChange={() => {}} hidden/>
         </div>
     )
 }

@@ -20,11 +20,13 @@ export default function SignupForm (props){
             setErrorMessage(false)
             window.localStorage.setItem("username", userName)
             window.localStorage.setItem("userID", response.data.id)
-            window.location.href = '/account'
+            signedUp = "signedUp"
             setTimeout(alert('Successfully signed up! Please log in'), 500)
         }).catch(error => {
-            console.log(error)
+            //console.log(error)
             setErrorMessage("Username already exists")
+        }).finally(() => {
+            window.location.assign('/account')
         })
     }
 
