@@ -32,6 +32,7 @@ router.get('/:collectionID', async (req, res) => {
     } catch (err) {res.status(500).json({message: err.message})}
 })
 
+//Delete collection with id
 router.get('/delete/:collectionID', async (req, res) => {
     try {
         const result = await Collections.deleteOne({"_id": req.params.collectionID });
@@ -39,6 +40,11 @@ router.get('/delete/:collectionID', async (req, res) => {
     } catch(err) {res.status(500).json({message: err.message})}
 })
 
-
-
+// Get one data entry for testing
+router.get('/test/datatest', async (req, res) => {
+    try {
+        const result = await Collections.findOne()
+        res.status(200).json(result)
+    } catch (err) {res.status(500).json({message: err.message})}
+})
 module.exports = router
