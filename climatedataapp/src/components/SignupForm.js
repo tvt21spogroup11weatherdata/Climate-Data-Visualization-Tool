@@ -7,7 +7,7 @@ export default function SignupForm (props){
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage]= useState(null)
 
-    var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    var url = process.env.REACT_APP_APIURL // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     function signUp(){
         const signupPayload = {

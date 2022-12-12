@@ -40,7 +40,7 @@ function App() {
     if(routes === null) getRoutes()
 
     function getRoutes(){
-        var url = 'http://localhost:3001' // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var url = process.env.REACT_APP_APIURL // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         let visualizationRoutes = []
         axios.get(url + '/collections', {
             headers: {

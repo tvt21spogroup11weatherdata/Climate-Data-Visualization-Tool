@@ -19,7 +19,7 @@ export default function CollectionEditor(props){
     const [help, setHelp] = useState(false)
     const [loadingChart, setLoadingChart] = useState(false)
 
-    var url = "http://localhost:3001"
+    var url = process.env.REACT_APP_APIURL
     var collectionElements = [];
     var column2 = [];
     var visualizationsData = [];

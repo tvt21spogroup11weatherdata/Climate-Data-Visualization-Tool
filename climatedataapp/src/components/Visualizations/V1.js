@@ -13,7 +13,7 @@ export default function V1(props){
         if(loading){
            if(data === null){   
                 cnstr.V1Data().then(res => {
-                    setTimeout(() => {storeData(res)}, "500");
+                    setTimeout(() => {storeData(res)}, "1500");
                 })
             }  
         }

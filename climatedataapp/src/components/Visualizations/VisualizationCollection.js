@@ -16,7 +16,7 @@ export default function VisualizationCollection(props){
     const [elements, setElements] = useState(null)
     const [createdBy, setCreatedBy] = useState("")
 
-    var url = "http://localhost:3001" // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    var url = process.env.REACT_APP_APIURL // TO ENV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     var column2 = [];
 
     useEffect(() => {
@@ -71,7 +71,7 @@ export default function VisualizationCollection(props){
                         }
                     }
                     setElements(collectionElements)
-                    setTimeout(setLoading(false), 1000)
+                    setTimeout(setLoading(false), 2000)
                 }
             }
         }
