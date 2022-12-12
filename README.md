@@ -17,3 +17,8 @@ The service is deployed in [Google Cloud](https://group11weatherdata.ew.r.appspo
 - User is able to register to the service with an username and a password. After a succesful registration, the user is able to login to the service
 - User can create a new collection of the available visualizations and can sort them into one or two columns, add custom descriptions and enable custom amount of chart series
 - User can inspect and delete their own collections from their account page. User can also delete their account from the service entirely, what also deletes their collections
+
+## Testing
+
+Mocha and Chai were used for testing the API's connection to the database
+Jest was used for frontend component testing on signup, login and user account pages
