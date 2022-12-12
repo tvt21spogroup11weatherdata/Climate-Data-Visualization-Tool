@@ -7,7 +7,7 @@ The project's requirements were to build a visualization application for climate
 
 ## Technical description of the development stack
 
-The user interface was built with React, API connections were handled with Axios, data was visualized with CanvasJS charting library and the web app stylized with Bootstrap.
+The user interface was built with React, API connections were handled with Axios, data was visualized with CanvasJS charting library and the web app was stylized with Bootstrap.
 The database is a MongoDB NoSQL-database which runs on MongoDB's own Atlas platform.
 Data was imported with mongoimport. REST API was made with Express and Mongoose.
 The service is deployed in [Google Cloud](https://group11weatherdata.ew.r.appspot.com/), but also local backups of the service exist.
