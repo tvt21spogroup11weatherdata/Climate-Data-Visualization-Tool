@@ -1,4 +1,4 @@
-# Climate-Data-Visualization-Tool
+# Climate Data Visualization Tool
 
 This is a group project by OAMK second year software development students, the purpose of which was to build a web application that fetches data from a database via a RESTful API. We had nine weeks to complete this project.
 
