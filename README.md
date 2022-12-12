@@ -20,5 +20,4 @@ The service is deployed in [Google Cloud](https://group11weatherdata.ew.r.appspo
 
 ## Testing
 
-Mocha and Chai were used for testing the API's connection to the database
-Jest was used for frontend component testing on signup, login and user account pages
+Mocha and Chai were used for testing the API's connection to the database. Jest was used for frontend component testing on signup, login and user account pages
