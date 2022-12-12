@@ -14,7 +14,7 @@ The service is deployed in [Google Cloud](https://group11weatherdata.ew.r.appspo
 
 ## User Functions
 
-- User is able to register to the service with an username and a password. After a succesful registration, the user is able to login to the service
+- User is able to register to the service with a username and a password. After a succesful registration, the user is able to login to the service
 - User can create a new collection of the available visualizations and can sort them into one or two columns, add custom descriptions and enable custom amount of chart series
 - User can inspect and delete their own collections from their account page. User can also delete their account from the service entirely, what also deletes their collections
 
